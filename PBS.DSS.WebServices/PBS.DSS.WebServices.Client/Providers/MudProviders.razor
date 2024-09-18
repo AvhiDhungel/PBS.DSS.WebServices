@@ -1,0 +1,15 @@
+﻿<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@code {
+    protected override void OnInitialized()
+    {
+        SnackbarService.Clear();
+        SnackbarService.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+        SnackbarService.Configuration.MaxDisplayedSnackbars = 5;
+        SnackbarService.Configuration.SnackbarVariant = Variant.Filled;
+        SnackbarService.Configuration.PreventDuplicates = true;
+    }
+}

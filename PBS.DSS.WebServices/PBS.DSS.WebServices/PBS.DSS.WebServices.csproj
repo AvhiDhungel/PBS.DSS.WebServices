@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\PBS.DSS.Shared\PBS.DSS.Shared.csproj" />
+    <ProjectReference Include="..\PBS.DSS.WebServices.Client\PBS.DSS.WebServices.Client.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.*" />
+    <PackageReference Include="PBS.DataAccess.Core" Version="1.0.11" />
+  </ItemGroup>
+
+</Project>

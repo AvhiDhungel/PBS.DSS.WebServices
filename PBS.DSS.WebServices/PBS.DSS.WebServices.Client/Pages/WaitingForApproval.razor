@@ -1,0 +1,16 @@
+﻿@page "/WaitingForApproval"
+@page "/WaitingForApproval/{SerialNumber}/{WorkItemRef}"
+@page "/WaitingForApproval/{SerialNumber}/{WorkItemRef}/{Requestor}"
+
+<MudPaper>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public string SerialNumber { get; set; } = string.Empty;
+    [Parameter]
+    public string WorkItemRef { get; set; } = string.Empty;
+    [Parameter]
+    public string Requestor { get; set; } = string.Empty;
+
+}
