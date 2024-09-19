@@ -3,7 +3,6 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
-@using static Microsoft.AspNetCore.Components.Web.RenderMode
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
 @using PBS.DSS.WebServices.Client
@@ -13,8 +12,12 @@
 @using PBS.DSS.Shared
 @using PBS.DSS.Shared.Resources
 @using PBS.DSS.Shared.Services
+@using PBS.DSS.Shared.Models
+@using PBS.DSS.Shared.Models.WorkItems
 @using MudBlazor
 @using MudBlazor.Services
+
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
 
 @inject IDialogService DialogService
 @inject ISnackbar SnackbarService
