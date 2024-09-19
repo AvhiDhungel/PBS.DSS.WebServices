@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using PBS.DSS.WebServices.Client.Helpers;
 
 namespace PBS.DSS.WebServices.Client.Services
 {
@@ -14,6 +15,26 @@ namespace PBS.DSS.WebServices.Client.Services
         public async Task CopyToClipboard(string str)
         {
             await _jsRuntime.InvokeVoidAsync("copyTextToClipboard", str);
+        }
+
+        public async Task OpenPDFInNewTab(byte[] content)
+        {
+            await _jsRuntime.InvokeVoidAsync("openPDFInNewTab", content);
+        }
+
+        public async Task DownloadICS(ICSDownloadArgs args)
+        {
+            List<string> jsArgs =
+            [
+                args.StartDate.ToString("yyyyMMddTHHmmss"),
+                args.EndDate.ToString("yyyyMMddTHHmmss"),
+                DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ"),
+                args.Summary,
+                args.Description,
+                args.Reference,
+            ];
+
+            await _jsRuntime.InvokeVoidAsync("generateICS", jsArgs);
         }
     }
 }

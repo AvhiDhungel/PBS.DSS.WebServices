@@ -2,7 +2,7 @@ function isDevice() {
     return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);
 }
 
-function GenerateICS(args) {
+function generateICS(args) {
     var plainText = "BEGIN:VCALENDAR";
     plainText += "\r\nVERSION:2.0";
     plainText += "\r\nPRODID:-//hacksw/handcal//NONSGML v1.0//EN";
@@ -27,7 +27,7 @@ function GenerateICS(args) {
     document.body.removeChild(element);
 }
 
-function OpenPDFInNewTab(byteArray) {
+function openPDFInNewTab(byteArray) {
     var file = new Blob([byteArray], { type: 'application/pdf' });
     var fileURL = URL.createObjectURL(file);
     if (isDevice) {
