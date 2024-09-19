@@ -7,7 +7,7 @@ namespace PBS.DSS.WebServices.Client.Services
     {
         private readonly IJSRuntime _jsRuntime = jsRuntime;
 
-        public async ValueTask<bool> GetIsMobile()
+        public async ValueTask<bool> IsMobile()
         {
             return await _jsRuntime.InvokeAsync<bool>("isDevice");
         }
