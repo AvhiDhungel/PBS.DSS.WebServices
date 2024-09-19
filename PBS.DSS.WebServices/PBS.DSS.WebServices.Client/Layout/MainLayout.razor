@@ -28,7 +28,7 @@
 
         if (System.Globalization.CultureInfo.CurrentCulture.Name == cInfo.Name) return;
 
-        await InterOpService.SetCulture(cInfo.Name);
+        await SessionStorageService.SetSessionCulture(cInfo.Name);
 
         NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
     }

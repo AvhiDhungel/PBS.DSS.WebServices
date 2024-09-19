@@ -40,11 +40,3 @@ function OpenPDFInNewTab(byteArray) {
 function copyTextToClipboard(text) {
     navigator.clipboard.writeText(text);
 }
-
-function getBlazorCulture() {
-    return window.localStorage['BlazorCulture'];
-}
-
-function setBlazorCulture(value) {
-    window.localStorage['BlazorCulture'] = value;
-};

@@ -15,15 +15,5 @@ namespace PBS.DSS.Shared.Services
         {
             await _jsRuntime.InvokeVoidAsync("copyTextToClipboard", str);
         }
-
-        public async Task<string> GetCulture()
-        {
-            return await _jsRuntime.InvokeAsync<string>("getBlazorCulture");
-        }
-
-        public async Task SetCulture(string str)
-        {
-            await _jsRuntime.InvokeVoidAsync("setBlazorCulture", str);
-        }
     }
 }
