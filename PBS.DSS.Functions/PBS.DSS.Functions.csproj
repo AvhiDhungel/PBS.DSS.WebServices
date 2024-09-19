@@ -4,8 +4,11 @@
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Csla" Version="8.2.7" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.4.1" />
     <PackageReference Include="PBS.DataAccess.Core" Version="1.0.11" />
+    <PackageReference Include="PBS.WebserviceMaintenance.Client" Version="1.0.31" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
