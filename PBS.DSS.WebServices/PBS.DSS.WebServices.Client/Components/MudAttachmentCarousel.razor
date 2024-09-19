@@ -1,32 +1,20 @@
-﻿<MudDialog Style="height:75%;">
-    <DialogContent>
-        <MudCarousel TData="@Attachment"
-                     ShowArrows="true"
-                     ShowBullets="true"
-                     AutoCycle="false"
-                     Class="mud-width-full"
-                     Style="height:47em;">
+﻿<MudCarousel TData="@Attachment"
+             ShowArrows="true"
+             ShowBullets="true"
+             AutoCycle="false"
+             Style="height:47em;">
 
-            @foreach (var a in Attachments)
-            {
-                <MudCarouselItem Transition="Transition.Slide">
-                    <MudAttachment Attachment="a" DeploymentId="DeploymentId" />
-                </MudCarouselItem>
-            }
-        </MudCarousel>
-    </DialogContent>
-    <DialogActions>
-        <MudButton Color="Color.Primary" OnClick="Close">Ok</MudButton>
-    </DialogActions>
-</MudDialog>
+    @foreach (var a in Attachments)
+    {
+        <MudCarouselItem Transition="Transition.Slide" Style="display:flex; justify-content:center; align-items:center; height:90%">
+            <MudAttachment Attachment="a" DeploymentId="DeploymentId" />
+        </MudCarouselItem>
+    }
+</MudCarousel>
+
 @code {
-    [CascadingParameter]
-    MudDialogInstance MudDialog { get; set; } = new();
-
     [Parameter]
     public List<Attachment> Attachments { get; set; } = new();
     [Parameter]
     public Guid DeploymentId { get; set; } = Guid.Empty;
-
-    private void Close() => MudDialog.Close(DialogResult.Ok(true));
 }

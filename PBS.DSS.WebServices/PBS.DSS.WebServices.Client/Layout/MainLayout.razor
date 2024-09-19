@@ -14,8 +14,9 @@
         <MudMainContent>
             @if (SessionInfo.Banner.HasValue())
             {
-                <MudStack Row="true" Justify="Justify.SpaceEvenly" Class="ma-2">
-                    <MudImage Src="@($"data:image/png;base64,{SessionInfo.Banner}")" Style="max-height:10em; width:70%" />
+                <MudStack Style="align-items:center" Justify="Justify.SpaceEvenly" Class="ma-2">
+                    <MudImage Src="@($"data:image/png;base64,{SessionInfo.Banner}")" Style="max-height:10em; width:60%" />
+                    <MudDivider Style="width:70%; background-color:black; height:2px " />
                 </MudStack>
             }
             <MudContainer MaxWidth="MaxWidth.Large" Class="pt-5 justify-center align-center">

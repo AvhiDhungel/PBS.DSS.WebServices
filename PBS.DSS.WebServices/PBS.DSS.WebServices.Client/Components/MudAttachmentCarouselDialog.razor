@@ -1,0 +1,19 @@
+﻿<MudDialog Style="height:75%;">
+    <DialogContent>
+        <MudAttachmentCarousel Attachments="Attachments" DeploymentId="DeploymentId" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = new();
+
+    [Parameter]
+    public List<Attachment> Attachments { get; set; } = new();
+    [Parameter]
+    public Guid DeploymentId { get; set; } = Guid.Empty;
+
+    private void Close() => MudDialog.Close(DialogResult.Ok(true));
+}
