@@ -9,13 +9,12 @@
         public decimal Price { get; set; } = decimal.Zero;
         public decimal EstimatedLabour { get; set; } = decimal.Zero;
         public decimal EstimatedParts { get; set; } = decimal.Zero;
-        public AWRStatuses AWRStatus { get; set; } = AWRStatuses.Original;
+        public AWRStatuses AWRStatus { get; set; } = AWRStatuses.Approved;
         public RecommendedPriority Priority { get; set; } = RecommendedPriority.None;
     }
 
     public enum AWRStatuses
     {
-        Original,
         Approved,
         Pending,
         Deferred,
