@@ -1,7 +1,7 @@
 ﻿using PBS.DataAccess.Core;
 using System.Text;
 
-namespace PBS.DSS.WebServices
+namespace PBS.DSS.WebServices.Server.Utilities
 {
     internal class Activity
     {

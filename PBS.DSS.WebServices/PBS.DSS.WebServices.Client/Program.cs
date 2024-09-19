@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using MudExtensions.Services;
 using Blazored.SessionStorage;
-using PBS.DSS.Shared.Services;
 using PBS.DSS.WebServices.Client.Pages;
 using PBS.DSS.WebServices.Client.Services;
 

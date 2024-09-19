@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.DSS.WebServices", "PBS.DSS.WebServices\PBS.DSS.WebServices\PBS.DSS.WebServices.csproj", "{9988ECF6-CF5E-419A-AF9C-94CB2C983B49}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.DSS.WebServices.Client", "PBS.DSS.WebServices\PBS.DSS.WebServices.Client\PBS.DSS.WebServices.Client.csproj", "{3B4326B7-785C-4C90-A8E2-2E29AC0CF1A5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.DSS.Shared", "PBS.DSS.Shared\PBS.DSS.Shared.csproj", "{AE9067CE-905E-4019-90FA-C773061B0AFA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.DSS.Functions", "PBS.DSS.Functions\PBS.DSS.Functions.csproj", "{AD9511D2-CFC1-433B-8A26-CE6E147B93E9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.DSS.Bootstrap", "PBS.DSS.Bootstrap\PBS.DSS.Bootstrap.csproj", "{36A421F6-A451-4D27-B31D-7455F2EF7E6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.DSS.WebServices.Server", "PBS.DSS.WebServices\PBS.DSS.WebServices.Server\PBS.DSS.WebServices.Server.csproj", "{055B766D-4B9A-4D1A-B0D8-206E29220956}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.DSS.WebServices.Client", "PBS.DSS.WebServices\PBS.DSS.WebServices.Client\PBS.DSS.WebServices.Client.csproj", "{55CFF772-4EAA-4807-97B4-658930DD168A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9988ECF6-CF5E-419A-AF9C-94CB2C983B49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9988ECF6-CF5E-419A-AF9C-94CB2C983B49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9988ECF6-CF5E-419A-AF9C-94CB2C983B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9988ECF6-CF5E-419A-AF9C-94CB2C983B49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B4326B7-785C-4C90-A8E2-2E29AC0CF1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B4326B7-785C-4C90-A8E2-2E29AC0CF1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B4326B7-785C-4C90-A8E2-2E29AC0CF1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B4326B7-785C-4C90-A8E2-2E29AC0CF1A5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE9067CE-905E-4019-90FA-C773061B0AFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AE9067CE-905E-4019-90FA-C773061B0AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE9067CE-905E-4019-90FA-C773061B0AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,13 +31,21 @@ Global
 		{36A421F6-A451-4D27-B31D-7455F2EF7E6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36A421F6-A451-4D27-B31D-7455F2EF7E6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36A421F6-A451-4D27-B31D-7455F2EF7E6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{055B766D-4B9A-4D1A-B0D8-206E29220956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{055B766D-4B9A-4D1A-B0D8-206E29220956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{055B766D-4B9A-4D1A-B0D8-206E29220956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{055B766D-4B9A-4D1A-B0D8-206E29220956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55CFF772-4EAA-4807-97B4-658930DD168A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55CFF772-4EAA-4807-97B4-658930DD168A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55CFF772-4EAA-4807-97B4-658930DD168A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55CFF772-4EAA-4807-97B4-658930DD168A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_NeutralResourcesLanguage = en-CA
-		RESX_CultureCountyOverrides = fr=fr-CA
 		SolutionGuid = {D48255B8-0008-46E0-8AE7-B6FB5AF78054}
+		RESX_CultureCountyOverrides = fr=fr-CA
+		RESX_NeutralResourcesLanguage = en-CA
 	EndGlobalSection
 EndGlobal

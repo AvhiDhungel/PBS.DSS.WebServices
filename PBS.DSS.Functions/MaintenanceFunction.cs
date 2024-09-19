@@ -6,7 +6,7 @@ namespace PBS.DSS.Functions
 {
     public class MaintenanceFunction
     {
-        [FunctionName("Function1")]
+        [FunctionName("DatabaseMaintenance")]
         public void Run([TimerTrigger("0 0 9 * * 0")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");

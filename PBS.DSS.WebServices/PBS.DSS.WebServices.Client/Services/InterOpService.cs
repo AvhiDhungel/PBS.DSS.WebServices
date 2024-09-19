@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace PBS.DSS.Shared.Services
+namespace PBS.DSS.WebServices.Client.Services
 {
     public sealed class InterOpService(IJSRuntime jsRuntime)
     {
