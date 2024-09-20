@@ -1,10 +1,9 @@
-﻿<MudPaper Style="max-width:max-content">
+﻿<MudPaper Style="max-width:max-content; width:90%; height:85%; display:flex; align-self:center; background-color:inherit;" Elevation="0">
     @if (Attachment.Name.ToLower().EndsWith(".mov") || Attachment.Name.ToLower().EndsWith(".mp4"))
     {
         <video controls
                muted
                loop
-               style="height:45em;width:100%;"
                playsinline>
             <source src=@($"https://documents.pbsdealers.com/api/Stream/{DeploymentId}/{Attachment.AttachmentRef}") />
         </video>
@@ -13,8 +12,7 @@
     {
         <MudImage Src="@($"data:img/png;base64,{Convert.ToBase64String(Attachment.Content)}")"
                   Fluid="true"
-                  Style="height:43em;width:64em;"
-                  ObjectFit="ObjectFit.Fill" />
+                  ObjectFit="ObjectFit.ScaleDown" />
     }
 </MudPaper>
 

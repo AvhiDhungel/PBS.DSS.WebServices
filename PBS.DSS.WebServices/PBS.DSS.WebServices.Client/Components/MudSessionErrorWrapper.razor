@@ -22,13 +22,18 @@ else
     public RenderFragment? Content { get; set; }
     [Parameter]
     public Func<bool>? Validation { get; set; }
+
     [Parameter]
-    public Func<Task>? Initialized { get; set; }
+    public Action? Initialized { get; set; }
+    [Parameter]
+    public Func<Task>? InitializedAsync { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         if (!Validation?.Invoke() ?? false) return;
-        if (Initialized != null) await Initialized.Invoke();
+        if (InitializedAsync != null) await InitializedAsync.Invoke();
+
+        Initialized?.Invoke();
 
         StateHasChanged();
     }

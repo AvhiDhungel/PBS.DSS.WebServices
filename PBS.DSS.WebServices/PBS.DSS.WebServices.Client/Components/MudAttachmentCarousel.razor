@@ -2,11 +2,14 @@
              ShowArrows="true"
              ShowBullets="true"
              AutoCycle="false"
-             Style="height:47em;">
+             NextIcon="@Icons.Material.Outlined.ArrowForwardIos"
+             PreviousIcon="@Icons.Material.Outlined.ArrowBackIos"
+             BulletsColor="Color.Primary"
+             Style="height:45em; border-radius:8px; background-color:slategray;">
 
     @foreach (var a in Attachments)
     {
-        <MudCarouselItem Transition="Transition.Slide" Style="display:flex; justify-content:center; align-items:center; height:90%">
+        <MudCarouselItem Transition="Transition.Slide" Style="display:flex; justify-content:center; align-items:center;">
             <MudAttachment Attachment="a" DeploymentId="DeploymentId" />
         </MudCarouselItem>
     }

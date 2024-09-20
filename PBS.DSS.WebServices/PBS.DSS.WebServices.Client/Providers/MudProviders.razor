@@ -1,9 +1,11 @@
-﻿<MudThemeProvider />
+﻿<MudThemeProvider Theme="Theme" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 @code {
+    private MudTheme Theme { get; set; } = new();
+
     protected override void OnInitialized()
     {
         SnackbarService.Clear();
@@ -11,5 +13,11 @@
         SnackbarService.Configuration.MaxDisplayedSnackbars = 5;
         SnackbarService.Configuration.SnackbarVariant = Variant.Filled;
         SnackbarService.Configuration.PreventDuplicates = true;
+
+        Theme.PaletteLight.Surface = Colors.Blue.Darken3;
+        Theme.PaletteLight.Primary = Colors.Blue.Darken3;
+        Theme.PaletteLight.Secondary = Colors.Purple.Darken3;
+        Theme.PaletteLight.Tertiary = Colors.Blue.Darken1;
+        Theme.PaletteLight.AppbarBackground = Colors.Blue.Darken3;
     }
 }
