@@ -5,6 +5,7 @@ using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.Shared.Criteria;
 using PBS.DSS.WebServices.Server.Integrations;
 using PBS.DSS.WebServices.Server.Extensions;
+using PBS.ConnectHub.Library.Messages.DigitalServiceSuite;
 
 namespace PBS.DSS.WebServices.Server.Controllers
 {
@@ -18,9 +19,9 @@ namespace PBS.DSS.WebServices.Server.Controllers
         {
             var so = new ServiceOrder();
 
-            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrder(x, so)))
+            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrderResponse(x, so)))
             {
-                var soReq = new ConnectModels.FetchServiceOrderRequest() { WorkItemRef = args.ServiceOrderRef };
+                var soReq = new ServiceOrderDSSRequest() { ServiceOrderRef = args.ServiceOrderRef };
 
                 await cl.StartConnection();
                 await cl.SendToServer(soReq);
@@ -30,10 +31,17 @@ namespace PBS.DSS.WebServices.Server.Controllers
         }
 
         #region Connect Message Handlers
-        private static void ReceiveServiceOrder(MessageHeaderV2 msgHeader, ServiceOrder so)
+        private static void ReceiveServiceOrderResponse(MessageHeaderV2 msgHeader, ServiceOrder so)
         {
-            if (msgHeader.IsConnectResponseMatch(typeof(ConnectModels.FetchServiceOrderResponse)))
-                TranscribeServiceOrder(so, msgHeader.RecieveMessage<ConnectModels.ServiceOrder>());
+            if (msgHeader.IsConnectResponseMatch(typeof(ServiceOrderDSSResponse)))
+                TranscribeServiceOrder(so, msgHeader.RecieveMessage<ServiceOrderDSSResponse>());
+        }
+
+        private static void TranscribeServiceOrder(ServiceOrder so, ServiceOrderDSSResponse resp)
+        {
+            so.ShopBanner = resp.ShopBanner; 
+            
+            TranscribeServiceOrder(so, resp);
         }
 
         private static void TranscribeServiceOrder(ServiceOrder so, ConnectModels.ServiceOrder connectSO)

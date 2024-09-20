@@ -5,6 +5,7 @@ using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.Shared.Criteria;
 using PBS.DSS.WebServices.Server.Integrations;
 using PBS.DSS.WebServices.Server.Extensions;
+using PBS.ConnectHub.Library.Messages.DigitalServiceSuite;
 
 namespace PBS.DSS.WebServices.Server.Controllers
 {
@@ -20,7 +21,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
 
             using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveAppointment(x, appt)))
             {
-                var apptReq = new ConnectModels.FetchAppointmentRequest() { AppointmentRef = args.AppointmentRef };
+                var apptReq = new AppointmentDSSRequest { AppointmentRef = args.AppointmentRef };
 
                 await cl.StartConnection();
                 await cl.SendToServer(apptReq);
@@ -32,8 +33,15 @@ namespace PBS.DSS.WebServices.Server.Controllers
         #region Connect Message Handlers
         private static void ReceiveAppointment(MessageHeaderV2 msgHeader, Appointment appt)
         {
-            if (msgHeader.IsConnectResponseMatch(typeof(ConnectModels.FetchAppointmentResponse)))
-                TranscribeAppointment(appt, msgHeader.RecieveMessage<ConnectModels.Appointment>());
+            if (msgHeader.IsConnectResponseMatch(typeof(AppointmentDSSResponse)))
+                TranscribeAppointment(appt, msgHeader.RecieveMessage<AppointmentDSSResponse>());
+        }
+
+        private static void TranscribeAppointment(Appointment appt, AppointmentDSSResponse resp)
+        {
+            appt.ShopBanner = resp.ShopBanner;
+
+            TranscribeAppointment(appt, resp);
         }
 
         private static void TranscribeAppointment(Appointment appt, ConnectModels.Appointment connectAppt)
