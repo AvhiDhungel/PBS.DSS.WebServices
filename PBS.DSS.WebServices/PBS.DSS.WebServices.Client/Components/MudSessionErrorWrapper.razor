@@ -1,0 +1,35 @@
+﻿@if (SessionInfo.HasErrors())
+{
+    <MudStack Style="display:flex; align-items:center">
+        <MudText Typo="Typo.h6">
+            Error loading your page
+        </MudText>
+        <MudText>
+            @SessionInfo.GetErrors()
+        </MudText>
+    </MudStack>
+}
+else
+{
+    @Content
+}
+
+@code {
+    [CascadingParameter]
+    private SessionInfo SessionInfo { get; set; } = new();
+
+    [Parameter]
+    public RenderFragment? Content { get; set; }
+    [Parameter]
+    public Func<bool>? Validation { get; set; }
+    [Parameter]
+    public Func<Task>? Initialized { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Validation?.Invoke() ?? false) return;
+        if (Initialized != null) await Initialized.Invoke();
+
+        StateHasChanged();
+    }
+}

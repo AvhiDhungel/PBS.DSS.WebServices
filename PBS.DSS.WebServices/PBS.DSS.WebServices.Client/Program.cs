@@ -19,6 +19,7 @@ builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<InterOpService>();
 builder.Services.AddScoped<SessionStorageService>();
+builder.Services.AddScoped<NavigationManagerService>();
 
 var host = builder.Build();
 

@@ -2,6 +2,7 @@
 using ConnectModels = PBS.ConnectHub.Library.Messages.ServiceOrders;
 using PBS.ConnectHub.Library;
 using PBS.DSS.Shared.Models.WorkItems;
+using PBS.DSS.Shared.Criteria;
 using PBS.DSS.WebServices.Server.Integrations;
 using PBS.DSS.WebServices.Server.Extensions;
 
@@ -89,14 +90,5 @@ namespace PBS.DSS.WebServices.Server.Controllers
             }
         }
         #endregion
-
-        #region Args
-        public class ServiceOrderFetchArgs
-        {
-            public Guid ServiceOrderRef { get; set; } = Guid.Empty;
-            public string SerialNumber { get; set; } = string.Empty;
-        }
-        #endregion
-
     }
 }

@@ -41,7 +41,7 @@
 
         await SessionStorageService.SetSessionCulture(cInfo.Name);
 
-        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        NavigationManager.Refresh();
     }
 
     #region "Testing Code"

@@ -5,8 +5,11 @@
         public Guid Id { get; set; } = Guid.Empty;
         public Guid ContactRef { get; set; } = Guid.Empty;
         public Guid VehicleRef { get; set; } = Guid.Empty;
+        
         public string SONumber { get; set; } = string.Empty;
         public string AdditionalComments { get; set; } = string.Empty;
+        public string ShopBanner { get; set; } = string.Empty;
+
         public decimal SubTotal { get; set; } = decimal.Zero;
         public decimal TaxTotal { get; set; } = decimal.Zero;
         public decimal FeesTotal { get; set; } = decimal.Zero;

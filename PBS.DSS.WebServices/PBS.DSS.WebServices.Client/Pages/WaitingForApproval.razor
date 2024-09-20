@@ -2,10 +2,16 @@
 @page "/WaitingForApproval/{SerialNumber}/{WorkItemRef}"
 @page "/WaitingForApproval/{SerialNumber}/{WorkItemRef}/{Requestor}"
 
-<MudPaper>
-</MudPaper>
+<MudSessionErrorWrapper Validation="ValidateParams" Initialized="Initialize">
+    <Content>
+        <MudText>All Good</MudText>
+    </Content>
+</MudSessionErrorWrapper>
 
 @code {
+    [CascadingParameter]
+    private SessionInfo SessionInfo { get; set; } = new();
+
     [Parameter]
     public string SerialNumber { get; set; } = string.Empty;
     [Parameter]
@@ -15,4 +21,27 @@
 
     private ServiceOrder ServiceOrder { get; set; } = new();
 
+    private async Task Initialize()
+    {
+        var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
+        var resp = await httpClient.PostAsJsonAsync<ServiceOrderFetchArgs>("/api/ServiceOrder/FetchServiceOrder", args) ?? new();
+
+        if (!resp.IsSuccessStatusCode) return;
+
+        ServiceOrder = await resp.Content.ReadFromJsonAsync<ServiceOrder>() ?? new();
+        SessionInfo.SerialNumber = SerialNumber;
+        SessionInfo.Banner = ServiceOrder.ShopBanner;
+
+        StateHasChanged();
+    }
+
+    private bool ValidateParams()
+    {
+        if (!SessionInfo.ValidateSerialNumber(SerialNumber)) return false;
+        if (!SessionInfo.ValidateServiceOrderRef(WorkItemRef, out Guid parsedWorkItemRef)) return false;
+
+        ServiceOrder.Id = parsedWorkItemRef;
+
+        return true;
+    }
 }
