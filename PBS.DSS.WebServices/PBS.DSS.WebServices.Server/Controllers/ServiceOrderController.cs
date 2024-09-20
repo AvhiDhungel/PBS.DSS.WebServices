@@ -19,13 +19,10 @@ namespace PBS.DSS.WebServices.Server.Controllers
         {
             var so = new ServiceOrder();
 
-            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrderResponse(x, so)))
-            {
-                var soReq = new ServiceOrderDSSRequest() { ServiceOrderRef = args.ServiceOrderRef };
+            using var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrderResponse(x, so));
+            var soReq = new ServiceOrderDSSRequest() { ServiceOrderRef = args.ServiceOrderRef };
 
-                await cl.StartConnection();
-                await cl.SendToServer(soReq);
-            }
+            await cl.SendToServer(soReq);
 
             return so;
         }
@@ -39,8 +36,8 @@ namespace PBS.DSS.WebServices.Server.Controllers
 
         private static void TranscribeServiceOrder(ServiceOrder so, ServiceOrderDSSResponse resp)
         {
-            so.ShopBanner = resp.ShopBanner; 
-            
+            so.ShopBanner = resp.ShopBanner;
+
             TranscribeServiceOrder(so, resp);
         }
 
