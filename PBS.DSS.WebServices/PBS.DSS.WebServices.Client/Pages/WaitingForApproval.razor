@@ -129,8 +129,11 @@
         SessionInfo.SerialNumber = "9999.QA";
         return;
 
+        var busyDialog = DialogService.Show<MudBusyDialog>("");
         var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
         var resp = await httpClient.PostAsJsonAsync<ServiceOrderFetchArgs>("/api/ServiceOrder/FetchServiceOrder", args) ?? new();
+
+        busyDialog.Close();
 
         if (!resp.IsSuccessStatusCode) return;
 
@@ -153,10 +156,15 @@
 
     private async Task ViewInspection()
     {
+        var busyDialog = DialogService.Show<MudBusyDialog>("");
+
         var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
 
         SessionInfo.AddModel(SessionInfo.ModelTypes.InspectionDocument, Convert.ToBase64String(inspectionDoc));
+
         await SessionStorageService.SaveSessionInfo(SessionInfo);
+
+        busyDialog.Close();
 
         NavigationManager.NavigateTo($"/Document/{SessionInfo.ModelTypes.InspectionDocument.ToString()}");
     }
