@@ -1,0 +1,67 @@
+DSS Blazor Service:
+
+- Shared library that has all models
+	- Appointment
+	- Service Order
+	- Activity Logging (Fetching and Updating of workitems, log the connect hub request and responses with serail number, date, Workitem type and workitem id)
+- Server controllers
+	- All data fetches and updates through ConnectHubv2
+	- Database connection for Activity logging
+- Client blazor pages
+	- Waiting for Approval
+	- Service Order Status
+		- While SO still open after notification has been sent
+		- After SO has been closed
+	- Appointment Status
+	- Attachment Notification Page
+- Maintenance Function App - (To clean the activity log)
+
+Models:
+Service Order:
+- Id
+- SO Number
+- Contact Ref
+- VehicleRef
+- Vehicle Info
+	- Id, Year, Make, Model, Trim, VIN
+- Contact Info
+	- Last Name, First Name, Email, Phone
+- Requests
+	- RequestRef
+	- OpCodeRef
+	- OpCode
+	- Description
+	- Price
+	- AWR Status
+	- Priority
+	- Estimated Labour
+	- Estimated Parts
+- Additional Comments
+- Sub Total
+- Tax Total
+- Fees
+- Grand Total
+- Print Documents
+	- Content
+	- DocumentType (CustomerCopy, Inspection)
+	
+**We want the AWR page to calculate total dynamically when customer clicks approve or decline. We can adjust the Estimated Labour and Parts easily, but what about taxes and fees?**
+**For those to be accurate, we'd need to send out another connecthub call each time so that v10 can calculate them and pass back**
+**Might still want to show an Estimate copy for details?**
+	
+Appointment:
+- Id
+- Appointment Number
+- Appt Date and Time
+- Contact Ref
+- VehicleRef
+- Vehicle Info
+	- Id, Year, Make, Model, Trim, VIN
+- Contact Info
+	- Last Name, First Name, Email, Phone
+- Requests
+	- RequestRef
+	- OpCodeRef
+	- OpCode
+	- Description
+- Additional Comments

@@ -4,7 +4,104 @@
 
 <MudSessionErrorWrapper Validation="ValidateParams" InitializedAsync="Initialize">
     <Content>
-        <MudText>All Good</MudText>
+        <MudContainer Style="height:60vh; overflow-y:auto; overflow-x:clip" Class="pb-10 pr-15 pl-5">
+            <MudStack Style="width:100%;">
+                <MudStack Row="true" Style="justify-content:center;">
+                    <MudStack AlignItems="AlignItems.Center" Class="pl-20">
+                        <MudText Typo="Typo.h6">@Resources.SO # @ServiceOrder.SONumber</MudText>
+                        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Outlined.Checklist">Inspection</MudButton>
+                    </MudStack>
+                    <MudSpacer />
+                    <MudStack AlignItems="AlignItems.Center" Class="pr-20">
+                        <MudText Typo="Typo.h6">@ServiceOrder.Vehicle.Description</MudText>
+                        <MudText Typo="Typo.h6">@ServiceOrder.Vehicle.VIN</MudText>
+                    </MudStack>
+                </MudStack>
+
+                <MudStack AlignItems="AlignItems.Center">
+                    <MudDivider />
+                    <MudText Typo="Typo.h6">
+                        @ServiceOrder.AdditionalComments
+                    </MudText>
+                </MudStack>
+
+                <MudStack AlignItems="AlignItems.Center" Class="mt-4">
+                    <MudText Typo="Typo.h5">Approved Services</MudText>
+                    <MudDivider Class="mt-1" Style="width:30%" />
+                    @foreach (var approved in ServiceOrder.ApprovedRequests)
+                    {
+                        <MudText>@approved.Description</MudText>
+                    }
+                </MudStack>
+
+                <MudStack AlignItems="AlignItems.Center" Class="mt-4">
+                    <MudText Typo="Typo.h5">Service Recommendations</MudText>
+                    <MudDivider Class="mt-1 mb-1" Style="width:40%" />
+                    @foreach (var pending in ServiceOrder.PendingRequests)
+                    {
+                        <MudGrid>
+                            <MudItem xs="1" />
+                            <MudItem xs="9">
+                                <MudText Style="@pending.Priority.LabelStyle()" Class="pl-2 pr-2 mb-2">
+                                    @pending.Priority.FriendlyText()
+                                </MudText>
+                                <MudText>@pending.Description</MudText>
+                            </MudItem>
+                            <MudItem xs="2">
+                                <MudText>@((pending.EstimatedLabour + pending.EstimatedParts).ToString("C2"))</MudText>
+                            </MudItem>
+
+                            <MudItem xs="12">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center">
+                                    <MudButton Style="width:fit-content; margin-right:10%"
+                                               Color="Color.Success"
+                                               StartIcon="@Icons.Material.Filled.Check"
+                                               Variant="@(pending.MarkedForApproval ? Variant.Filled: Variant.Outlined)"
+                                               OnClick="() => SetApproval(pending, true)">
+                                        Approve
+                                    </MudButton>
+                                    <MudButton Style="width:fit-content;"
+                                               Color="Color.Error"
+                                               StartIcon="@Icons.Material.Filled.Close"
+                                               Variant="@(pending.MarkedForApproval ? Variant.Outlined : Variant.Filled)"
+                                               OnClick="() => SetApproval(pending, false)">
+                                        Decline
+                                    </MudButton>
+                                </MudStack>
+                            </MudItem>
+
+                            <MudItem xs="3" />
+                            <MudItem xs="7">
+                                <MudDivider Style="width:100%" />
+                            </MudItem>
+                        </MudGrid>
+                    }
+                </MudStack>
+            </MudStack>
+        </MudContainer>
+
+        <MudPaper Style="position: fixed; bottom: 0; left: 0; right: 0; padding: 8px; border-top: 1px solid black;" Outlined="true">
+            <MudGrid>
+                <MudItem xs="3" />
+
+                <MudItem xs="6">
+                    <MudStack Style="align-items: center;">
+                        <MudStack Row="true" Spacing="3">
+                            <MudText Typo="Typo.h6">Subtotal: @ServiceOrder.SubTotal.ToString("C2")</MudText>
+                            <MudText Typo="Typo.h6">Taxes: @ServiceOrder.TaxTotal.ToString("C2")</MudText>
+                            <MudText Typo="Typo.h6">Fees: @ServiceOrder.FeesTotal.ToString("C2")</MudText>
+                        </MudStack>
+                        <MudText Typo="Typo.h5">Total: @ServiceOrder.GrandTotal.ToString("C2")</MudText>
+                    </MudStack>
+                </MudItem>
+
+                <MudItem xs="3" Style="display: flex; justify-content: flex-start">
+                    <MudButton Variant="Variant.Filled" Color="Color.Dark" Style="height:60%; align-self:center">
+                        Confirm
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
     </Content>
 </MudSessionErrorWrapper>
 
@@ -23,6 +120,10 @@
 
     private async Task Initialize()
     {
+        //Debug Code
+        ServiceOrder = ServiceOrder.GenerateDummy();
+        return;
+
         var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
         var resp = await httpClient.PostAsJsonAsync<ServiceOrderFetchArgs>("/api/ServiceOrder/FetchServiceOrder", args) ?? new();
 
@@ -37,6 +138,8 @@
 
     private bool ValidateParams()
     {
+        return true; //Debug code
+
         if (!SessionInfo.ValidateSerialNumber(SerialNumber)) return false;
         if (!SessionInfo.ValidateServiceOrderRef(WorkItemRef, out Guid parsedWorkItemRef)) return false;
 
@@ -44,4 +147,6 @@
 
         return true;
     }
+
+    private void SetApproval(RequestLine req, bool approved) => req.MarkedForApproval = approved;
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Text.RegularExpressions;
+using PBS.DSS.Shared.Models.WorkItems;
 
 namespace PBS.DSS.Shared
 {
@@ -73,6 +74,39 @@ namespace PBS.DSS.Shared
         public static bool IsInSet<T>(this T value, params T[] args)
         {
             return args.Any(x => x != null && x.Equals(value));
+        }
+
+        public static bool IsApproved(this RequestLine req)
+        {
+            return req.AWRStatus == AWRStatuses.Approved;
+        }
+
+        public static string FriendlyText(this RecommendedPriority p)
+        {
+            switch (p)
+            {
+                case RecommendedPriority.Medium:
+                    return "Attention Required";
+                case RecommendedPriority.High:
+                    return "Immediate Attention Required";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string LabelStyle(this RecommendedPriority p)
+        {
+            var baseStyle = "color:white; width:fit-content; border-radius:8px;";
+
+            switch (p)
+            {
+                case RecommendedPriority.Medium:
+                    return $"{baseStyle} background-color:darkorange;";
+                case RecommendedPriority.High:
+                    return $"{baseStyle} background-color:darkred;";
+                default:
+                    return string.Empty;
+            }
         }
 
         public static EventCallback CreateEventCallback(this object page, Func<Task> t)

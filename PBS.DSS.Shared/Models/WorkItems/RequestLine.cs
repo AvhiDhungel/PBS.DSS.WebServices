@@ -11,6 +11,8 @@
         public decimal EstimatedParts { get; set; } = decimal.Zero;
         public AWRStatuses AWRStatus { get; set; } = AWRStatuses.Approved;
         public RecommendedPriority Priority { get; set; } = RecommendedPriority.None;
+
+        public bool MarkedForApproval { get; set; } = false;
     }
 
     public enum AWRStatuses
