@@ -3,12 +3,14 @@ using System.Text.Json;
 using System.Text;
 using System.Globalization;
 using PBS.DSS.Shared;
+using PBS.DSS.Shared.Models;
 
 namespace PBS.DSS.WebServices.Client.Services
 {
     public sealed class SessionStorageService(ISessionStorageService storageService)
     {
         private const string C_SessionCultureKey = "PBS_DSS_CultureString";
+        private const string C_SessionInfoKey = "PBS_SessionInfo";
 
         private readonly ISessionStorageService _sessionStorageService = storageService;
 
@@ -33,6 +35,7 @@ namespace PBS.DSS.WebServices.Client.Services
             return item;
         }
 
+        public async Task SetSessionCulture(string cultureString) => await SaveToSessionAsync(C_SessionCultureKey, cultureString);
         public async Task<CultureInfo> GetSessionCulture()
         {
             var culture = new CultureInfo("en-CA");
@@ -43,9 +46,7 @@ namespace PBS.DSS.WebServices.Client.Services
             return culture;
         }
 
-        public async Task SetSessionCulture(string cultureString)
-        {
-            await SaveToSessionAsync(C_SessionCultureKey, cultureString);
-        }
+        public async Task SaveSessionInfo(SessionInfo s) => await SaveToSessionAsync(C_SessionInfoKey, s);
+        public async Task<SessionInfo> GetSessionInfo() => await ReadFromSessionAsync<SessionInfo>(C_SessionInfoKey) ?? new();
     }
 }

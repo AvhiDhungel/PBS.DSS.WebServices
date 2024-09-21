@@ -1,7 +1,7 @@
 ﻿@page "/CustomerAttachment"
 @page "/CustomerAttachment/{SerialNumber}/{WorkItemRef}/{NotificationRef}"
 
-<MudSessionErrorWrapper Validation="ValidateParams" Initialized="Initialize">
+<MudSessionErrorWrapper ValidateSession="ValidateParams" Initialized="Initialize">
     <Content>
         <MudStack>
             <MudButton Style="align-self:center; width:30%"

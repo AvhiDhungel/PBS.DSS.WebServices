@@ -7,15 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Components">
-      <HintPath>..\..\..\..\Nuget\microsoft.aspnetcore.components\8.0.8\lib\net8.0\Microsoft.AspNetCore.Components.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.JSInterop">
-      <HintPath>..\..\..\..\Nuget\microsoft.jsinterop\8.0.8\lib\net8.0\Microsoft.JSInterop.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Resources\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

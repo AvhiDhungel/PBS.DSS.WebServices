@@ -1,0 +1,22 @@
+﻿<MudContainer Style="align-items:center; width:fit-content">
+    <MudTooltip Text="Full Screen">
+        <MudButton Class="mb-5"
+                   Variant="Variant.Filled"
+                   Color="Color.Tertiary"
+                   StartIcon="@Icons.Material.Outlined.Fullscreen"
+                   OnClick="RequestFullScreen">
+            View Full Screen
+        </MudButton>
+    </MudTooltip>
+</MudContainer>
+
+<MudPaper Class="pdf-viewer-container" Elevation="3">
+    <iframe id="pdfIFrame" src="@($"data:application/pdf;base64,{Base64String}")" class="pdf-frame" allowfullscreen></iframe>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public string Base64String { get; set; } = string.Empty;
+
+    private async Task RequestFullScreen() => await InterOpService.RequestElementFullScreen("pdfIFrame");
+}

@@ -1,17 +1,18 @@
-﻿@if (SessionInfo.HasErrors())
+﻿@if (Validation.IsValid && !SessionInfo.HasErrors())
+{
+    @Content
+}
+else
 {
     <MudStack Style="display:flex; align-items:center">
         <MudText Typo="Typo.h6">
             Error loading your page
         </MudText>
         <MudText>
-            @SessionInfo.GetErrors()
+            @if (SessionInfo.HasErrors()) { @SessionInfo.GetErrors(); }
+            @if (!Validation.IsValid) { @Validation.ErrorMessage; }
         </MudText>
     </MudStack>
-}
-else
-{
-    @Content
 }
 
 @code {
@@ -20,20 +21,32 @@ else
 
     [Parameter]
     public RenderFragment? Content { get; set; }
-    [Parameter]
-    public Func<bool>? Validation { get; set; }
 
+    [Parameter]
+    public Func<bool>? ValidateSession { get; set; }
+    [Parameter]
+    public Func<Validation>? Validate { get; set; }
     [Parameter]
     public Action? Initialized { get; set; }
     [Parameter]
+    public Func<Task>? PreValidation { get; set; }
+
+    [Parameter]
     public Func<Task>? InitializedAsync { get; set; }
+
+    private Validation Validation { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
-        if (!Validation?.Invoke() ?? false) return;
-        if (InitializedAsync != null) await InitializedAsync.Invoke();
+        if (PreValidation != null) await PreValidation.Invoke();
 
-        Initialized?.Invoke();
+        Validation = Validate?.Invoke() ?? new();
+
+        if (!Validation.IsValid) return;
+        if (!ValidateSession?.Invoke() ?? false) return;
+
+        if (InitializedAsync != null) await InitializedAsync.Invoke();
+        if (Initialized != null) Initialized.Invoke();
 
         StateHasChanged();
     }

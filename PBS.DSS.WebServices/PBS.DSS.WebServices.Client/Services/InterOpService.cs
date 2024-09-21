@@ -22,6 +22,11 @@ namespace PBS.DSS.WebServices.Client.Services
             await _jsRuntime.InvokeVoidAsync("openPDFInNewTab", content);
         }
 
+        public async Task RequestElementFullScreen(string elementName)
+        {
+            await _jsRuntime.InvokeVoidAsync("requestFullScreen", elementName);
+        }
+
         public async Task DownloadICS(ICSDownloadArgs args)
         {
             List<string> jsArgs =

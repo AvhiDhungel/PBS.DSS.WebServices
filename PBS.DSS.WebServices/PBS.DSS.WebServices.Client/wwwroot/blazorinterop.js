@@ -40,3 +40,18 @@ function openPDFInNewTab(byteArray) {
 function copyTextToClipboard(text) {
     navigator.clipboard.writeText(text);
 }
+
+function requestFullScreen(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+    }
+}
