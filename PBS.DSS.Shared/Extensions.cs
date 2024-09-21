@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using PBS.DSS.Shared.Models.WorkItems;
 
 namespace PBS.DSS.Shared
@@ -107,11 +106,6 @@ namespace PBS.DSS.Shared
                 default:
                     return string.Empty;
             }
-        }
-
-        public static EventCallback CreateEventCallback(this object page, Func<Task> t)
-        {
-            return EventCallback.Factory.Create(page, t);
         }
 
         [GeneratedRegex(@"^\d+$")]
