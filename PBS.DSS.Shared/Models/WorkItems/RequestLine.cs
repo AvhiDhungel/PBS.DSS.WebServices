@@ -6,9 +6,9 @@
         public Guid OpCodeRef { get; set; } = Guid.Empty;
         public string OpCode { get; set; } = string.Empty;   
         public string Description { get; set; } = string.Empty;
-        public decimal Price { get; set; } = decimal.Zero;
-        public decimal EstimatedLabour { get; set; } = decimal.Zero;
-        public decimal EstimatedParts { get; set; } = decimal.Zero;
+        public double Price { get; set; } = 0;
+        public double EstimatedLabour { get; set; } = 0;
+        public double EstimatedParts { get; set; } = 0;
         public AWRStatuses AWRStatus { get; set; } = AWRStatuses.Approved;
         public RecommendedPriority Priority { get; set; } = RecommendedPriority.None;
 

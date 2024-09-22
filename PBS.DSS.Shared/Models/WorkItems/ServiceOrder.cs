@@ -23,6 +23,7 @@
 
         public IEnumerable<RequestLine> ApprovedRequests { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Approved); }
         public IEnumerable<RequestLine> PendingRequests { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Pending); }
+        public IEnumerable<RequestLine> RequestsMarkedForApproval { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Pending && x.MarkedForApproval); }
 
         public bool IsValid() => Id != Guid.Empty;
 

@@ -58,8 +58,8 @@ namespace PBS.DSS.WebServices.Server.Controllers
                 req.OpCodeRef = connectReq.OpCodeRef;
                 req.OpCode = connectReq.OpCode;
                 req.Description = connectReq.RequestDescription;
-                req.EstimatedLabour = connectReq.EstimatedLabour;
-                req.EstimatedParts = connectReq.EstimatedParts;
+                req.EstimatedLabour = (double)connectReq.EstimatedLabour;
+                req.EstimatedParts = (double)connectReq.EstimatedParts;
 
                 switch (connectReq.RequestLineStatus)
                 {

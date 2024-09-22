@@ -91,11 +91,11 @@
                 <MudItem xs="6">
                     <MudStack Style="align-items: center;">
                         <MudStack Row="true" Spacing="3">
-                            <MudText Typo="Typo.h6">Subtotal: @ServiceOrder.SubTotal.ToString("C2")</MudText>
-                            <MudText Typo="Typo.h6">Taxes: @ServiceOrder.TaxTotal.ToString("C2")</MudText>
-                            <MudText Typo="Typo.h6">Fees: @ServiceOrder.FeesTotal.ToString("C2")</MudText>
+                            <MudText Typo="Typo.h6">Subtotal: @SubTotal.ToString("C2")</MudText>
+                            <MudText Typo="Typo.h6">Taxes: @Taxes.ToString("C2")</MudText>
+                            <MudText Typo="Typo.h6">Fees: @Fees.ToString("C2")</MudText>
                         </MudStack>
-                        <MudText Typo="Typo.h5">Total: @ServiceOrder.GrandTotal.ToString("C2")</MudText>
+                        <MudText Typo="Typo.h5">Total: @GrandTotal.ToString("C2")</MudText>
                     </MudStack>
                 </MudItem>
 
@@ -119,11 +119,18 @@
 
     private ServiceOrder ServiceOrder { get; set; } = new();
 
+    private double SubTotal { get; set; } = 0;
+    private double Taxes { get; set; } = 0;
+    private double Fees { get; set; } = 0;
+    private double GrandTotal => SubTotal + Taxes + Fees;
+
+
     private async Task Initialize()
     {
         //Debug Code
         ServiceOrder = ServiceOrder.GenerateDummy();
         SerialNumber = "9999.QA";
+        CalculateTotals();
         return;
 
         SharedStateService.SharedState.SerialNumber = SerialNumber;
@@ -149,6 +156,7 @@
         }
 
         SharedStateService.SetBanner(ServiceOrder.ShopBanner);
+        CalculateTotals();
     }
 
     private bool ValidateParams()
@@ -177,5 +185,16 @@
         NavigationManager.NavigateTo($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
     }
 
-    private void SetApproval(RequestLine req, bool approved) => req.MarkedForApproval = approved;
+    private void CalculateTotals()
+    {
+        SubTotal = ServiceOrder.SubTotal + ServiceOrder.RequestsMarkedForApproval.Sum((x) => x.EstimatedLabour + x.EstimatedParts);
+        Taxes = ServiceOrder.TaxTotal;
+        Fees = ServiceOrder.FeesTotal;
+    }
+
+    private void SetApproval(RequestLine req, bool approved)
+    {
+        req.MarkedForApproval = approved;
+        CalculateTotals();
+    }
 }
