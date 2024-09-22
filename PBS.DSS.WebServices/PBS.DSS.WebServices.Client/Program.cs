@@ -20,6 +20,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<InterOpService>();
 builder.Services.AddScoped<SessionStorageService>();
 builder.Services.AddScoped<NavigationManagerService>();
+builder.Services.AddScoped<SharedStateService>();
 
 var host = builder.Build();
 

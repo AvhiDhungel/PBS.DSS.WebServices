@@ -2,7 +2,7 @@
 @page "/WaitingForApproval/{SerialNumber}/{WorkItemRef}"
 @page "/WaitingForApproval/{SerialNumber}/{WorkItemRef}/{Requestor}"
 
-<MudSessionErrorWrapper ValidateSession="ValidateParams" InitializedAsync="Initialize">
+<MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
         <MudContainer>
             <MudStack>
@@ -110,9 +110,6 @@
 </MudSessionErrorWrapper>
 
 @code {
-    [CascadingParameter]
-    private SessionInfo SessionInfo { get; set; } = new();
-
     [Parameter]
     public string SerialNumber { get; set; } = string.Empty;
     [Parameter]
@@ -126,8 +123,10 @@
     {
         //Debug Code
         ServiceOrder = ServiceOrder.GenerateDummy();
-        SessionInfo.SerialNumber = "9999.QA";
+        SerialNumber = "9999.QA";
         return;
+
+        SharedStateService.SharedState.SerialNumber = SerialNumber;
 
         var busyDialog = DialogService.Show<MudBusyDialog>("");
         var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
@@ -135,19 +134,29 @@
 
         busyDialog.Close();
 
-        if (!resp.IsSuccessStatusCode) return;
+        if (!resp.IsSuccessStatusCode)
+        {
+            SharedStateService.SetInvalidServiceOrderError();
+            return;
+        }
 
         ServiceOrder = await resp.Content.ReadFromJsonAsync<ServiceOrder>() ?? new();
-        SessionInfo.SerialNumber = SerialNumber;
-        SessionInfo.Banner = ServiceOrder.ShopBanner;
+
+        if (!ServiceOrder.IsValid())
+        {
+            SharedStateService.SetInvalidServiceOrderError();
+            return;
+        }
+
+        SharedStateService.SetBanner(ServiceOrder.ShopBanner);
     }
 
     private bool ValidateParams()
     {
         return true; //Debug code
 
-        if (!SessionInfo.ValidateSerialNumber(SerialNumber)) return false;
-        if (!SessionInfo.ValidateServiceOrderRef(WorkItemRef, out Guid parsedWorkItemRef)) return false;
+        if (!SharedStateService.ValidateSerialNumber(SerialNumber)) return false;
+        if (!SharedStateService.ValidateServiceOrderRef(WorkItemRef, out Guid parsedWorkItemRef)) return false;
 
         ServiceOrder.Id = parsedWorkItemRef;
 
@@ -160,13 +169,12 @@
 
         var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
 
-        SessionInfo.AddModel(SessionInfo.ModelTypes.InspectionDocument, Convert.ToBase64String(inspectionDoc));
-
-        await SessionStorageService.SaveSessionInfo(SessionInfo);
+        SharedStateService.AddModel(SharedModelTypes.InspectionDocument, Convert.ToBase64String(inspectionDoc));
+        await SharedStateService.SaveToSession();
 
         busyDialog.Close();
 
-        NavigationManager.NavigateTo($"/Document/{SessionInfo.ModelTypes.InspectionDocument.ToString()}");
+        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
     }
 
     private void SetApproval(RequestLine req, bool approved) => req.MarkedForApproval = approved;

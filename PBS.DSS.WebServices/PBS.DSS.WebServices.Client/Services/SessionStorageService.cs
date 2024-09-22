@@ -3,14 +3,14 @@ using System.Text.Json;
 using System.Text;
 using System.Globalization;
 using PBS.DSS.Shared;
-using PBS.DSS.Shared.Models;
+using PBS.DSS.Shared.Models.States;
 
 namespace PBS.DSS.WebServices.Client.Services
 {
     public sealed class SessionStorageService(ISessionStorageService storageService)
     {
         private const string C_SessionCultureKey = "PBS_DSS_CultureString";
-        private const string C_SessionInfoKey = "PBS_SessionInfo";
+        private const string C_SharedStateKey = "PBS_SharedState";
 
         private readonly ISessionStorageService _sessionStorageService = storageService;
 
@@ -46,7 +46,7 @@ namespace PBS.DSS.WebServices.Client.Services
             return culture;
         }
 
-        public async Task SaveSessionInfo(SessionInfo s) => await SaveToSessionAsync(C_SessionInfoKey, s);
-        public async Task<SessionInfo> GetSessionInfo() => await ReadFromSessionAsync<SessionInfo>(C_SessionInfoKey) ?? new();
+        public async Task SaveSharedState(SharedState s) => await SaveToSessionAsync(C_SharedStateKey, s);
+        public async Task<SharedState> GetSharedState() => await ReadFromSessionAsync<SharedState>(C_SharedStateKey) ?? new();
     }
 }

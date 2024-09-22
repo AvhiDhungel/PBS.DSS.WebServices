@@ -1,44 +1,33 @@
 ﻿@page "/Document/{DocumentType}"
 
-<MudSessionErrorWrapper PreValidation="LoadBase64String" Validate="@PerformValidation">
+<MudSessionErrorWrapper FetchAsync="LoadBase64String">
     <Content>
         <MudPDFViewer Base64String="@Base64String" />
     </Content>
 </MudSessionErrorWrapper>
 
 @code {
-    [CascadingParameter]
-    private SessionInfo SessionInfo { get; set; } = new();
-
     [Parameter]
     public string DocumentType { get; set; } = string.Empty;
 
     private string Base64String { get; set; } = string.Empty;
 
-    private async Task LoadBase64String() => Base64String = await GetBase64();
-
-    private Validation PerformValidation()
+    private async Task LoadBase64String()
     {
-        var v = new Validation() { IsValid = true };
+        Base64String = await GetBase64();
 
-        if (Base64String.IsEmpty())
-        {
-            v.IsValid = false;
-            v.ErrorMessage = "Unable to location document";
-        }
-
-        return v;
+        if (Base64String.IsEmpty()) SharedStateService.AddError("Unable to location document");
     }
 
     private async Task<string> GetBase64()
     {
         if (DocumentType.IsNullOrWhitespace()) return string.Empty;
-        if (!Enum.TryParse(DocumentType, out SessionInfo.ModelTypes docType)) return string.Empty;
+        if (!Enum.TryParse(DocumentType, out SharedModelTypes docType)) return string.Empty;
 
-        var doc = SessionInfo.GetBase64Document(docType) ?? string.Empty;
+        var doc = SharedStateService.GetBase64Document(docType) ?? string.Empty;
         if (doc.HasValue()) return doc;
 
-        SessionInfo = await SessionStorageService.GetSessionInfo();
-        return SessionInfo.GetBase64Document(docType) ?? string.Empty;
+        await SharedStateService.GetFromSession();
+        return SharedStateService.GetBase64Document(docType) ?? string.Empty;
     }
 }

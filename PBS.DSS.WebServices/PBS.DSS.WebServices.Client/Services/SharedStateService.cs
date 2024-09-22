@@ -1,39 +1,43 @@
 ﻿using PBS.DSS.Shared.Helpers;
+using PBS.DSS.Shared.Enums;
+using PBS.DSS.Shared.Models.States;
+using PBS.DSS.Shared;
 using System.Text;
 
-namespace PBS.DSS.Shared.Models
+namespace PBS.DSS.WebServices.Client.Services
 {
-    public class SessionInfo
+    public sealed class SharedStateService(SessionStorageService sessionStorageService)
     {
-        public Dictionary<ModelTypes, object> Models { get; set; } = [];
+        private readonly SessionStorageService _sessionStorageService = sessionStorageService;
 
-        public string SerialNumber { get; set; } = string.Empty;
-        public Guid WorkItemRef { get; set; } = Guid.Empty;
-        public string Banner { get; set; } = string.Empty;
+        public SharedState SharedState { get; set; } = new();
+        public Action? RefreshMainLayout { get; set; }
 
-        public bool IsValid { get => SerialNumber.HasValue(); }
-
-        public enum ModelTypes
+        public bool HasBanner() => SharedState.Banner.HasValue();
+        public string GetBanner() => SharedState.Banner;
+        public void SetBanner(string banner)
         {
-            ServiceOrder,
-            Appointment,
-            InspectionDocument
+            SharedState.Banner = banner;
+            RefreshMainLayout?.Invoke();
         }
 
-        public void AddModel(ModelTypes type, object model) => Models[type] = model;
+        public void AddModel(SharedModelTypes type, object model) => SharedState.Models[type] = model;
 
-        public T? GetModel<T>(ModelTypes type)
+        public T? GetModel<T>(SharedModelTypes type)
         {
-            if (!Models.TryGetValue(type, out object? model)) return default;
+            if (!SharedState.Models.TryGetValue(type, out object? model)) return default;
             if (model.GetType() != typeof(T)) return default;
 
             return (T)model;
         }
 
-        public string GetBase64Document(ModelTypes type)
+        public string GetBase64Document(SharedModelTypes type)
         {
-            return Models.TryGetValue(type, out object? model) ? (model?.ToString() ?? string.Empty) : string.Empty;
+            return SharedState.Models.TryGetValue(type, out object? model) ? (model?.ToString() ?? string.Empty) : string.Empty;
         }
+
+        public async Task SaveToSession() => await _sessionStorageService.SaveSharedState(SharedState);
+        public async Task GetFromSession() => SharedState = await _sessionStorageService.GetSharedState();
 
         #region Errors
         private readonly StringBuilder _errors = new();
@@ -44,7 +48,7 @@ namespace PBS.DSS.Shared.Models
         public string GetErrors() => _errors.ToString();
         public bool HasErrors() => _errors.Length > 0;
 
-        public void SetInvalidSerialError() => AddError($"Serial Number {SerialNumber} is invalid.");
+        public void SetInvalidSerialError() => AddError($"Serial Number {SharedState.SerialNumber} is invalid.");
         public void SetInvalidServiceOrderError() => AddError($"We were unable to locate your Service Order");
         public void SetInvalidAppointmentError() => AddError($"We were unable to locate your Appointment");
         #endregion
@@ -53,7 +57,7 @@ namespace PBS.DSS.Shared.Models
         public bool ValidateSerialNumber(string serial)
         {
             var isValid = ValidationHelper.ValidateSerialNumber(serial);
-            if (!isValid) SetInvalidSerialError(); else SerialNumber = serial;
+            if (!isValid) SetInvalidSerialError(); else SharedState.SerialNumber = serial;
 
             return isValid;
         }

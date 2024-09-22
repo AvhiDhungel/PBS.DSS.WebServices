@@ -24,6 +24,8 @@
         public IEnumerable<RequestLine> ApprovedRequests { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Approved); }
         public IEnumerable<RequestLine> PendingRequests { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Pending); }
 
+        public bool IsValid() => Id != Guid.Empty;
+
         public static ServiceOrder GenerateDummy()
         {
             var so = new ServiceOrder();
