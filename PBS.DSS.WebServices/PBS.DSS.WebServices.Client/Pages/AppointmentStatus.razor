@@ -4,36 +4,36 @@
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
         <MudStack AlignItems="AlignItems.Center">
-            <MudText>Appt # @Appointment.AppointmentNumber</MudText>
+            <MudText>@Resources.Appt # @Appointment.AppointmentNumber</MudText>
 
-            <MudText Typo="Typo.h5">Appointment Details</MudText>
+            <MudText Typo="Typo.h5">@Resources.AppointmentDetails</MudText>
             <MudDivider Style="width:30%" />
             <MudStack>
                 <MudStack Row="true">
-                    <MudText>Date:</MudText>
+                    <MudText>@Resources.Date:</MudText>
                     <MudSpacer />
                     <MudText>@Appointment.AppointmentTime.LocalDateTime.ToShortDateString()</MudText>
                 </MudStack>
                 <MudStack Row="true">
-                    <MudText>Time:</MudText>
+                    <MudText>@Resources.Time:</MudText>
                     <MudSpacer />
                     <MudText>@Appointment.AppointmentTime.LocalDateTime.ToShortTimeString()</MudText>
                 </MudStack>
             </MudStack>
 
-            <MudText Typo="Typo.h5" Class="mt-4">Vehicle Details</MudText>
+            <MudText Typo="Typo.h5" Class="mt-4">@Resources.VehicleDetails</MudText>
             <MudDivider Style="width:30%" />
             <MudText Typo="Typo.h6">@Appointment.Vehicle.Description</MudText>
             <MudText>@Appointment.Vehicle.VIN</MudText>
 
-            <MudText Typo="Typo.h5" Class="mt-4">Services</MudText>
+            <MudText Typo="Typo.h5" Class="mt-4">@Resources.Services</MudText>
             <MudDivider Style="width:30%" />
             @foreach (var approved in Appointment.Requests)
             {
                 <MudText>@approved.Description</MudText>
             }
 
-            <MudText Typo="Typo.h5" Class="mt-4">Additional Comments</MudText>
+            <MudText Typo="Typo.h5" Class="mt-4">@Resources.AdditionalComments</MudText>
             <MudDivider Style="width:30%" />
             <MudText>@Appointment.AdditionalComments</MudText>
 
@@ -44,7 +44,7 @@
                                Color="Color.Tertiary"
                                Class="pt-2 pb-2"
                                OnClick="CheckIn">
-                        Check In
+                        @Resources.CheckIn
                     </MudButton>
                     <MudSpacer />
                 }
@@ -54,7 +54,7 @@
                     <MudButton Variant="Variant.Filled"
                                Color="Color.Tertiary"
                                OnClick="ReSchedule">
-                        Re-schedule
+                        @Resources.Reschedule
                     </MudButton>
                     <MudSpacer />
                 }
@@ -64,7 +64,7 @@
                     <MudButton Variant="Variant.Filled"
                                Color="Color.Tertiary"
                                OnClick="CancelAppointment">
-                        Cancel Appointment
+                        @Resources.CancelAppointment
                     </MudButton>
                     <MudSpacer />
                 }
@@ -72,7 +72,7 @@
                 <MudButton Variant="Variant.Filled"
                            Color="Color.Tertiary"
                            OnClick="AddToCalendar">
-                    Add to Calendar
+                    @Resources.AddToCalendar
                 </MudButton>
             </MudStack>
 

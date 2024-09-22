@@ -85,9 +85,9 @@ namespace PBS.DSS.Shared
             switch (p)
             {
                 case RecommendedPriority.Medium:
-                    return "Attention Required";
+                    return Resources.Resources.AttentionRequired;
                 case RecommendedPriority.High:
-                    return "Immediate Attention Required";
+                    return Resources.Resources.ImmediateAttentionRequired;
                 default:
                     return string.Empty;
             }

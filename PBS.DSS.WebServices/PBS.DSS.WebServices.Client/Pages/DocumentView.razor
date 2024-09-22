@@ -16,7 +16,7 @@
     {
         Base64String = await GetBase64();
 
-        if (Base64String.IsEmpty()) SharedStateService.AddError("Unable to location document");
+        if (Base64String.IsEmpty()) SharedStateService.AddError(Resources.UnableToLocateDocument);
     }
 
     private async Task<string> GetBase64()

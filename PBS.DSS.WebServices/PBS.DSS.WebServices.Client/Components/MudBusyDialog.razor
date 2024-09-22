@@ -1,4 +1,4 @@
-﻿<MudDialog Class="mud-busy-dialog">
+﻿<MudDialog>
     <DialogContent>
         <MudPaper Elevation="0" Class="d-flex align-content-center flex-wrap flex-grow-1 gap-4" MinHeight="300px" MinWidth="300px">
             <MudGrid Justify="Justify.Center">
@@ -15,5 +15,5 @@
 
 @code {
     [Parameter]
-    public string Message { get; set; } = "Loading...";
+    public string Message { get; set; } = Resources.Loading;
 }

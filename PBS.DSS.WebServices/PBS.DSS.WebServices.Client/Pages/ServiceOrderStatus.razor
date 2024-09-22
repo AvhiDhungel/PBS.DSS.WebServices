@@ -6,16 +6,16 @@
         <MudStack AlignItems="AlignItems.Center">
             <MudText>@Resources.SO # @ServiceOrder.SONumber</MudText>
 
-            <MudText Typo="Typo.h5">Service Advisor</MudText>
+            <MudText Typo="Typo.h5">@Resources.ServiceAdvisor</MudText>
             <MudDivider Style="width:30%" />
             <MudText>@ServiceOrder.AdvisorName</MudText>
 
-            <MudText Typo="Typo.h5" Class="mt-4">Vehicle Details</MudText>
+            <MudText Typo="Typo.h5" Class="mt-4">@Resources.VehicleDetails</MudText>
             <MudDivider Style="width:30%" />
             <MudText>@ServiceOrder.Vehicle.Description</MudText>
             <MudText>@ServiceOrder.Vehicle.VIN</MudText>
 
-            <MudText Typo="Typo.h5" Class="mt-4">Approved Services</MudText>
+            <MudText Typo="Typo.h5" Class="mt-4">@Resources.ApprovedServices</MudText>
             <MudDivider Style="width:30%" />
             @foreach (var approved in ServiceOrder.ApprovedRequests)
             {
@@ -29,24 +29,24 @@
                                Color="Color.Tertiary"
                                Class="mr-20 pt-2 pb-2"
                                OnClick="ViewInspection">
-                        Inspection
+                        @Resources.Inspection
                     </MudButton>
                     <MudButton Variant="Variant.Filled"
                                Color="Color.Tertiary"
                                OnClick="ViewCustomerCopy">
-                        Customer Copy
+                        @Resources.CustomerCopy
                     </MudButton>
                 </MudStack>
             }
             else if (ServiceOrder.PendingRequests.Count() > 0)
             {
-                <MudText Typo="Typo.h5" Class="mt-4">Estimate awaiting approval</MudText>
+                <MudText Typo="Typo.h5" Class="mt-4">@Resources.EstimateAwaitingApproval</MudText>
                 <MudDivider Style="width:30%" />
                 <MudButton Style="align-self:center;"
                            Variant="Variant.Filled"
                            Color="Color.Tertiary"
                            OnClick="ViewRecommendations">
-                    View Your Recommendations
+                    @Resources.ViewYourRecommendations
                 </MudButton>
             }
 

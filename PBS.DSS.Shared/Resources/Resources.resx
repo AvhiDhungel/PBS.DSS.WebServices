@@ -100,4 +100,118 @@
   <data name="SO" xml:space="preserve">
     <value>SO</value>
   </data>
+  <data name="Appt" xml:space="preserve">
+    <value>Appt</value>
+  </data>
+  <data name="ServiceOrder" xml:space="preserve">
+    <value>Service Order</value>
+  </data>
+  <data name="Appointment" xml:space="preserve">
+    <value>Appointment</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Full Screen</value>
+  </data>
+  <data name="ErrorLoadingYourPage" xml:space="preserve">
+    <value>Error loading your page</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="VehicleDetails" xml:space="preserve">
+    <value>Vehicle Details</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="AdditionalComments" xml:space="preserve">
+    <value>Additional Comments</value>
+  </data>
+  <data name="CheckIn" xml:space="preserve">
+    <value>Check In</value>
+  </data>
+  <data name="Reschedule" xml:space="preserve">
+    <value>Re-schedule</value>
+  </data>
+  <data name="CancelAppointment" xml:space="preserve">
+    <value>Cancel Appointment</value>
+  </data>
+  <data name="AddToCalendar" xml:space="preserve">
+    <value>Add to Calendar</value>
+  </data>
+  <data name="ViewYourRecommendations" xml:space="preserve">
+    <value>View Your Recommendations</value>
+  </data>
+  <data name="UnableToLocateAttachments" xml:space="preserve">
+    <value>We were unable to locate the attachments.</value>
+  </data>
+  <data name="UnableToLocateDocument" xml:space="preserve">
+    <value>Unable to locate document</value>
+  </data>
+  <data name="ServiceAdvisor" xml:space="preserve">
+    <value>Service Advisor</value>
+  </data>
+  <data name="ApprovedServices" xml:space="preserve">
+    <value>Approved Services</value>
+  </data>
+  <data name="Inspection" xml:space="preserve">
+    <value>Inspection</value>
+  </data>
+  <data name="CustomerCopy" xml:space="preserve">
+    <value>Customer Copy</value>
+  </data>
+  <data name="SerialNumber0IsInvalid" xml:space="preserve">
+    <value>Serial Number {0} is invalid</value>
+  </data>
+  <data name="UnableToLocationServiceOrder" xml:space="preserve">
+    <value>We were unable to locate your Service Order</value>
+  </data>
+  <data name="UnableToLocationAppointment" xml:space="preserve">
+    <value>We were unable to locate your Appointment</value>
+  </data>
+  <data name="ServiceRecommendations" xml:space="preserve">
+    <value>Service Recommendations</value>
+  </data>
+  <data name="AttentionRequired" xml:space="preserve">
+    <value>Attention Required</value>
+  </data>
+  <data name="ImmediateAttentionRequired" xml:space="preserve">
+    <value>Immediate Attention Required</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="Decline" xml:space="preserve">
+    <value>Decline</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="Fees" xml:space="preserve">
+    <value>Fees</value>
+  </data>
+  <data name="Taxes" xml:space="preserve">
+    <value>Taxes</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ViewFullScreen" xml:space="preserve">
+    <value>View Full Screen</value>
+  </data>
+  <data name="EstimateAwaitingApproval" xml:space="preserve">
+    <value>Estimate awaiting approval</value>
+  </data>
+  <data name="AppointmentDetails" xml:space="preserve">
+    <value>Appointment Details</value>
+  </data>
 </root>

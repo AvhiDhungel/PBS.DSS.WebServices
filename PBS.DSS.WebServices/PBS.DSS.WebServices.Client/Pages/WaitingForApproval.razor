@@ -12,7 +12,7 @@
                         <MudButton Variant="Variant.Filled"
                                    StartIcon="@Icons.Material.Outlined.Checklist"
                                    OnClick="ViewInspection">
-                            Inspection
+                            @Resources.Inspection
                         </MudButton>
                     </MudStack>
                     <MudSpacer />
@@ -30,7 +30,7 @@
                 </MudStack>
 
                 <MudStack AlignItems="AlignItems.Center" Class="mt-4">
-                    <MudText Typo="Typo.h5">Approved Services</MudText>
+                    <MudText Typo="Typo.h5">@Resources.ApprovedServices</MudText>
                     <MudDivider Class="mt-1" Style="width:30%" />
                     @foreach (var approved in ServiceOrder.ApprovedRequests)
                     {
@@ -39,7 +39,7 @@
                 </MudStack>
 
                 <MudStack AlignItems="AlignItems.Center" Class="mt-4">
-                    <MudText Typo="Typo.h5">Service Recommendations</MudText>
+                    <MudText Typo="Typo.h5">@Resources.ServiceRecommendations</MudText>
                     <MudDivider Class="mt-1 mb-1" Style="width:40%" />
                     @foreach (var pending in ServiceOrder.PendingRequests)
                     {
@@ -62,14 +62,14 @@
                                                StartIcon="@Icons.Material.Filled.Check"
                                                Variant="@(pending.MarkedForApproval ? Variant.Filled: Variant.Outlined)"
                                                OnClick="() => SetApproval(pending, true)">
-                                        Approve
+                                        @Resources.Approve
                                     </MudButton>
                                     <MudButton Style="width:fit-content;"
                                                Color="Color.Error"
                                                StartIcon="@Icons.Material.Filled.Close"
                                                Variant="@(pending.MarkedForApproval ? Variant.Outlined : Variant.Filled)"
                                                OnClick="() => SetApproval(pending, false)">
-                                        Decline
+                                        @Resources.Decline
                                     </MudButton>
                                 </MudStack>
                             </MudItem>
@@ -91,17 +91,17 @@
                 <MudItem xs="6">
                     <MudStack Style="align-items: center;">
                         <MudStack Row="true" Spacing="3">
-                            <MudText Typo="Typo.h6">Subtotal: @SubTotal.ToString("C2")</MudText>
-                            <MudText Typo="Typo.h6">Taxes: @Taxes.ToString("C2")</MudText>
-                            <MudText Typo="Typo.h6">Fees: @Fees.ToString("C2")</MudText>
+                            <MudText Typo="Typo.h6">@Resources.Subtotal: @SubTotal.ToString("C2")</MudText>
+                            <MudText Typo="Typo.h6">@Resources.Taxes: @Taxes.ToString("C2")</MudText>
+                            <MudText Typo="Typo.h6">@Resources.Fees: @Fees.ToString("C2")</MudText>
                         </MudStack>
-                        <MudText Typo="Typo.h5">Total: @GrandTotal.ToString("C2")</MudText>
+                        <MudText Typo="Typo.h5">@Resources.Total: @GrandTotal.ToString("C2")</MudText>
                     </MudStack>
                 </MudItem>
 
                 <MudItem xs="3" Style="display: flex; justify-content: flex-start">
                     <MudButton Variant="Variant.Filled" Color="Color.Dark" Style="height:60%; align-self:center">
-                        Confirm
+                        @Resources.Confirm
                     </MudButton>
                 </MudItem>
             </MudGrid>

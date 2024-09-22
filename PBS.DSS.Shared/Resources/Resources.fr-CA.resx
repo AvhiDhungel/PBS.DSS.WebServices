@@ -120,4 +120,109 @@
   <data name="SO" xml:space="preserve">
     <value>BT</value>
   </data>
+  <data name="AdditionalComments" xml:space="preserve">
+    <value>Commentaires supplémentaires</value>
+  </data>
+  <data name="AddToCalendar" xml:space="preserve">
+    <value>Ajouter au calendrier</value>
+  </data>
+  <data name="Appointment" xml:space="preserve">
+    <value>Rendez-vous</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Approuver</value>
+  </data>
+  <data name="ApprovedServices" xml:space="preserve">
+    <value>Services Approuvés</value>
+  </data>
+  <data name="Appt" xml:space="preserve">
+    <value>Rdv</value>
+  </data>
+  <data name="AttentionRequired" xml:space="preserve">
+    <value>Attention requise</value>
+  </data>
+  <data name="CancelAppointment" xml:space="preserve">
+    <value>Annuler le rendez-vous</value>
+  </data>
+  <data name="CheckIn" xml:space="preserve">
+    <value>Arrivée</value>
+  </data>
+  <data name="CustomerCopy" xml:space="preserve">
+    <value>Copie client</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirmer</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Decline" xml:space="preserve">
+    <value>Refuser</value>
+  </data>
+  <data name="ErrorLoadingYourPage" xml:space="preserve">
+    <value>Erreur lors du chargement de votre page</value>
+  </data>
+  <data name="Fees" xml:space="preserve">
+    <value>Frais</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Plein écran</value>
+  </data>
+  <data name="ImmediateAttentionRequired" xml:space="preserve">
+    <value>Attention immédiate requise</value>
+  </data>
+  <data name="Inspection" xml:space="preserve">
+    <value>Inspection</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Chargement</value>
+  </data>
+  <data name="Reschedule" xml:space="preserve">
+    <value>Changement</value>
+  </data>
+  <data name="SerialNumber0IsInvalid" xml:space="preserve">
+    <value>Le numéro de série {0} est invalide</value>
+  </data>
+  <data name="ServiceAdvisor" xml:space="preserve">
+    <value>Conseiller au service</value>
+  </data>
+  <data name="ServiceOrder" xml:space="preserve">
+    <value>Bon de travail</value>
+  </data>
+  <data name="ServiceRecommendations" xml:space="preserve">
+    <value>Service recommandé</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Sous-total</value>
+  </data>
+  <data name="Taxes" xml:space="preserve">
+    <value>Taxes</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Temps</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="UnableToLocateAttachments" xml:space="preserve">
+    <value>Nous n'avons pas pu localiser les pièces jointes.</value>
+  </data>
+  <data name="VehicleDetails" xml:space="preserve">
+    <value>Détails du véhicule</value>
+  </data>
+  <data name="ViewYourRecommendations" xml:space="preserve">
+    <value>Voir vos recommandations</value>
+  </data>
+  <data name="ViewFullScreen" xml:space="preserve">
+    <value>Afficher en plein écran</value>
+  </data>
+  <data name="EstimateAwaitingApproval" xml:space="preserve">
+    <value>En attente d'approbation</value>
+  </data>
+  <data name="AppointmentDetails" xml:space="preserve">
+    <value>Détails du rendez-vous</value>
+  </data>
 </root>

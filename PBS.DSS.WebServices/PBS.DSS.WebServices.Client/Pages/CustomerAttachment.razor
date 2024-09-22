@@ -8,7 +8,7 @@
                        Variant="Variant.Filled"
                        Color="Color.Tertiary"
                        OnClick="ViewRecommendations">
-                View Your Recommendations
+                @Resources.ViewYourRecommendations
             </MudButton>
             <MudSpacer />
             <MudAttachmentCarousel Attachments="Attachments" />
@@ -46,7 +46,7 @@
 
         if (NotificationRef.IsNullOrWhitespace())
         {
-            SharedStateService.AddError("We were unable to find the attachments.");
+            SharedStateService.AddError(Resources.UnableToLocateAttachments);
             return false;   
         }
 

@@ -61,11 +61,353 @@ namespace PBS.DSS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional Comments.
+        /// </summary>
+        public static string AdditionalComments {
+            get {
+                return ResourceManager.GetString("AdditionalComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add to Calendar.
+        /// </summary>
+        public static string AddToCalendar {
+            get {
+                return ResourceManager.GetString("AddToCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appointment.
+        /// </summary>
+        public static string Appointment {
+            get {
+                return ResourceManager.GetString("Appointment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appointment Details.
+        /// </summary>
+        public static string AppointmentDetails {
+            get {
+                return ResourceManager.GetString("AppointmentDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approve.
+        /// </summary>
+        public static string Approve {
+            get {
+                return ResourceManager.GetString("Approve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approved Services.
+        /// </summary>
+        public static string ApprovedServices {
+            get {
+                return ResourceManager.GetString("ApprovedServices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appt.
+        /// </summary>
+        public static string Appt {
+            get {
+                return ResourceManager.GetString("Appt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attention Required.
+        /// </summary>
+        public static string AttentionRequired {
+            get {
+                return ResourceManager.GetString("AttentionRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel Appointment.
+        /// </summary>
+        public static string CancelAppointment {
+            get {
+                return ResourceManager.GetString("CancelAppointment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check In.
+        /// </summary>
+        public static string CheckIn {
+            get {
+                return ResourceManager.GetString("CheckIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Copy.
+        /// </summary>
+        public static string CustomerCopy {
+            get {
+                return ResourceManager.GetString("CustomerCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decline.
+        /// </summary>
+        public static string Decline {
+            get {
+                return ResourceManager.GetString("Decline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading your page.
+        /// </summary>
+        public static string ErrorLoadingYourPage {
+            get {
+                return ResourceManager.GetString("ErrorLoadingYourPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estimate awaiting approval.
+        /// </summary>
+        public static string EstimateAwaitingApproval {
+            get {
+                return ResourceManager.GetString("EstimateAwaitingApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fees.
+        /// </summary>
+        public static string Fees {
+            get {
+                return ResourceManager.GetString("Fees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Screen.
+        /// </summary>
+        public static string FullScreen {
+            get {
+                return ResourceManager.GetString("FullScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Immediate Attention Required.
+        /// </summary>
+        public static string ImmediateAttentionRequired {
+            get {
+                return ResourceManager.GetString("ImmediateAttentionRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspection.
+        /// </summary>
+        public static string Inspection {
+            get {
+                return ResourceManager.GetString("Inspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading.
+        /// </summary>
+        public static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-schedule.
+        /// </summary>
+        public static string Reschedule {
+            get {
+                return ResourceManager.GetString("Reschedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial Number {0} is invalid.
+        /// </summary>
+        public static string SerialNumber0IsInvalid {
+            get {
+                return ResourceManager.GetString("SerialNumber0IsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Advisor.
+        /// </summary>
+        public static string ServiceAdvisor {
+            get {
+                return ResourceManager.GetString("ServiceAdvisor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Order.
+        /// </summary>
+        public static string ServiceOrder {
+            get {
+                return ResourceManager.GetString("ServiceOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Recommendations.
+        /// </summary>
+        public static string ServiceRecommendations {
+            get {
+                return ResourceManager.GetString("ServiceRecommendations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Services.
+        /// </summary>
+        public static string Services {
+            get {
+                return ResourceManager.GetString("Services", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SO.
         /// </summary>
         public static string SO {
             get {
                 return ResourceManager.GetString("SO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtotal.
+        /// </summary>
+        public static string Subtotal {
+            get {
+                return ResourceManager.GetString("Subtotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taxes.
+        /// </summary>
+        public static string Taxes {
+            get {
+                return ResourceManager.GetString("Taxes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string Time {
+            get {
+                return ResourceManager.GetString("Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We were unable to locate the attachments..
+        /// </summary>
+        public static string UnableToLocateAttachments {
+            get {
+                return ResourceManager.GetString("UnableToLocateAttachments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to locate document.
+        /// </summary>
+        public static string UnableToLocateDocument {
+            get {
+                return ResourceManager.GetString("UnableToLocateDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We were unable to locate your Appointment.
+        /// </summary>
+        public static string UnableToLocationAppointment {
+            get {
+                return ResourceManager.GetString("UnableToLocationAppointment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We were unable to locate your Service Order.
+        /// </summary>
+        public static string UnableToLocationServiceOrder {
+            get {
+                return ResourceManager.GetString("UnableToLocationServiceOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vehicle Details.
+        /// </summary>
+        public static string VehicleDetails {
+            get {
+                return ResourceManager.GetString("VehicleDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Full Screen.
+        /// </summary>
+        public static string ViewFullScreen {
+            get {
+                return ResourceManager.GetString("ViewFullScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Your Recommendations.
+        /// </summary>
+        public static string ViewYourRecommendations {
+            get {
+                return ResourceManager.GetString("ViewYourRecommendations", resourceCulture);
             }
         }
     }

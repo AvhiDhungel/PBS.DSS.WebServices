@@ -3,6 +3,7 @@ using PBS.DSS.Shared.Enums;
 using PBS.DSS.Shared.Models.States;
 using PBS.DSS.Shared;
 using System.Text;
+using PBS.DSS.Shared.Resources;
 
 namespace PBS.DSS.WebServices.Client.Services
 {
@@ -48,9 +49,9 @@ namespace PBS.DSS.WebServices.Client.Services
         public string GetErrors() => _errors.ToString();
         public bool HasErrors() => _errors.Length > 0;
 
-        public void SetInvalidSerialError() => AddError($"Serial Number {SharedState.SerialNumber} is invalid.");
-        public void SetInvalidServiceOrderError() => AddError($"We were unable to locate your Service Order");
-        public void SetInvalidAppointmentError() => AddError($"We were unable to locate your Appointment");
+        public void SetInvalidSerialError() => AddError(string.Format(Resources.SerialNumber0IsInvalid, SharedState.SerialNumber));
+        public void SetInvalidServiceOrderError() => AddError(Resources.UnableToLocationServiceOrder);
+        public void SetInvalidAppointmentError() => AddError(Resources.UnableToLocationAppointment);
         #endregion
 
         #region Validation
