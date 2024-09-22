@@ -4,6 +4,7 @@
     {
         ServiceOrder,
         Appointment,
-        InspectionDocument
+        InspectionDocument,
+        CustomerCopy
     }
 }

@@ -1,0 +1,139 @@
+﻿@page "/ServiceOrderStatus"
+@page "/ServiceOrderStatus/{SerialNumber}/{WorkItemRef}"
+
+<MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
+    <Content>
+        <MudStack AlignItems="AlignItems.Center">
+            <MudText>@Resources.SO # @ServiceOrder.SONumber</MudText>
+
+            <MudText Typo="Typo.h5">Service Advisor</MudText>
+            <MudDivider Style="width:30%" />
+            <MudText>@ServiceOrder.AdvisorName</MudText>
+
+            <MudText Typo="Typo.h5" Class="mt-4">Vehicle Details</MudText>
+            <MudDivider Style="width:30%" />
+            <MudText>@ServiceOrder.Vehicle.Description</MudText>
+            <MudText>@ServiceOrder.Vehicle.VIN</MudText>
+
+            <MudText Typo="Typo.h5" Class="mt-4">Approved Services</MudText>
+            <MudDivider Style="width:30%" />
+            @foreach (var approved in ServiceOrder.ApprovedRequests)
+            {
+                <MudText>@approved.Description</MudText>
+            }
+
+            @if (!ServiceOrder.IsOpen)
+            {
+                <MudStack Class="mt-10" Row="true">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Tertiary"
+                               Class="mr-20 pt-2 pb-2"
+                               OnClick="ViewInspection">
+                        Inspection
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Tertiary"
+                               OnClick="ViewCustomerCopy">
+                        Customer Copy
+                    </MudButton>
+                </MudStack>
+            }
+            else if (ServiceOrder.PendingRequests.Count() > 0)
+            {
+                <MudText Typo="Typo.h5" Class="mt-4">Estimate awaiting approval</MudText>
+                <MudDivider Style="width:30%" />
+                <MudButton Style="align-self:center;"
+                           Variant="Variant.Filled"
+                           Color="Color.Tertiary"
+                           OnClick="ViewRecommendations">
+                    View Your Recommendations
+                </MudButton>
+            }
+
+        </MudStack>
+    </Content>
+</MudSessionErrorWrapper>
+
+@code {
+    [Parameter]
+    public string SerialNumber { get; set; } = string.Empty;
+    [Parameter]
+    public string WorkItemRef { get; set; } = string.Empty;
+
+    private ServiceOrder ServiceOrder { get; set; } = new();
+
+    private async Task Initialize()
+    {
+        //Debug Code
+        ServiceOrder = ServiceOrder.GenerateDummy();
+        SerialNumber = "9999.QA";
+        return;
+
+        var busyDialog = DialogService.Show<MudBusyDialog>("");
+        var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
+        var resp = await httpClient.PostAsJsonAsync<ServiceOrderFetchArgs>("/api/ServiceOrder/FetchServiceOrder", args) ?? new();
+
+        busyDialog.Close();
+
+        if (!resp.IsSuccessStatusCode)
+        {
+            SharedStateService.SetInvalidServiceOrderError();
+            return;
+        }
+
+        ServiceOrder = await resp.Content.ReadFromJsonAsync<ServiceOrder>() ?? new();
+
+        if (!ServiceOrder.IsValid())
+        {
+            SharedStateService.SetInvalidServiceOrderError();
+            return;
+        }
+
+        SharedStateService.SetBanner(ServiceOrder.ShopBanner);
+    }
+
+    private bool ValidateParams()
+    {
+        return true; //Debug code
+
+        if (!SharedStateService.ValidateSerialNumber(SerialNumber)) return false;
+        if (!SharedStateService.ValidateServiceOrderRef(WorkItemRef, out Guid parsedWorkItemRef)) return false;
+
+        ServiceOrder.Id = parsedWorkItemRef;
+
+        return true;
+    }
+
+    private void ViewRecommendations()
+    {
+        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{WorkItemRef}");
+    }
+
+    private async Task ViewInspection()
+    {
+        var busyDialog = DialogService.Show<MudBusyDialog>("");
+
+        var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
+
+        SharedStateService.AddModel(SharedModelTypes.InspectionDocument, Convert.ToBase64String(inspectionDoc));
+        await SharedStateService.SaveToSession();
+
+        busyDialog.Close();
+
+        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
+    }
+
+    private async Task ViewCustomerCopy()
+    {
+        var busyDialog = DialogService.Show<MudBusyDialog>("");
+
+        var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
+
+        SharedStateService.AddModel(SharedModelTypes.CustomerCopy, Convert.ToBase64String(inspectionDoc));
+        await SharedStateService.SaveToSession();
+
+        busyDialog.Close();
+
+        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.CustomerCopy.ToString()}");
+    }
+}

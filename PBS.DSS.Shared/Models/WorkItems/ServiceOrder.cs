@@ -6,7 +6,9 @@
         public Guid ContactRef { get; set; } = Guid.Empty;
         public Guid VehicleRef { get; set; } = Guid.Empty;
 
+        public bool IsOpen { get; set; } = false;
         public string SONumber { get; set; } = string.Empty;
+        public string AdvisorName { get; set; } = string.Empty;
         public string AdditionalComments { get; set; } = string.Empty;
         public string ShopBanner { get; set; } = string.Empty;
 
@@ -35,11 +37,13 @@
             so.ContactRef = Guid.NewGuid();
             so.VehicleRef = Guid.NewGuid();
             so.SONumber = "81881";
+            so.AdvisorName = "Brandon";
             so.AdditionalComments = "Some Comment that Brandon typed up but I don't want to type up";
             so.SubTotal = 300.20;
             so.TaxTotal = 29.5;
             so.FeesTotal = 15.87;
             so.GrandTotal = 345.57;
+            so.IsOpen = true;
 
             var approved = new RequestLine();
             approved.Description = "Lube Oil & Filter - 15 Point Inspection - Reset Maintenance Reminder if required";
