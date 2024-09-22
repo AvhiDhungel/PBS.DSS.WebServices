@@ -4,8 +4,8 @@
 
 <MudSessionErrorWrapper ValidateSession="ValidateParams" InitializedAsync="Initialize">
     <Content>
-        <MudContainer Style="height:60vh; overflow-y:auto; overflow-x:clip" Class="pb-10 pr-15 pl-5">
-            <MudStack Style="width:100%;">
+        <MudContainer>
+            <MudStack>
                 <MudStack Row="true" Style="justify-content:center;">
                     <MudStack AlignItems="AlignItems.Center" Class="pl-20">
                         <MudText Typo="Typo.h6">@Resources.SO # @ServiceOrder.SONumber</MudText>
@@ -23,7 +23,7 @@
                 </MudStack>
 
                 <MudStack AlignItems="AlignItems.Center">
-                    <MudDivider />
+                    <MudDivider Style="width:90%" />
                     <MudText Typo="Typo.h6">
                         @ServiceOrder.AdditionalComments
                     </MudText>
@@ -84,7 +84,7 @@
             </MudStack>
         </MudContainer>
 
-        <MudPaper Style="position: fixed; bottom: 0; left: 0; right: 0; padding: 8px; border-top: 1px solid black;" Outlined="true">
+        <MudPaper Elevation="0" class="page-footer-pinned">
             <MudGrid>
                 <MudItem xs="3" />
 

@@ -19,3 +19,14 @@
         height: 80vh;
     }
 }
+
+.page-footer-pinned {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: 8px;
+    border-top: 1px solid black;
+}
