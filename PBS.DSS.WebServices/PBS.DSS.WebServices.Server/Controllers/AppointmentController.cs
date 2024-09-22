@@ -52,7 +52,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
             appt.VehicleRef = connectAppt.VehicleRef;
             appt.ContactRef = connectAppt.ContactRef;
             appt.AppointmentNumber = connectAppt.AppointmentNumber;
-            appt.AppointmentTimeUTC = connectAppt.AppointmentDateUTC;
+            appt.AppointmentTime = connectAppt.AppointmentDateUTC;
 
             foreach (var connectReq in connectAppt.Requests)
             {
