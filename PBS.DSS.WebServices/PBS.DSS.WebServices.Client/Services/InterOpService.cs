@@ -17,6 +17,11 @@ namespace PBS.DSS.WebServices.Client.Services
             await _jsRuntime.InvokeVoidAsync("copyTextToClipboard", str);
         }
 
+        public async Task OpenLinkInNewTab(string url)
+        {
+            await _jsRuntime.InvokeVoidAsync("openLinkInNewTab", url);
+        }
+
         public async Task OpenPDFInNewTab(byte[] content)
         {
             await _jsRuntime.InvokeVoidAsync("openPDFInNewTab", content);

@@ -120,7 +120,7 @@
 
         busyDialog.Close();
 
-        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
+        await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
     }
 
     private async Task ViewCustomerCopy()
@@ -134,6 +134,6 @@
 
         busyDialog.Close();
 
-        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.CustomerCopy.ToString()}");
+        await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.CustomerCopy.ToString()}");
     }
 }

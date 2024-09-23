@@ -182,7 +182,7 @@
 
         busyDialog.Close();
 
-        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
+        await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
     }
 
     private void CalculateTotals()

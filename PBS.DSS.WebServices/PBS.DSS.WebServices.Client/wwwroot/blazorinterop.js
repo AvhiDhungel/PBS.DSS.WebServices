@@ -27,6 +27,10 @@ function generateICS(args) {
     document.body.removeChild(element);
 }
 
+function openLinkInNewTab(url) {
+    window.open(url, '_blank');
+}
+
 function openPDFInNewTab(byteArray) {
     var file = new Blob([byteArray], { type: 'application/pdf' });
     var fileURL = URL.createObjectURL(file);
