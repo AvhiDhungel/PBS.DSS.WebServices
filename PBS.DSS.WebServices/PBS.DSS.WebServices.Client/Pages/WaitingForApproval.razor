@@ -137,17 +137,10 @@
 
         var busyDialog = DialogService.Show<MudBusyDialog>("");
         var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
-        var resp = await httpClient.PostAsJsonAsync<ServiceOrderFetchArgs>("/api/ServiceOrder/FetchServiceOrder", args) ?? new();
+
+        ServiceOrder = await ControllerAPIService.FetchServiceOrder(args);
 
         busyDialog.Close();
-
-        if (!resp.IsSuccessStatusCode)
-        {
-            SharedStateService.SetInvalidServiceOrderError();
-            return;
-        }
-
-        ServiceOrder = await resp.Content.ReadFromJsonAsync<ServiceOrder>() ?? new();
 
         if (!ServiceOrder.IsValid())
         {

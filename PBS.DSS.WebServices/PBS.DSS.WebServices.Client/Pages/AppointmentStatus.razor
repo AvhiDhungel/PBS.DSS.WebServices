@@ -97,17 +97,10 @@
 
         var busyDialog = DialogService.Show<MudBusyDialog>("");
         var args = new AppointmentFetchArgs() { SerialNumber = SerialNumber, AppointmentRef = Appointment.Id };
-        var resp = await httpClient.PostAsJsonAsync<AppointmentFetchArgs>("/api/Appointment/FetchAppointment", args) ?? new();
+
+        Appointment = await ControllerAPIService.FetchAppointment(args);
 
         busyDialog.Close();
-
-        if (!resp.IsSuccessStatusCode)
-        {
-            SharedStateService.SetInvalidAppointmentError();
-            return;
-        }
-
-        Appointment = await resp.Content.ReadFromJsonAsync<Appointment>() ?? new();
 
         if (!Appointment.IsValid())
         {
