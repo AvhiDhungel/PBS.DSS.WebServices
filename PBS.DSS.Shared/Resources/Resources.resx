@@ -214,4 +214,19 @@
   <data name="AppointmentDetails" xml:space="preserve">
     <value>Appointment Details</value>
   </data>
+  <data name="PleaseEnterAValidOdometer" xml:space="preserve">
+    <value>Please enter a valid odometer</value>
+  </data>
+  <data name="Odometer" xml:space="preserve">
+    <value>Odometer</value>
+  </data>
+  <data name="VehicleOdometer" xml:space="preserve">
+    <value>Vehicle Odometer</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EnterOdometer" xml:space="preserve">
+    <value>Enter Odometer</value>
+  </data>
 </root>

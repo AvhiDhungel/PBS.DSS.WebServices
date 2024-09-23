@@ -225,4 +225,19 @@
   <data name="AppointmentDetails" xml:space="preserve">
     <value>Détails du rendez-vous</value>
   </data>
+  <data name="VehicleOdometer" xml:space="preserve">
+    <value>Kilométrage du véhicule</value>
+  </data>
+  <data name="Odometer" xml:space="preserve">
+    <value>Odomètre</value>
+  </data>
+  <data name="PleaseEnterAValidOdometer" xml:space="preserve">
+    <value>Veuillez entrer un kilométrage valide</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="EnterOdometer" xml:space="preserve">
+    <value>Entrer le kilométrage</value>
+  </data>
 </root>

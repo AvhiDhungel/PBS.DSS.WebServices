@@ -1,0 +1,42 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudStack>
+            <MudTextField Label="@Resources.VehicleOdometer"
+                          @bind-Value="Odometer"
+                          Required="true"
+                          ErrorText="@Resources.PleaseEnterAValidOdometer"
+                          Pattern="^[0-9]\d*$"
+                          Immediate="true" />
+
+            <MudSpacer />
+
+            <MudStack Row="true">
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Success"
+                           Disabled="@(Odometer == 0)"
+                           OnClick="ConfirmOdometer">
+                    @Resources.CheckIn
+                </MudButton>
+                <MudSpacer />
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Error"
+                           OnClick="CancelCheckIn">
+                    @Resources.Cancel
+                </MudButton>
+            </MudStack>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; } = new();
+
+    [Parameter]
+    public int Odometer { get; set; } = 0;
+
+    private void ConfirmOdometer() => MudDialog.Close(Odometer);
+    private void CancelCheckIn() => MudDialog.Cancel();
+}

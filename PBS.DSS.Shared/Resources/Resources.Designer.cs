@@ -133,6 +133,15 @@ namespace PBS.DSS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel Appointment.
         /// </summary>
         public static string CancelAppointment {
@@ -183,6 +192,15 @@ namespace PBS.DSS.Shared.Resources {
         public static string Decline {
             get {
                 return ResourceManager.GetString("Decline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Odometer.
+        /// </summary>
+        public static string EnterOdometer {
+            get {
+                return ResourceManager.GetString("EnterOdometer", resourceCulture);
             }
         }
         
@@ -246,6 +264,24 @@ namespace PBS.DSS.Shared.Resources {
         public static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odometer.
+        /// </summary>
+        public static string Odometer {
+            get {
+                return ResourceManager.GetString("Odometer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a valid odometer.
+        /// </summary>
+        public static string PleaseEnterAValidOdometer {
+            get {
+                return ResourceManager.GetString("PleaseEnterAValidOdometer", resourceCulture);
             }
         }
         
@@ -390,6 +426,15 @@ namespace PBS.DSS.Shared.Resources {
         public static string VehicleDetails {
             get {
                 return ResourceManager.GetString("VehicleDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vehicle Odometer.
+        /// </summary>
+        public static string VehicleOdometer {
+            get {
+                return ResourceManager.GetString("VehicleOdometer", resourceCulture);
             }
         }
         

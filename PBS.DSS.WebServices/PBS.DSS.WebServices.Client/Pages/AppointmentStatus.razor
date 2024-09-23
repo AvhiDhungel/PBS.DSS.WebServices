@@ -128,9 +128,30 @@
         NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{WorkItemRef}");
     }
 
-    private void CheckIn()
+    private async Task CheckIn()
     {
+        if (!await PromptOdometer()) return;
+    }
 
+    private async Task<bool> PromptOdometer()
+    {
+        var options = new DialogOptions();
+        options.CloseOnEscapeKey = false;
+        options.BackdropClick = false;
+        options.Position = DialogPosition.Center;
+        options.MaxWidth = MaxWidth.Medium;
+
+        var parameters = new DialogParameters<OdomoterEntryDialog>();
+        parameters.Add(x => x.Odometer, Appointment.Odometer);
+
+        var dialog = await DialogService.ShowAsync<OdomoterEntryDialog>(Resources.EnterOdometer, parameters, options);
+        var result = await dialog.Result;
+        var odom = result.GetValue<int>();
+
+        if (odom == 0) return false;
+
+        Appointment.Odometer = odom; 
+        return true;
     }
 
     private void ReSchedule()

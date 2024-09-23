@@ -12,6 +12,7 @@
         public bool CanReschedule { get; set; } = false;
         public bool CanCancel { get; set; } = false;
 
+        public int Odometer { get; set; } = 0;
         public string AppointmentNumber { get; set; } = string.Empty;
         public string AdditionalComments { get; set; } = string.Empty;
         public string ShopBanner { get; set; } = string.Empty;
