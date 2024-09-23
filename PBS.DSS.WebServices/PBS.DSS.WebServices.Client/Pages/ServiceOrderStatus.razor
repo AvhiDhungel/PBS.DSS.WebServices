@@ -99,7 +99,7 @@
 
     private void ViewRecommendations()
     {
-        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{WorkItemRef}");
+        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{ServiceOrder.Id}");
     }
 
     private async Task ViewInspection()
