@@ -135,7 +135,7 @@
 
     private void ReSchedule()
     {
-
+        NavigationManager.NavigateTo($"{Utilities.GetWebAppointmentsURL()}/{SerialNumber}/{Appointment.Id}/Reschedule");
     }
 
     private void CancelAppointment()
