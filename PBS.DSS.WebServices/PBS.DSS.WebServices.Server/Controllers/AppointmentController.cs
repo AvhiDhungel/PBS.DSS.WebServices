@@ -18,23 +18,25 @@ namespace PBS.DSS.WebServices.Server.Controllers
         public async Task<Appointment> FetchAppointment(AppointmentFetchArgs args)
         {
             var appt = new Appointment();
+            var hasCompleted = false;
 
-            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveAppointment(x, appt)))
+            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveAppointment(x, appt, out hasCompleted)))
             {
-                var apptReq = new AppointmentDSSRequest { AppointmentRef = args.AppointmentRef };
+                await cl.SendToServer(new AppointmentDSSRequest { AppointmentRef = args.AppointmentRef });
 
-                await cl.StartConnection();
-                await cl.SendToServer(apptReq);
+                while (!hasCompleted) Thread.Sleep(500);
             }
 
             return appt;
         }
 
         #region Connect Message Handlers
-        private static void ReceiveAppointment(MessageHeaderV2 msgHeader, Appointment appt)
+        private static void ReceiveAppointment(MessageHeaderV2 msgHeader, Appointment appt, out bool hasCompleted)
         {
             if (msgHeader.IsConnectResponseMatch(typeof(AppointmentDSSResponse)))
                 TranscribeAppointment(appt, msgHeader.RecieveMessage<AppointmentDSSResponse>());
+
+            hasCompleted = true;
         }
 
         private static void TranscribeAppointment(Appointment appt, AppointmentDSSResponse resp)

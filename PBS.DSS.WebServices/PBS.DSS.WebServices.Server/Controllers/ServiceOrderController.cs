@@ -18,20 +18,25 @@ namespace PBS.DSS.WebServices.Server.Controllers
         public async Task<ServiceOrder> FetchServiceOrder(ServiceOrderFetchArgs args)
         {
             var so = new ServiceOrder();
+            var hasCompleted = false;
 
-            using var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrderResponse(x, so));
-            var soReq = new ServiceOrderDSSRequest() { ServiceOrderRef = args.ServiceOrderRef };
+            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrderResponse(x, so, out hasCompleted)))
+            {
+                await cl.SendToServer(new ServiceOrderDSSRequest() { ServiceOrderRef = args.ServiceOrderRef });
 
-            await cl.SendToServer(soReq);
+                while (!hasCompleted) Thread.Sleep(500);
+            }
 
             return so;
         }
 
         #region Connect Message Handlers
-        private static void ReceiveServiceOrderResponse(MessageHeaderV2 msgHeader, ServiceOrder so)
+        private static void ReceiveServiceOrderResponse(MessageHeaderV2 msgHeader, ServiceOrder so, out bool hasCompleted)
         {
             if (msgHeader.IsConnectResponseMatch(typeof(ServiceOrderDSSResponse)))
                 TranscribeServiceOrder(so, msgHeader.RecieveMessage<ServiceOrderDSSResponse>());
+
+            hasCompleted = true;
         }
 
         private static void TranscribeServiceOrder(ServiceOrder so, ServiceOrderDSSResponse resp)
