@@ -19,7 +19,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
         public async Task<ActionResult<ServiceOrder>> FetchServiceOrder(ServiceOrderFetchArgs args)
         {
             var msg = new ConnectReceiveMessage<ServiceOrder>(new ServiceOrder());
-
+            
             using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrderResponse(x, msg)))
             {
                 await cl.SendToServer(new ServiceOrderDSSRequest() { ServiceOrderRef = args.ServiceOrderRef });

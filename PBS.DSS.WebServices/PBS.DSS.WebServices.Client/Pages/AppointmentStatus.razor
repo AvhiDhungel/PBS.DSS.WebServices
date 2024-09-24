@@ -98,16 +98,17 @@
         var busyDialog = DialogService.Show<MudBusyDialog>("");
         var args = new AppointmentFetchArgs() { SerialNumber = SerialNumber, AppointmentRef = Appointment.Id };
 
-        Appointment = await ControllerAPIService.FetchAppointment(args);
+        var resp = await ControllerAPIService.FetchAppointment(args);
 
         busyDialog.Close();
 
-        if (!Appointment.IsValid())
+        if (resp.HasError)
         {
             SharedStateService.SetInvalidAppointmentError();
             return;
         }
 
+        Appointment = resp.ResponseObject ?? Appointment;
         SharedStateService.SetBanner(Appointment.ShopBanner);
     }
 

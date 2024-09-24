@@ -18,22 +18,51 @@ namespace PBS.DSS.WebServices.Client.Services
             return await _httpClient.PostAsJsonAsync($"/api/{controllerName}/{methodName}", args);
         }
 
-        public async Task<T?> Post<T, U>(U args, string controllerName, string methodName)
+        public async Task<APIResponse<T>> Post<T, U>(U args, string controllerName, string methodName)
         {
             var resp = await _httpClient.PostAsJsonAsync($"/api/{controllerName}/{methodName}", args);
-            if (resp == null || !resp.IsSuccessStatusCode) return default;
+            var result = new APIResponse<T>();
 
-            return await resp.Content.ReadFromJsonAsync<T>();
+            if (resp == null)
+            {
+                result.HasError = true;
+                result.ErrorMessage = "Was not able to completed request";
+            }
+            else if (resp.IsSuccessStatusCode)
+            {
+                result.ResponseObject = await resp.Content.ReadFromJsonAsync<T>();
+            }
+            else
+            {
+                result.HasError = true;
+                result.ErrorMessage = await resp.Content.ReadAsStringAsync();
+            }
+
+            return result;
         }
 
-        public async Task<ServiceOrder> FetchServiceOrder(ServiceOrderFetchArgs args)
+        #region Service Order
+        public async Task<APIResponse<ServiceOrder>> FetchServiceOrder(ServiceOrderFetchArgs args)
         {
             return await Post<ServiceOrder, ServiceOrderFetchArgs>(args, "ServiceOrder", "FetchServiceOrder") ?? new();
         }
+        #endregion
 
-        public async Task<Appointment> FetchAppointment(AppointmentFetchArgs args)
+        #region Appointment
+        public async Task<APIResponse<Appointment>> FetchAppointment(AppointmentFetchArgs args)
         {
             return await Post<Appointment, AppointmentFetchArgs>(args, "Appointment", "FetchAppointment") ?? new();
+        }
+        #endregion
+
+        public class APIResponse<T>
+        {
+            public T? ResponseObject { get; set; }
+            public bool HasError { get; set; } = false;
+            public string ErrorMessage { get; set; } = string.Empty;
+
+            public APIResponse() { }
+            public APIResponse(T? o) { ResponseObject = o; }
         }
     }
 }

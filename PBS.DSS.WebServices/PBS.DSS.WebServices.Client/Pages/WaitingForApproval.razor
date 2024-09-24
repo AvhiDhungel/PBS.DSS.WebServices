@@ -129,7 +129,7 @@
     {
         //Debug Code
         ServiceOrder = ServiceOrder.GenerateDummy();
-        SerialNumber = "9999.QA";
+        SerialNumber = "1239.QA";
         CalculateTotals();
         return;
 
@@ -138,16 +138,17 @@
         var busyDialog = DialogService.Show<MudBusyDialog>("");
         var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
 
-        ServiceOrder = await ControllerAPIService.FetchServiceOrder(args);
+        var resp = await ControllerAPIService.FetchServiceOrder(args);
 
         busyDialog.Close();
 
-        if (!ServiceOrder.IsValid())
+        if (resp.HasError)
         {
             SharedStateService.SetInvalidServiceOrderError();
             return;
         }
 
+        ServiceOrder = resp.ResponseObject ?? ServiceOrder;
         SharedStateService.SetBanner(ServiceOrder.ShopBanner);
         CalculateTotals();
     }
