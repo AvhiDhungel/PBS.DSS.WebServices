@@ -6,6 +6,7 @@ using PBS.DSS.Shared.Criteria;
 using PBS.DSS.WebServices.Server.Integrations;
 using PBS.DSS.WebServices.Server.Extensions;
 using PBS.ConnectHub.Library.Messages.DigitalServiceSuite;
+using PBS.DSS.WebServices.Server.Utilities;
 
 namespace PBS.DSS.WebServices.Server.Controllers
 {
@@ -15,38 +16,39 @@ namespace PBS.DSS.WebServices.Server.Controllers
     {
         [HttpPost]
         [Route("FetchAppointment")]
-        public async Task<Appointment> FetchAppointment(AppointmentFetchArgs args)
+        public async Task<ActionResult<Appointment>> FetchAppointment(AppointmentFetchArgs args)
         {
-            var appt = new Appointment();
-            var hasCompleted = false;
+            var msg = new ConnectReceiveMessage<Appointment>(new Appointment());
 
-            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveAppointment(x, appt, out hasCompleted)))
+            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveAppointment(x, msg)))
             {
                 await cl.SendToServer(new AppointmentDSSRequest { AppointmentRef = args.AppointmentRef });
 
-                while (!hasCompleted) Thread.Sleep(500);
+                while (!msg.HasCompleted) Thread.Sleep(500);
             }
 
-            return appt;
+            return msg.GetResult();
         }
 
         #region Connect Message Handlers
-        private static void ReceiveAppointment(MessageHeaderV2 msgHeader, Appointment appt, out bool hasCompleted)
+        private static void ReceiveAppointment(MessageHeaderV2 msgHeader, ConnectReceiveMessage<Appointment> msg)
         {
             if (msgHeader.IsConnectResponseMatch(typeof(AppointmentDSSResponse)))
-                TranscribeAppointment(appt, msgHeader.RecieveMessage<AppointmentDSSResponse>());
+                TranscribeAppointment(msgHeader.RecieveMessage<AppointmentDSSResponse>(), msg);
 
-            hasCompleted = true;
+            msg.HasCompleted = true;
         }
+        #endregion
 
-        private static void TranscribeAppointment(Appointment appt, AppointmentDSSResponse resp)
+        #region Transcribe Appointment
+        private static void TranscribeAppointment(AppointmentDSSResponse resp, ConnectReceiveMessage<Appointment> msg)
         {
-            appt.ShopBanner = resp.ShopBanner;
+            msg.Object.ShopBanner = resp.ShopBanner;
 
-            TranscribeAppointment(appt, resp);
+            TranscribeAppointment(resp.Appointment, msg.Object);
         }
 
-        private static void TranscribeAppointment(Appointment appt, ConnectModels.Appointment connectAppt)
+        private static void TranscribeAppointment(ConnectModels.Appointment connectAppt, Appointment appt)
         {
             if (connectAppt == null) return;
 
