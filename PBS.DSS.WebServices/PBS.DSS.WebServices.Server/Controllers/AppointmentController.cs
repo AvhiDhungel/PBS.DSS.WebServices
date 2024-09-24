@@ -20,7 +20,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
         {
             var msg = new ConnectReceiveMessage<Appointment>(new Appointment());
 
-            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveAppointment(x, msg)))
+            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveAppointment(x, msg, args.SerialNumber)))
             {
                 await cl.SendToServer(new AppointmentDSSRequest { AppointmentRef = args.AppointmentRef });
 
@@ -63,10 +63,10 @@ namespace PBS.DSS.WebServices.Server.Controllers
         }
 
         #region Connect Message Handlers
-        private static void ReceiveAppointment(MessageHeaderV2 msgHeader, ConnectReceiveMessage<Appointment> msg)
+        private static void ReceiveAppointment(MessageHeaderV2 msgHeader, ConnectReceiveMessage<Appointment> msg, string serial)
         {
             if (msgHeader.IsConnectResponseMatch(typeof(AppointmentDSSResponse)))
-                TranscribeAppointment(msgHeader.RecieveMessage<AppointmentDSSResponse>(), msg);
+                TranscribeAppointment(msgHeader.RecieveMessage<AppointmentDSSResponse>(), msg, serial);
 
             msg.HasCompleted = true;
         }
@@ -89,15 +89,16 @@ namespace PBS.DSS.WebServices.Server.Controllers
         #endregion
 
         #region Transcribe Appointment
-        private static void TranscribeAppointment(AppointmentDSSResponse resp, ConnectReceiveMessage<Appointment> msg)
+        private static void TranscribeAppointment(AppointmentDSSResponse resp, ConnectReceiveMessage<Appointment> msg, string serial)
         {
-            msg.Object.ShopBanner = resp.ShopBanner;
             msg.Object.DropOffInstructions = resp.DropOffInstructions;
             msg.Object.SelfCheckInEnabled = resp.IsSelfCheckInEnabled;
 
             ConnectModelHelper.TranscribeAppointment(resp.Appointment, msg.Object);
             ConnectModelHelper.TranscribeContact(msg.Object.ContactInfo, resp.Contact);
             ConnectModelHelper.TranscribeVehicle(msg.Object.Vehicle, resp.Vehicle);
+
+            msg.Object.ShopBanner = WebAppointmentsIntegration.GetShopBanner(serial, resp.Appointment.ShopRef);
         }
         #endregion
 

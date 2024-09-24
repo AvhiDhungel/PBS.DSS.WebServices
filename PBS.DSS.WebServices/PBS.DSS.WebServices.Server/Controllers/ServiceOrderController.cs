@@ -20,7 +20,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
         {
             var msg = new ConnectReceiveMessage<ServiceOrder>(new ServiceOrder());
 
-            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrderResponse(x, msg)))
+            using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrderResponse(x, msg, args.SerialNumber)))
             {
                 await cl.SendToServer(new ServiceOrderDSSRequest() { ServiceOrderRef = args.ServiceOrderRef });
 
@@ -65,10 +65,10 @@ namespace PBS.DSS.WebServices.Server.Controllers
         }
 
         #region Connect Message Handlers
-        private static void ReceiveServiceOrderResponse(MessageHeaderV2 msgHeader, ConnectReceiveMessage<ServiceOrder> msg)
+        private static void ReceiveServiceOrderResponse(MessageHeaderV2 msgHeader, ConnectReceiveMessage<ServiceOrder> msg, string serial)
         {
             if (msgHeader.IsConnectResponseMatch(typeof(ServiceOrderDSSResponse)))
-                TranscribeServiceOrder(msgHeader.RecieveMessage<ServiceOrderDSSResponse>(), msg);
+                TranscribeServiceOrder(msgHeader.RecieveMessage<ServiceOrderDSSResponse>(), msg, serial);
 
             msg.HasCompleted = true;
         }
@@ -91,15 +91,15 @@ namespace PBS.DSS.WebServices.Server.Controllers
         #endregion
 
         #region Transcribe Service Order
-        private static void TranscribeServiceOrder(ServiceOrderDSSResponse resp, ConnectReceiveMessage<ServiceOrder> msg)
+        private static void TranscribeServiceOrder(ServiceOrderDSSResponse resp, ConnectReceiveMessage<ServiceOrder> msg, string serial)
         {
             if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; return; }
-
-            msg.Object.ShopBanner = resp.ShopBanner;
 
             ConnectModelHelper.TranscribeServiceOrder(msg.Object, resp.ServiceOrder);
             ConnectModelHelper.TranscribeContact(msg.Object.ContactInfo, resp.Contact);
             ConnectModelHelper.TranscribeVehicle(msg.Object.Vehicle, resp.Vehicle);
+
+            msg.Object.ShopBanner = WebAppointmentsIntegration.GetShopBanner(serial, resp.ServiceOrder.ShopRef);
         }
         #endregion
 
