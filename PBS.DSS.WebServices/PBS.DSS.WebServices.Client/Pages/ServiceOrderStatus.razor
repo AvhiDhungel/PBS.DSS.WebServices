@@ -1,4 +1,4 @@
-﻿@page "/ServiceOrderStatus"
+@page "/ServiceOrderStatus"
 @page "/ServiceOrderStatus/{SerialNumber}/{WorkItemRef}"
 
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
@@ -22,20 +22,22 @@
                 <MudText>@approved.Description</MudText>
             }
 
-            @if (!ServiceOrder.IsOpen)
+            @if (ServiceOrder.IsOpen)
             {
-                <MudStack Class="mt-10" Row="true">
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Tertiary"
-                               Class="mr-20 pt-2 pb-2"
-                               OnClick="ViewInspection">
-                        @Resources.Inspection
-                    </MudButton>
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Tertiary"
-                               OnClick="ViewCustomerCopy">
-                        @Resources.CustomerCopy
-                    </MudButton>
+                <MudStack Class="mt-10" Spacing="1">
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Tertiary"
+                                   FullWidth="true"
+                                   Class="mr-20 pt-2 pb-2"
+                                   OnClick="ViewInspection">
+                            @Resources.Inspection
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Tertiary"
+                                   FullWidth="true"
+                                   OnClick="ViewCustomerCopy">
+                            @Resources.CustomerCopy
+                        </MudButton>
                 </MudStack>
             }
             else if (ServiceOrder.PendingRequests.Count() > 0)

@@ -37,12 +37,12 @@
             <MudDivider Style="width:30%" />
             <MudText>@Appointment.AdditionalComments</MudText>
 
-            <MudStack Class="mt-10" Row="true">
+            <MudStack Class="mt-10 pb-10" Spacing="1">
                 @if (Appointment.CheckInAvailable)
                 {
                     <MudButton Variant="Variant.Filled"
                                Color="Color.Tertiary"
-                               Class="pt-2 pb-2"
+                               FullWidth="true"
                                OnClick="CheckIn">
                         @Resources.CheckIn
                     </MudButton>
@@ -53,6 +53,7 @@
                 {
                     <MudButton Variant="Variant.Filled"
                                Color="Color.Tertiary"
+                               FullWidth="true"
                                OnClick="ReSchedule">
                         @Resources.Reschedule
                     </MudButton>
@@ -63,6 +64,7 @@
                 {
                     <MudButton Variant="Variant.Filled"
                                Color="Color.Tertiary"
+                               FullWidth="true"
                                OnClick="CancelAppointment">
                         @Resources.CancelAppointment
                     </MudButton>
@@ -71,6 +73,7 @@
 
                 <MudButton Variant="Variant.Filled"
                            Color="Color.Tertiary"
+                           FullWidth="true"
                            OnClick="AddToCalendar">
                     @Resources.AddToCalendar
                 </MudButton>
