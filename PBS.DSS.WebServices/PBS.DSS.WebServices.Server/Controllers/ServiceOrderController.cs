@@ -169,7 +169,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
         #region "AWR Approved Response"
         private static void VerifyAWRResponse(ServiceOrderApproveAWRResponse resp, ConnectReceiveMessage<ServiceOrder> msg)
         {
-            if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; }
+            if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; return; }
 
             msg.Object.RequestsMarkedForApproval.ToList().ForEach(req => req.AWRStatus = AWRStatuses.Approved);
         }

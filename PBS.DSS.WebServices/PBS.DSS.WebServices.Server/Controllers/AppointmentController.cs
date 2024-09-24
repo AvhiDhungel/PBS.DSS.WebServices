@@ -30,11 +30,59 @@ namespace PBS.DSS.WebServices.Server.Controllers
             return msg.GetResult();
         }
 
+        [HttpPost]
+        [Route("CheckInAppointment")]
+        public async Task<ActionResult<Appointment>> CheckInAppointment(Appointment appt, string serial)
+        {
+            var msg = new ConnectReceiveMessage<Appointment>(appt);
+
+            using (var cl = await ConnectHubIntegration.GetConnectHubClient(serial, (x) => ReceiveAppointmentCheckInResponse(x, msg)))
+            {
+                await cl.SendToServer(new AppointmentCheckInRequest { AppointmentRef = appt.Id, Odometer = appt.Odometer });
+
+                while (!msg.HasCompleted) Thread.Sleep(500);
+            }
+
+            return msg.GetResult();
+        }
+
+        [HttpPost]
+        [Route("CancelAppointment")]
+        public async Task<ActionResult<Appointment>> CancelAppointment(Appointment appt, string serial)
+        {
+            var msg = new ConnectReceiveMessage<Appointment>(appt);
+
+            using (var cl = await ConnectHubIntegration.GetConnectHubClient(serial, (x) => ReceiveAppointmentCancelResponse(x, msg)))
+            {
+                await cl.SendToServer(new AppointmentCancelRequest { AppointmentRef = appt.Id });
+
+                while (!msg.HasCompleted) Thread.Sleep(500);
+            }
+
+            return msg.GetResult();
+        }
+
         #region Connect Message Handlers
         private static void ReceiveAppointment(MessageHeaderV2 msgHeader, ConnectReceiveMessage<Appointment> msg)
         {
             if (msgHeader.IsConnectResponseMatch(typeof(AppointmentDSSResponse)))
                 TranscribeAppointment(msgHeader.RecieveMessage<AppointmentDSSResponse>(), msg);
+
+            msg.HasCompleted = true;
+        }
+
+        private static void ReceiveAppointmentCheckInResponse(MessageHeaderV2 msgHeader, ConnectReceiveMessage<Appointment> msg)
+        {
+            if (msgHeader.IsConnectResponseMatch(typeof(AppointmentCheckInResponse)))
+                ValidateAppointmentCheckIn(msgHeader.RecieveMessage<AppointmentCheckInResponse>(), msg);
+
+            msg.HasCompleted = true;
+        }
+
+        private static void ReceiveAppointmentCancelResponse(MessageHeaderV2 msgHeader, ConnectReceiveMessage<Appointment> msg)
+        {
+            if (msgHeader.IsConnectResponseMatch(typeof(AppointmentCancelResponse)))
+                ValidateAppointmentCancellation(msgHeader.RecieveMessage<AppointmentCancelResponse>(), msg);
 
             msg.HasCompleted = true;
         }
@@ -69,6 +117,25 @@ namespace PBS.DSS.WebServices.Server.Controllers
 
                 appt.Requests.Add(req);
             }
+        }
+        #endregion
+
+        #region Appointment Check In
+        private static void ValidateAppointmentCheckIn(AppointmentCheckInResponse resp, ConnectReceiveMessage<Appointment> msg)
+        {
+            if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; return; }
+
+            msg.Object.IsCheckedIn = true;
+        }
+        #endregion
+
+        #region Appointment Cancellation
+        private static void ValidateAppointmentCancellation(AppointmentCancelResponse resp, ConnectReceiveMessage<Appointment> msg)
+        {
+            if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; return; }
+
+            msg.Object.IsCheckedIn = false;
+            msg.Object.IsCanceled = false;
         }
         #endregion
     }

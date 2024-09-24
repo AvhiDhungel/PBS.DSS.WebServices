@@ -8,6 +8,9 @@
         public DateTimeOffset AppointmentTime { get; set; } = DateTimeOffset.UtcNow;
         public DateTimeOffset PickupDate { get; set; } = DateTimeOffset.UtcNow;
 
+        public bool IsCheckedIn { get; set; } = false;
+        public bool IsCanceled { get; set; } = false;
+
         public bool CheckInAvailable { get; set; } = false;
         public bool CanReschedule { get; set; } = false;
         public bool CanCancel { get; set; } = false;
