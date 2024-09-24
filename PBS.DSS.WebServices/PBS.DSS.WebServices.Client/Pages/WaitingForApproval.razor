@@ -172,11 +172,12 @@
         var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
 
         SharedStateService.AddModel(SharedModelTypes.InspectionDocument, Convert.ToBase64String(inspectionDoc));
-        await SharedStateService.SaveToSession();
+        // await SharedStateService.SaveToSession();
 
         busyDialog.Close();
 
-        await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
+        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
+        // await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
     }
 
     private void CalculateTotals()

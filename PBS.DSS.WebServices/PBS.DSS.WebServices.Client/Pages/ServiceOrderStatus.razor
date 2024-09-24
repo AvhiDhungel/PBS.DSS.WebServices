@@ -1,4 +1,4 @@
-@page "/ServiceOrderStatus"
+﻿@page "/ServiceOrderStatus"
 @page "/ServiceOrderStatus/{SerialNumber}/{WorkItemRef}"
 
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
@@ -112,11 +112,12 @@
         var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
 
         SharedStateService.AddModel(SharedModelTypes.InspectionDocument, Convert.ToBase64String(inspectionDoc));
-        await SharedStateService.SaveToSession();
+        // await SharedStateService.SaveToSession();
 
         busyDialog.Close();
 
-        await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
+        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
+        // await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
     }
 
     private async Task ViewCustomerCopy()
@@ -126,10 +127,11 @@
         var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
 
         SharedStateService.AddModel(SharedModelTypes.CustomerCopy, Convert.ToBase64String(inspectionDoc));
-        await SharedStateService.SaveToSession();
+        // await SharedStateService.SaveToSession();
 
         busyDialog.Close();
 
-        await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.CustomerCopy.ToString()}");
+        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.CustomerCopy.ToString()}");
+        // await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.CustomerCopy.ToString()}");
     }
 }
