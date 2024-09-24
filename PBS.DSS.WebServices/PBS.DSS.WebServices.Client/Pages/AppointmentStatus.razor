@@ -35,10 +35,10 @@
 
             <MudText Typo="Typo.h5" Class="mt-4">@Resources.AdditionalComments</MudText>
             <MudDivider Style="width:30%" />
-            <MudText>@Appointment.AdditionalComments</MudText>
+            <MudText>@Appointment.DropOffInstructions</MudText>
 
             <MudStack Class="mt-10 pb-10" Spacing="1">
-                @if (Appointment.CheckInAvailable)
+                @if (Appointment.SelfCheckInEnabled)
                 {
                     <MudButton Variant="Variant.Filled"
                                Color="Color.Tertiary"

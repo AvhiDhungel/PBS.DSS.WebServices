@@ -92,31 +92,12 @@ namespace PBS.DSS.WebServices.Server.Controllers
         private static void TranscribeAppointment(AppointmentDSSResponse resp, ConnectReceiveMessage<Appointment> msg)
         {
             msg.Object.ShopBanner = resp.ShopBanner;
+            msg.Object.DropOffInstructions = resp.DropOffInstructions;
+            msg.Object.SelfCheckInEnabled = resp.IsSelfCheckInEnabled;
 
-            TranscribeAppointment(resp.Appointment, msg.Object);
-        }
-
-        private static void TranscribeAppointment(ConnectModels.Appointment connectAppt, Appointment appt)
-        {
-            if (connectAppt == null) return;
-
-            appt.Id = connectAppt.WorkItemRef;
-            appt.VehicleRef = connectAppt.VehicleRef;
-            appt.ContactRef = connectAppt.ContactRef;
-            appt.AppointmentNumber = connectAppt.AppointmentNumber;
-            appt.AppointmentTime = connectAppt.AppointmentDateUTC;
-
-            foreach (var connectReq in connectAppt.Requests)
-            {
-                var req = new RequestLine();
-
-                req.RequestRef = connectReq.RequestRef;
-                req.OpCodeRef = connectReq.OpCodeRef;
-                req.OpCode = connectReq.OpCode;
-                req.Description = connectReq.RequestDescription;
-
-                appt.Requests.Add(req);
-            }
+            ConnectModelHelper.TranscribeAppointment(resp.Appointment, msg.Object);
+            ConnectModelHelper.TranscribeContact(msg.Object.ContactInfo, resp.Contact);
+            ConnectModelHelper.TranscribeVehicle(msg.Object.Vehicle, resp.Vehicle);
         }
         #endregion
 

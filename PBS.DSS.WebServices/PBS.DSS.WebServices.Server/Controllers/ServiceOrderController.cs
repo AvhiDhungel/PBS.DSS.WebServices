@@ -96,61 +96,10 @@ namespace PBS.DSS.WebServices.Server.Controllers
             if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; return; }
 
             msg.Object.ShopBanner = resp.ShopBanner;
-            TranscribeServiceOrder(msg.Object, resp.ServiceOrder);
-        }
 
-        private static void TranscribeServiceOrder(ServiceOrder so, ConnectModels.ServiceOrder connectSO)
-        {
-            if (connectSO == null) return;
-
-            so.Id = connectSO.WorkItemRef;
-            so.VehicleRef = connectSO.VehicleRef;
-            so.ContactRef = connectSO.ContactRef;
-            so.SONumber = connectSO.ServiceOrderNumber;
-
-            foreach (var connectReq in connectSO.Requests)
-            {
-                var req = new RequestLine();
-
-                req.RequestRef = connectReq.RequestRef;
-                req.OpCodeRef = connectReq.OpCodeRef;
-                req.OpCode = connectReq.OpCode;
-                req.Description = connectReq.RequestDescription;
-                req.EstimatedLabour = (double)connectReq.EstimatedLabour;
-                req.EstimatedParts = (double)connectReq.EstimatedParts;
-
-                switch (connectReq.RequestLineStatus)
-                {
-                    case ConnectModels.RequestLineStatuses.APPROVED:
-                        req.AWRStatus = AWRStatuses.Approved;
-                        break;
-                    case ConnectModels.RequestLineStatuses.PENDING:
-                        req.AWRStatus = AWRStatuses.Pending;
-                        break;
-                    case ConnectModels.RequestLineStatuses.DEFERRED:
-                        req.AWRStatus = AWRStatuses.Deferred;
-                        break;
-                    case ConnectModels.RequestLineStatuses.DECLINED:
-                        req.AWRStatus = AWRStatuses.Declined;
-                        break;
-                }
-
-                switch (connectReq.Severity)
-                {
-                    case RecommendedServiceSeverity.Low:
-                        req.Priority = RecommendedPriority.Low;
-                        break;
-                    case RecommendedServiceSeverity.Medium:
-                        req.Priority = RecommendedPriority.Medium;
-                        break;
-                    case RecommendedServiceSeverity.High:
-                    case RecommendedServiceSeverity.Critical:
-                        req.Priority = RecommendedPriority.High;
-                        break;
-                }
-
-                so.Requests.Add(req);
-            }
+            ConnectModelHelper.TranscribeServiceOrder(msg.Object, resp.ServiceOrder);
+            ConnectModelHelper.TranscribeContact(msg.Object.ContactInfo, resp.Contact);
+            ConnectModelHelper.TranscribeVehicle(msg.Object.Vehicle, resp.Vehicle);
         }
         #endregion
 

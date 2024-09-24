@@ -11,13 +11,13 @@
         public bool IsCheckedIn { get; set; } = false;
         public bool IsCanceled { get; set; } = false;
 
-        public bool CheckInAvailable { get; set; } = false;
+        public bool SelfCheckInEnabled { get; set; } = false;
         public bool CanReschedule { get; set; } = false;
         public bool CanCancel { get; set; } = false;
 
         public int Odometer { get; set; } = 0;
         public string AppointmentNumber { get; set; } = string.Empty;
-        public string AdditionalComments { get; set; } = string.Empty;
+        public string DropOffInstructions { get; set; } = string.Empty;
         public string ShopBanner { get; set; } = string.Empty;
 
         public Contact ContactInfo { get; set; } = new Contact();
@@ -32,10 +32,10 @@
             var appt = new Appointment();
 
             appt.AppointmentNumber = "81881";
-            appt.CheckInAvailable = true;
+            appt.SelfCheckInEnabled = true;
             appt.CanReschedule = true;
             appt.CanCancel = true;
-            appt.AdditionalComments = "Please park your vehicle on the left of the drive through and drop the keys in the box after you've checked in";
+            appt.DropOffInstructions = "Please park your vehicle on the left of the drive through and drop the keys in the box after you've checked in";
 
             var req = new RequestLine();
             req.Description = "Lube Oil & Filter - 15 Point Inspection - Reset Maintenance Reminder if required";
