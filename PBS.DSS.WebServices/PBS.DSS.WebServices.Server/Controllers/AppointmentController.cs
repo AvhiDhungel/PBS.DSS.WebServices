@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ConnectModels = PBS.ConnectHub.Library.Messages.Appointments;
 using PBS.ConnectHub.Library;
-using PBS.DSS.Shared.Models.WorkItems;
+using PBS.ConnectHub.Library.Messages.DigitalServiceSuite;
 using PBS.DSS.Shared.Criteria;
+using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.WebServices.Server.Integrations;
 using PBS.DSS.WebServices.Server.Extensions;
-using PBS.ConnectHub.Library.Messages.DigitalServiceSuite;
 using PBS.DSS.WebServices.Server.Utilities;
 
 namespace PBS.DSS.WebServices.Server.Controllers
@@ -24,7 +24,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
             {
                 await cl.SendToServer(new AppointmentDSSRequest { AppointmentRef = args.AppointmentRef });
 
-                while (!msg.HasCompleted) Thread.Sleep(500);
+                msg.WaitForCompletion();
             }
 
             return msg.GetResult();
@@ -40,7 +40,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
             {
                 await cl.SendToServer(new AppointmentCheckInRequest { AppointmentRef = appt.Id, Odometer = appt.Odometer });
 
-                while (!msg.HasCompleted) Thread.Sleep(500);
+                msg.WaitForCompletion();
             }
 
             return msg.GetResult();
@@ -56,7 +56,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
             {
                 await cl.SendToServer(new AppointmentCancelRequest { AppointmentRef = appt.Id });
 
-                while (!msg.HasCompleted) Thread.Sleep(500);
+                msg.WaitForCompletion();
             }
 
             return msg.GetResult();

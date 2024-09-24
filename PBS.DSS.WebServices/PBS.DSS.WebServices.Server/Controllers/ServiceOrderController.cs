@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ConnectModels = PBS.ConnectHub.Library.Messages.ServiceOrders;
 using PBS.ConnectHub.Library;
-using PBS.DSS.Shared.Models.WorkItems;
+using PBS.ConnectHub.Library.Messages.DigitalServiceSuite;
 using PBS.DSS.Shared.Criteria;
+using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.WebServices.Server.Utilities;
 using PBS.DSS.WebServices.Server.Integrations;
 using PBS.DSS.WebServices.Server.Extensions;
-using PBS.ConnectHub.Library.Messages.DigitalServiceSuite;
 
 namespace PBS.DSS.WebServices.Server.Controllers
 {
@@ -19,12 +19,12 @@ namespace PBS.DSS.WebServices.Server.Controllers
         public async Task<ActionResult<ServiceOrder>> FetchServiceOrder(ServiceOrderFetchArgs args)
         {
             var msg = new ConnectReceiveMessage<ServiceOrder>(new ServiceOrder());
-            
+
             using (var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrderResponse(x, msg)))
             {
                 await cl.SendToServer(new ServiceOrderDSSRequest() { ServiceOrderRef = args.ServiceOrderRef });
 
-                while (!msg.HasCompleted) Thread.Sleep(500);
+                msg.WaitForCompletion();
             }
 
             return msg.GetResult();
@@ -41,7 +41,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
                 var reqRefs = so.RequestsMarkedForApproval.Select(x => x.RequestRef).ToList();
                 await cl.SendToServer(new CalculateApprovedAWRRequest() { ServiceOrderRef = so.Id, ApprovedRequestRefs = reqRefs });
 
-                while (!msg.HasCompleted) Thread.Sleep(500);
+                msg.WaitForCompletion();
             }
 
             return msg.GetResult();
@@ -58,7 +58,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
                 var reqRefs = so.RequestsMarkedForApproval.Select(x => x.RequestRef).ToList();
                 await cl.SendToServer(new ServiceOrderApproveAWRRequest() { ServiceOrderRef = so.Id, ApprovedRequestRefs = reqRefs });
 
-                while (!msg.HasCompleted) Thread.Sleep(500);
+                msg.WaitForCompletion();
             }
 
             return msg.GetResult();
