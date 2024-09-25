@@ -74,7 +74,9 @@
                 <MudGrid Justify="Justify.Center">
                     @foreach (var pending in ServiceOrder.PendingRequests)
                     {
-                        <MudItem lg="5" md="4" xs="12">
+                        <MudItem lg="@((pending == ServiceOrder.PendingRequests.Last()) ? 10: 5)"
+                                 md="@((pending == ServiceOrder.PendingRequests.Last()) ? 8: 4)"
+                                 xs="12">
                             <MudPaper Elevation="4" Class="paper-card-wrap">
                                 <MudStack Spacing="1" AlignItems="AlignItems.Center">
                                     <MudText Style="@pending.Priority.LabelStyle()" Class="pl-2 pr-2 mb-2">
