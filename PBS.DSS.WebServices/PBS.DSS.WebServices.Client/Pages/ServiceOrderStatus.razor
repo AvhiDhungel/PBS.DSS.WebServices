@@ -3,55 +3,85 @@
 
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
-        <MudStack AlignItems="AlignItems.Center">
-            <MudText>@Resources.SO # @ServiceOrder.SONumber</MudText>
+        <MudStack AlignItems="AlignItems.Center" Class="mb-20">
+            <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Row="true" Wrap="Wrap.Wrap" Class="mb-4">
+                @if (!ServiceOrder.IsOpen)
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Tertiary"
+                               OnClick="ViewInspection">
+                        @Resources.Inspection
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Tertiary"
+                               OnClick="ViewCustomerCopy">
+                        @Resources.CustomerCopy
+                    </MudButton>
+                }
+                else if (ServiceOrder.PendingRequests.Count() > 0)
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Tertiary"
+                               StartIcon="@Icons.Material.Outlined.Recommend"
+                               OnClick="ViewRecommendations">
+                        @Resources.ViewYourRecommendations
+                    </MudButton>
+                }
+            </MudStack>
 
-            <MudText Typo="Typo.h5">@Resources.ServiceAdvisor</MudText>
-            <MudDivider Style="width:30%" />
-            <MudText>@ServiceOrder.AdvisorName</MudText>
+            <MudGrid Justify="Justify.Center">
+                <MudItem lg="5" md="6" xs="12">
+                    <MudPaper Elevation="4" Class="paper-card-fit">
+                        <MudStack AlignItems="AlignItems.Stretch" Spacing="1">
+                            <MudText Typo="Typo.h6" Align="Align.Center">@Resources.ServiceOrder</MudText>
+                            <MudDivider />
+                            <MudSpacer />
+                            <MudStack Row="true">
+                                <MudText>@Resources.SO #:</MudText>
+                                <MudSpacer />
+                                <MudText>@ServiceOrder.SONumber</MudText>
+                            </MudStack>
+                            <MudStack Row="true">
+                                <MudText>@Resources.ServiceAdvisor:</MudText>
+                                <MudSpacer />
+                                <MudText>@ServiceOrder.AdvisorName</MudText>
+                            </MudStack>
+                        </MudStack>
+                    </MudPaper>
+                </MudItem>
 
-            <MudText Typo="Typo.h5" Class="mt-4">@Resources.VehicleDetails</MudText>
-            <MudDivider Style="width:30%" />
-            <MudText>@ServiceOrder.Vehicle.Description</MudText>
-            <MudText>@ServiceOrder.Vehicle.VIN</MudText>
+                <MudItem lg="5" md="6" xs="12">
+                    <MudPaper Elevation="4" Class="paper-card-fit">
+                        <MudStack AlignItems="AlignItems.Center" Spacing="1">
+                            <MudText Typo="Typo.h6">@Resources.VehicleDetails</MudText>
+                            <MudDivider />
+                            <MudSpacer />
+                            <MudText>@ServiceOrder.Vehicle.Description</MudText>
+                            <MudText>@ServiceOrder.Vehicle.VIN</MudText>
+                        </MudStack>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
 
-            <MudText Typo="Typo.h5" Class="mt-4">@Resources.ApprovedServices</MudText>
-            <MudDivider Style="width:30%" />
-            @foreach (var approved in ServiceOrder.ApprovedRequests)
-            {
-                <MudText>@approved.Description</MudText>
-            }
+            <MudGrid Justify="Justify.Center" Class="mb-4">
+                <MudItem lg="10" md="12" xs="12">
+                    <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-4">@Resources.ApprovedServices</MudText>
+                    <MudDivider />
+                </MudItem>
+            </MudGrid>
 
-            @if (ServiceOrder.IsOpen)
-            {
-                <MudStack Class="mt-10" Spacing="1">
-                        <MudButton Variant="Variant.Filled"
-                                   Color="Color.Tertiary"
-                                   FullWidth="true"
-                                   Class="mr-20 pt-2 pb-2"
-                                   OnClick="ViewInspection">
-                            @Resources.Inspection
-                        </MudButton>
-                        <MudButton Variant="Variant.Filled"
-                                   Color="Color.Tertiary"
-                                   FullWidth="true"
-                                   OnClick="ViewCustomerCopy">
-                            @Resources.CustomerCopy
-                        </MudButton>
-                </MudStack>
-            }
-            else if (ServiceOrder.PendingRequests.Count() > 0)
-            {
-                <MudText Typo="Typo.h5" Class="mt-4">@Resources.EstimateAwaitingApproval</MudText>
-                <MudDivider Style="width:30%" />
-                <MudButton Style="align-self:center;"
-                           Variant="Variant.Filled"
-                           Color="Color.Tertiary"
-                           OnClick="ViewRecommendations">
-                    @Resources.ViewYourRecommendations
-                </MudButton>
-            }
-
+            <MudGrid Justify="Justify.Center">
+                @foreach (var approved in ServiceOrder.ApprovedRequests)
+                {
+                    <MudItem lg="5" md="5" xs="12">
+                        <MudPaper Elevation="4" Class="paper-card-wrap">
+                            <MudStack Spacing="1">
+                                <MudText>@approved.Description</MudText>
+                            </MudStack>
+                        </MudPaper>
+                    </MudItem>
+                }
+            </MudGrid>
         </MudStack>
     </Content>
 </MudSessionErrorWrapper>

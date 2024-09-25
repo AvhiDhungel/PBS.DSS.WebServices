@@ -88,6 +88,8 @@ namespace PBS.DSS.Shared
                     return Resources.Resources.AttentionRequired;
                 case RecommendedPriority.High:
                     return Resources.Resources.ImmediateAttentionRequired;
+                case RecommendedPriority.Low:
+                    return "Recommended";
                 default:
                     return string.Empty;
             }
@@ -95,14 +97,17 @@ namespace PBS.DSS.Shared
 
         public static string LabelStyle(this RecommendedPriority p)
         {
-            var baseStyle = "color:white; width:fit-content; border-radius:8px;";
+            var baseStyle = "width:fit-content; border-radius:8px;";
+            baseStyle += "border-top-width:1px; border-bottom-width:1px; border-left-width:1px; border-right-width:1px;";
 
             switch (p)
             {
                 case RecommendedPriority.Medium:
-                    return $"{baseStyle} background-color:darkorange;";
+                    return $"{baseStyle} border-color:darkorange; color:darkorange;";
                 case RecommendedPriority.High:
-                    return $"{baseStyle} background-color:darkred;";
+                    return $"{baseStyle} border-color:darkred; color:darkred;";
+                case RecommendedPriority.Low:
+                    return $"{baseStyle} border-color:black;";
                 default:
                     return string.Empty;
             }

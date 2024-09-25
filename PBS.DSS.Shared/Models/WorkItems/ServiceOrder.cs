@@ -45,27 +45,50 @@
             so.GrandTotal = 345.57;
             so.IsOpen = true;
 
-            var approved = new RequestLine();
-            approved.Description = "Lube Oil & Filter - 15 Point Inspection - Reset Maintenance Reminder if required";
-            approved.AWRStatus = AWRStatuses.Approved;
+            var approved1 = new RequestLine();
+            approved1.Description = "Lube Oil & Filter - 15 Point Inspection - Reset Maintenance Reminder if required";
+            approved1.AWRStatus = AWRStatuses.Approved;
+
+            var approved2 = new RequestLine();
+            approved2.Description = "Checking the A/C system for leaks and performance. Includes refrigerant recharge if needed.";
+            approved2.AWRStatus = AWRStatuses.Approved;
+
+            var approved3 = new RequestLine();
+            approved3.Description = "Flushing old brake fluid and replacing it to keep your brakes functioning properly. Includes a basic inspection of pads and rotors.";
+            approved3.AWRStatus = AWRStatuses.Approved;
+
+            var approved4 = new RequestLine();
+            approved4.Description = "Draining old coolant and refilling with new fluid to prevent overheating. Basic system inspection included.";
+            approved4.AWRStatus = AWRStatuses.Approved;
 
             var pending1 = new RequestLine();
-            pending1.Description = "Perform Cooling System Fluid Exchange/Flush";
+            pending1.Description = "Urgent replacement of worn brake pads. Necessary for safe driving. Includes inspection of rotors and brake fluid.";
             pending1.EstimatedLabour = 50;
             pending1.EstimatedParts = 100;
             pending1.AWRStatus = AWRStatuses.Pending;
             pending1.Priority = RecommendedPriority.High;
 
             var pending2 = new RequestLine();
-            pending2.Description = "Air Conditioning Recovery, Evacuation and Recharge";
+            pending2.Description = " Replace the cabin air filter to remove accumulated dust and debris that affect air quality inside the vehicle. ";
             pending2.EstimatedLabour = 50;
             pending2.EstimatedParts = 100;
             pending2.AWRStatus = AWRStatuses.Pending;
             pending2.Priority = RecommendedPriority.Medium;
 
-            so.Requests.Add(approved);
+            var pending3 = new RequestLine();
+            pending3.Description = "Draining old transmission fluid and replacing it with new fluid. Helps improve shifting performance.";
+            pending3.EstimatedLabour = 50;
+            pending3.EstimatedParts = 100;
+            pending3.AWRStatus = AWRStatuses.Pending;
+            pending3.Priority = RecommendedPriority.Low;
+
+            so.Requests.Add(approved1);
+            so.Requests.Add(approved2);
+            so.Requests.Add(approved3);
+            so.Requests.Add(approved4);
             so.Requests.Add(pending1);
             so.Requests.Add(pending2);
+            so.Requests.Add(pending3);
 
             so.Vehicle = Vehicle.GenerateDummy();
 
