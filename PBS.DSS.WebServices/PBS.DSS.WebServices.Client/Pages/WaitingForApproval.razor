@@ -100,14 +100,14 @@
                                         <MudButton Color="Color.Success"
                                                    StartIcon="@Icons.Material.Filled.Check"
                                                    Size="Size.Small"
-                                                   Variant="@(pending.MarkedForApproval ? Variant.Filled: Variant.Outlined)"
+                                                   Variant="@(pending.MarkedForApproval.HasValue && pending.MarkedForApproval.Value ? Variant.Filled: Variant.Outlined)"
                                                    OnClick="() => SetApproval(pending, true)">
                                             @Resources.Approve
                                         </MudButton>
                                         <MudButton Color="Color.Error"
                                                    StartIcon="@Icons.Material.Filled.Close"
                                                    Size="Size.Small"
-                                                   Variant="@(pending.MarkedForApproval ? Variant.Outlined : Variant.Filled)"
+                                                   Variant="@(!pending.MarkedForApproval.HasValue || pending.MarkedForApproval.Value ? Variant.Outlined : Variant.Filled)"
                                                    OnClick="() => SetApproval(pending, false)">
                                             @Resources.Decline
                                         </MudButton>
@@ -158,7 +158,8 @@
                     <MudButton Variant="Variant.Filled"
                                Color="Color.Primary"
                                Style="padding-left:8%; padding-right:8%;"
-                               StartIcon="@Icons.Material.Outlined.CheckCircle">
+                               StartIcon="@Icons.Material.Outlined.CheckCircle"
+                               OnClick="Confirm">
                         @Resources.Confirm
                     </MudButton>
                 </MudItem>
@@ -249,5 +250,13 @@
     {
         req.MarkedForApproval = approved;
         CalculateTotals();
+    }
+
+    private void Confirm()
+    {
+        if (ServiceOrder.PendingRequests.Any(x =>  !x.MarkedForApproval.HasValue))
+        {
+            SnackbarService.Add("Please Approve or Decline all Recommended Services Prior to Confirming", Severity.Error);
+        }
     }
 }
