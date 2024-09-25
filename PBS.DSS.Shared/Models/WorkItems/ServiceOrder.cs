@@ -26,12 +26,17 @@ namespace PBS.DSS.Shared.Models.WorkItems
         public List<RequestLine> Requests { get; set; } = [];
         public List<Attachment> Attachments { get; set; } = [];
 
+        public Dictionary<DocumentTypes, byte[]> Documents { get; set; } = new();
+
         public IEnumerable<RequestLine> ApprovedRequests { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Approved); }
         public IEnumerable<RequestLine> PendingRequests { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Pending); }
-        public IEnumerable<RequestLine> RequestsMarkedForApproval { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Pending &&
-                                                                           x.MarkedForApproval.HasValue && x.MarkedForApproval.Value); }
+        public IEnumerable<RequestLine> RequestsMarkedForApproval
+        {
+            get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Pending && x.MarkedForApproval.HasValue && x.MarkedForApproval.Value);
+        }
 
         public bool IsValid() => Id != Guid.Empty;
+        public bool HasInspection() => Documents.ContainsKey(DocumentTypes.Inspection);
 
         public static ServiceOrder GenerateDummy()
         {
