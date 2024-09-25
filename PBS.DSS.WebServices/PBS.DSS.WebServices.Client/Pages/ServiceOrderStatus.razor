@@ -40,21 +40,24 @@
 
             <MudGrid Justify="Justify.Center" Class="mb-4">
                 <MudItem lg="10" md="12" xs="12">
-                    <MudTimeline TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Top">
-                        @foreach (ServiceOrderTimeline e in Enum.GetValues(typeof(ServiceOrderTimeline)))
-                        {
-                            <MudTimelineItem Size="Size.Medium"
-                                             Color="Color.Success"
-                                             HideDot="@(ServiceOrder.Timeline != e)">
-                                <ItemDot>
-                                    <MudIcon Icon="@Icons.Material.Outlined.Check" />
-                                </ItemDot>
-                                <ItemContent>
-                                    <MudText Align="Align.Center">@(e.ToLocalizedString())</MudText>
-                                </ItemContent>
-                            </MudTimelineItem>
-                        }
-                    </MudTimeline>
+                    <MudPaper Elevation="4" Class="paper-card-flex">
+                        <MudTimeline Class="responsive-timeline" TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Top">
+                            @foreach (ServiceOrderTimeline e in Enum.GetValues(typeof(ServiceOrderTimeline)))
+                            {
+                                <MudTimelineItem Size="Size.Medium"
+                                                 Color="Color.Success"
+                                                 Variant="Variant.Filled"
+                                                 HideDot="@(ServiceOrder.Timeline != e)">
+                                    <ItemDot>
+                                        <MudIcon Icon="@Icons.Material.Outlined.Check" />
+                                    </ItemDot>
+                                    <ItemContent>
+                                        <MudText Align="Align.Center" Typo="Typo.body2">@(e.ToLocalizedString())</MudText>
+                                    </ItemContent>
+                                </MudTimelineItem>
+                            }
+                        </MudTimeline>
+                    </MudPaper>
                 </MudItem>
             </MudGrid>
 

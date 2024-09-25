@@ -1,4 +1,11 @@
-﻿.page-banner-image {
+﻿body {
+    color: floralwhite;
+    background-color: #0c1210;
+    background-image: url('backgroundimg.jpg');
+    background-repeat: no-repeat;
+}
+
+.page-banner-image {
     height: fit-content;
     max-height: 15em;
     width: 100%
@@ -12,12 +19,13 @@
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
     border-radius: 8px;
-    background-color: white;
+    color: floralwhite;
+    background-color: black;
     box-sizing: border-box;
 }
 
@@ -28,6 +36,9 @@
     max-width: contain;
     flex-grow: 1;
     height: 100%;
+    background-color: #0c1220;
+    color: floralwhite;
+    box-shadow: 0px 2px 4px 2px ghostwhite;
 }
 
 .paper-card-fit {
@@ -35,7 +46,18 @@
     padding: 20px;
     width: stretch;
     min-width: max-content;
-    height: 100%
+    height: 100%;
+    background-color: #0c1220;
+    color: floralwhite;
+    box-shadow: 0px 2px 4px 2px ghostwhite;
+}
+
+.paper-card-flex {
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #0c1220;
+    color: floralwhite;
+    box-shadow: 0px 2px 4px 2px ghostwhite;
 }
 
 .pdf-viewer-container {
@@ -52,6 +74,12 @@
     width: 100%;
     height: 100%;
     border: none;
+}
+
+.attachment-carousel {
+    height: 45em;
+    border-radius: 8px;
+    background-color: #0c1210;
 }
 
 @media (max-width: 768px) {

@@ -1,7 +1,7 @@
 ﻿@page "/CustomerAttachment"
 @page "/CustomerAttachment/{SerialNumber}/{WorkItemRef}/{NotificationRef}"
 
-<MudSessionErrorWrapper Validate="ValidateParams" Fetch="Initialize">
+<MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
         <MudStack>
             <MudButton Style="align-self:center; width:fit-content"
@@ -12,7 +12,7 @@
             </MudButton>
             <MudSpacer />
             <MudAttachmentCarousel Attachments="Attachments" />
-            <MudSpacer/>
+            <MudSpacer />
         </MudStack>
     </Content>
 </MudSessionErrorWrapper>
@@ -27,14 +27,25 @@
 
     private List<Attachment> Attachments { get; set; } = new();
 
-    protected void Initialize()
+    private async Task Initialize()
     {
-        var attachment = new Attachment();
-        attachment.Name = "Banner";
-        attachment.FileType = FileTypes.Image;
-        attachment.Content = Convert.FromBase64String(SharedStateService.SharedState.Banner);
+        var busyDialog = await DialogService.ShowAsync<MudBusyDialog>("");
+        var img = await httpClient.GetByteArrayAsync("backgroundimg.jpg");
 
-        Attachments.Add(attachment);
+        var attachment1 = new Attachment();
+        attachment1.Name = "Banner";
+        attachment1.FileType = FileTypes.Image;
+        attachment1.Content = Convert.FromBase64String(SharedStateService.GetBanner());
+
+        var attachment2 = new Attachment();
+        attachment2.Name = "Car";
+        attachment2.FileType = FileTypes.Image;
+        attachment2.Content = img;
+
+        Attachments.Add(attachment2);
+        Attachments.Add(attachment1);
+
+        busyDialog.Close();
     }
 
     private bool ValidateParams()
@@ -47,7 +58,7 @@
         if (NotificationRef.IsNullOrWhitespace())
         {
             SharedStateService.AddError(Resources.UnableToLocateAttachments);
-            return false;   
+            return false;
         }
 
         return true;

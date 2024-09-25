@@ -124,7 +124,7 @@ namespace PBS.DSS.Shared
                 case RecommendedPriority.Medium:
                     return $"{baseStyle} border-color:darkorange; color:darkorange;";
                 case RecommendedPriority.High:
-                    return $"{baseStyle} border-color:darkred; color:darkred;";
+                    return $"{baseStyle} border-color:darkred; color:indianred;";
                 case RecommendedPriority.Low:
                     return $"{baseStyle} border-color:black;";
                 default:
