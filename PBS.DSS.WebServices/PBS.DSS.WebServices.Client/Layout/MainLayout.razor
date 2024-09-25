@@ -3,25 +3,19 @@
 <MudProviders />
 
 <MudLayout>
-        <MudAppBar Elevation="1" Dense="true">
-            <MudSpacer />
-            <MudStack Row="true">
-                <MudButton Style="color:white;" OnClick="SetLanguageEN">EN</MudButton>
-                <MudButton Style="color:white;" OnClick="SetLanguageFR">FR</MudButton>
-            </MudStack>
-        </MudAppBar>
-        <MudMainContent>
-            @if (SharedStateService.HasBanner())
-            {
-                <MudStack Style="align-items:center" Justify="Justify.SpaceEvenly" Class="ma-2">
-                    <MudImage Src="@($"data:image/png;base64,{SharedStateService.GetBanner()}")" Style="max-height:10em; width:60%" />
-                    <MudDivider Style="width:60%; background-color:black; height:2px " />
-                </MudStack>
-            }
-            <MudContainer MaxWidth="MaxWidth.Large" Class="pt-5 justify-center align-center">
-                @Body
-            </MudContainer>
-        </MudMainContent>
+    <MudAppBar Elevation="1" Dense="true">
+        <MudSpacer />
+        <MudStack Row="true">
+            <MudButton Style="color:white;" OnClick="SetLanguageEN">EN</MudButton>
+            <MudButton Style="color:white;" OnClick="SetLanguageFR">FR</MudButton>
+        </MudStack>
+    </MudAppBar>
+    <MudMainContent>
+        <MudPageBanner Banner="@SharedStateService.GetBanner()" />
+        <MudContainer MaxWidth="MaxWidth.Large" Class="pt-5 justify-center align-center">
+            @Body
+        </MudContainer>
+    </MudMainContent>
 </MudLayout>
 
 @code {

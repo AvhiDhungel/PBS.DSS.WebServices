@@ -1,0 +1,14 @@
+﻿@if (Banner.HasValue())
+{
+    <MudGrid Justify="Justify.Center" Class="pt-2">
+        <MudItem xs="11" md="11" lg="7">
+            <MudImage Src="@($"data:image/png;base64,{SharedStateService.GetBanner()}")" class="page-banner-image" />
+            <MudDivider Style="background-color:black; height:2px" Class="mt-1 mb-2" />
+        </MudItem>
+    </MudGrid>
+}
+
+@code {
+    [Parameter]
+    public string Banner { get; set; } = string.Empty;
+}
