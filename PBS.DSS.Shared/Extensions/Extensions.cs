@@ -137,9 +137,9 @@ namespace PBS.DSS.Shared
             switch (p)
             {
                 case RecommendedPriority.Medium:
-                    return "box-shadow: 2px 4px 6px orange;";
+                    return "box-shadow: 0px 2px 4px 2px orange;";
                 case RecommendedPriority.High:
-                    return "box-shadow: 2px 4px 6px red;";
+                    return "box-shadow: 0px 2px 4px 2px red;";
                 default:
                     return string.Empty;
             }
