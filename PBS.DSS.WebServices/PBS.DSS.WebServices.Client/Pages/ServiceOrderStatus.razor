@@ -73,7 +73,9 @@
             <MudGrid Justify="Justify.Center">
                 @foreach (var approved in ServiceOrder.ApprovedRequests)
                 {
-                    <MudItem lg="5" md="5" xs="12">
+                    <MudItem lg="@((approved == ServiceOrder.ApprovedRequests.Last()) ? 10: 5)"
+                             md="@((approved == ServiceOrder.ApprovedRequests.Last()) ? 10: 5)"
+                             xs="12">
                         <MudPaper Elevation="4" Class="paper-card-wrap">
                             <MudStack Spacing="1">
                                 <MudText>@approved.Description</MudText>

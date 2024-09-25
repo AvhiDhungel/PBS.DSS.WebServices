@@ -77,7 +77,9 @@
                         <MudItem lg="@((pending == ServiceOrder.PendingRequests.Last()) ? 10: 5)"
                                  md="@((pending == ServiceOrder.PendingRequests.Last()) ? 8: 4)"
                                  xs="12">
-                            <MudPaper Elevation="4" Class="paper-card-wrap">
+                            <MudPaper Elevation="4"
+                                      Class="paper-card-wrap"
+                                      Style="@pending.Priority.PaperShadowStyle()">
                                 <MudStack Spacing="1" AlignItems="AlignItems.Center">
                                     <MudText Style="@pending.Priority.LabelStyle()" Class="pl-2 pr-2 mb-2">
                                         @pending.Priority.FriendlyText()
@@ -126,7 +128,9 @@
                 <MudGrid Justify="Justify.Center">
                     @foreach (var approved in ServiceOrder.ApprovedRequests)
                     {
-                        <MudItem lg="5" md="4" xs="12">
+                        <MudItem lg="@((approved == ServiceOrder.ApprovedRequests.Last()) ? 10: 5)"
+                                 md="@((approved == ServiceOrder.ApprovedRequests.Last()) ? 8: 4)"
+                                 xs="12">
                             <MudPaper Elevation="4" Class="paper-card-wrap">
                                 <MudStack Spacing="1">
                                     <MudText>@approved.Description</MudText>

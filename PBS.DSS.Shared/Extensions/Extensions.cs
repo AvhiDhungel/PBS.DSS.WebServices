@@ -113,6 +113,19 @@ namespace PBS.DSS.Shared
             }
         }
 
+        public static string PaperShadowStyle(this RecommendedPriority p)
+        {
+            switch (p)
+            {
+                case RecommendedPriority.Medium:
+                    return "box-shadow: 2px 4px 6px orange;";
+                case RecommendedPriority.High:
+                    return "box-shadow: 2px 4px 6px red;";
+                default:
+                    return string.Empty;
+            }
+        }
+
         [GeneratedRegex(@"^\d+$")]
         private static partial Regex IntegerRegex();
 
