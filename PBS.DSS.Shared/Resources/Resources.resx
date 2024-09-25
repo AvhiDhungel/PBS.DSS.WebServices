@@ -229,4 +229,22 @@
   <data name="EnterOdometer" xml:space="preserve">
     <value>Enter Odometer</value>
   </data>
+  <data name="CheckedIn" xml:space="preserve">
+    <value>Checked In</value>
+  </data>
+  <data name="InspectionStarted" xml:space="preserve">
+    <value>Inspection Started</value>
+  </data>
+  <data name="InspectionComplete" xml:space="preserve">
+    <value>Inspection Complete</value>
+  </data>
+  <data name="AllJobsComplete" xml:space="preserve">
+    <value>All Jobs Complete</value>
+  </data>
+  <data name="JobStarted" xml:space="preserve">
+    <value>Job Started</value>
+  </data>
+  <data name="ReadyForPickup" xml:space="preserve">
+    <value>Ready For Pickup</value>
+  </data>
 </root>

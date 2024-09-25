@@ -1,4 +1,6 @@
-﻿namespace PBS.DSS.Shared.Models.WorkItems
+﻿using PBS.DSS.Shared.Enums;
+
+namespace PBS.DSS.Shared.Models.WorkItems
 {
     public class ServiceOrder
     {
@@ -17,6 +19,7 @@
         public double FeesTotal { get; set; } = 0;
         public double GrandTotal { get; set; } = 0;
 
+        public ServiceOrderTimeline Timeline { get; set; } = ServiceOrderTimeline.InspectionComplete;
         public Contact ContactInfo { get; set; } = new Contact();
         public Vehicle Vehicle { get; set; } = new Vehicle();
 

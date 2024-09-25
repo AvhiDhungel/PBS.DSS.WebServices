@@ -79,6 +79,15 @@ namespace PBS.DSS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Jobs Complete.
+        /// </summary>
+        public static string AllJobsComplete {
+            get {
+                return ResourceManager.GetString("AllJobsComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Appointment.
         /// </summary>
         public static string Appointment {
@@ -147,6 +156,15 @@ namespace PBS.DSS.Shared.Resources {
         public static string CancelAppointment {
             get {
                 return ResourceManager.GetString("CancelAppointment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checked In.
+        /// </summary>
+        public static string CheckedIn {
+            get {
+                return ResourceManager.GetString("CheckedIn", resourceCulture);
             }
         }
         
@@ -259,6 +277,33 @@ namespace PBS.DSS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inspection Complete.
+        /// </summary>
+        public static string InspectionComplete {
+            get {
+                return ResourceManager.GetString("InspectionComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspection Started.
+        /// </summary>
+        public static string InspectionStarted {
+            get {
+                return ResourceManager.GetString("InspectionStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Started.
+        /// </summary>
+        public static string JobStarted {
+            get {
+                return ResourceManager.GetString("JobStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading.
         /// </summary>
         public static string Loading {
@@ -282,6 +327,15 @@ namespace PBS.DSS.Shared.Resources {
         public static string PleaseEnterAValidOdometer {
             get {
                 return ResourceManager.GetString("PleaseEnterAValidOdometer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready For Pickup.
+        /// </summary>
+        public static string ReadyForPickup {
+            get {
+                return ResourceManager.GetString("ReadyForPickup", resourceCulture);
             }
         }
         

@@ -5,6 +5,7 @@ namespace PBS.DSS.Shared
 {
     public static partial class Extensions
     {
+        #region String
         public static bool HasValue(this string value)
         {
             return !string.IsNullOrEmpty(value);
@@ -39,7 +40,9 @@ namespace PBS.DSS.Shared
         {
             return string.Concat(vaule.TakeLast(length));
         }
+        #endregion
 
+        #region DateTime
         public static DateTime StartOfDay(this DateTime value)
         {
             return new DateTime(value.Year, value.Month, value.Day, 0, 0, 0);
@@ -64,7 +67,9 @@ namespace PBS.DSS.Shared
         {
             return value.ToString("MM/dd/yyyy");
         }
+        #endregion
 
+        #region Enumerable
         public static bool HasItems<T>(this IEnumerable<T> list)
         {
             return list != null && list.Any();
@@ -74,12 +79,26 @@ namespace PBS.DSS.Shared
         {
             return args.Any(x => x != null && x.Equals(value));
         }
+        #endregion
 
+        #region "Enum"
+        public static string ToLocalizedString(this Enum e)
+        {
+            var key = e.ToString() ?? string.Empty;
+            if (!key.HasValue()) return string.Empty;
+
+            return Resources.Resources.ResourceManager.GetString(key) ?? key.ToString();
+        }
+        #endregion
+
+        #region Models
         public static bool IsApproved(this RequestLine req)
         {
             return req.AWRStatus == AWRStatuses.Approved;
         }
+        #endregion
 
+        #region CSS
         public static string FriendlyText(this RecommendedPriority p)
         {
             switch (p)
@@ -125,6 +144,7 @@ namespace PBS.DSS.Shared
                     return string.Empty;
             }
         }
+        #endregion
 
         [GeneratedRegex(@"^\d+$")]
         private static partial Regex IntegerRegex();

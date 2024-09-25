@@ -4,31 +4,6 @@
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
         <MudStack AlignItems="AlignItems.Center" Class="mb-20">
-            <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Row="true" Wrap="Wrap.Wrap" Class="mb-4">
-                @if (!ServiceOrder.IsOpen)
-                {
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Tertiary"
-                               OnClick="ViewInspection">
-                        @Resources.Inspection
-                    </MudButton>
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Tertiary"
-                               OnClick="ViewCustomerCopy">
-                        @Resources.CustomerCopy
-                    </MudButton>
-                }
-                else if (ServiceOrder.PendingRequests.Count() > 0)
-                {
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Tertiary"
-                               StartIcon="@Icons.Material.Outlined.Recommend"
-                               OnClick="ViewRecommendations">
-                        @Resources.ViewYourRecommendations
-                    </MudButton>
-                }
-            </MudStack>
-
             <MudGrid Justify="Justify.Center">
                 <MudItem lg="5" md="6" xs="12">
                     <MudPaper Elevation="4" Class="paper-card-fit">
@@ -62,6 +37,51 @@
                     </MudPaper>
                 </MudItem>
             </MudGrid>
+
+            <MudGrid Justify="Justify.Center" Class="mb-4">
+                <MudItem lg="10" md="12" xs="12">
+                    <MudTimeline TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Top">
+                        @foreach (ServiceOrderTimeline e in Enum.GetValues(typeof(ServiceOrderTimeline)))
+                        {
+                            <MudTimelineItem Size="Size.Medium"
+                                             Color="Color.Success"
+                                             HideDot="@(ServiceOrder.Timeline != e)">
+                                <ItemDot>
+                                    <MudIcon Icon="@Icons.Material.Outlined.Check" />
+                                </ItemDot>
+                                <ItemContent>
+                                    <MudText Align="Align.Center">@(e.ToLocalizedString())</MudText>
+                                </ItemContent>
+                            </MudTimelineItem>
+                        }
+                    </MudTimeline>
+                </MudItem>
+            </MudGrid>
+
+            <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Row="true" Wrap="Wrap.Wrap">
+                @if (!ServiceOrder.IsOpen)
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Tertiary"
+                               OnClick="ViewInspection">
+                        @Resources.Inspection
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Tertiary"
+                               OnClick="ViewCustomerCopy">
+                        @Resources.CustomerCopy
+                    </MudButton>
+                }
+                else if (ServiceOrder.PendingRequests.Count() > 0)
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Tertiary"
+                               StartIcon="@Icons.Material.Outlined.Recommend"
+                               OnClick="ViewRecommendations">
+                        @Resources.ViewYourRecommendations
+                    </MudButton>
+                }
+            </MudStack>
 
             <MudGrid Justify="Justify.Center" Class="mb-4">
                 <MudItem lg="10" md="12" xs="12">
