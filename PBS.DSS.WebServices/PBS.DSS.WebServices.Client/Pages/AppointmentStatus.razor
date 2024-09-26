@@ -45,11 +45,8 @@
 
             <MudGrid Justify="Justify.Center">
                 <MudItem lg="5" md="6" xs="12">
-                    <MudPaper Elevation="4" Class="paper-card-fit">
-                        <MudStack AlignItems="AlignItems.Stretch" Spacing="1">
-                            <MudText Typo="Typo.h6" Align="Align.Center">@Resources.AppointmentDetails</MudText>
-                            <MudDivider />
-                            <MudSpacer />
+                    <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Fit" Header="@Resources.AppointmentDetails">
+                        <ChildContent>
                             <MudStack Row="true">
                                 <MudText>@Resources.Appt #:</MudText>
                                 <MudSpacer />
@@ -65,31 +62,26 @@
                                 <MudSpacer />
                                 <MudText>@Appointment.AppointmentTime.LocalDateTime.ToShortTimeString()</MudText>
                             </MudStack>
-                        </MudStack>
-                    </MudPaper>
+                        </ChildContent>
+                    </MudPaperCard>
                 </MudItem>
 
                 <MudItem lg="5" md="6" xs="12">
-                    <MudPaper Elevation="4" Class="paper-card-fit">
-                        <MudStack AlignItems="AlignItems.Center" Spacing="1">
-                            <MudText Typo="Typo.h6">@Resources.VehicleDetails</MudText>
-                            <MudDivider />
-                            <MudSpacer />
-                            <MudText>@Appointment.Vehicle.Description</MudText>
-                            <MudText>@Appointment.Vehicle.VIN</MudText>
-                        </MudStack>
-                    </MudPaper>
+                    <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Fit" Header="@Resources.VehicleDetails">
+                        <ChildContent>
+                            <MudStack AlignItems="AlignItems.Center" Spacing="1">
+                                <MudText>@Appointment.Vehicle.Description</MudText>
+                                <MudText>@Appointment.Vehicle.VIN</MudText>
+                            </MudStack>
+                        </ChildContent>
+                    </MudPaperCard>
                 </MudItem>
 
                 <MudItem lg="10" md="12" xs="12">
-                    <MudPaper Elevation="4" Class="paper-card-wrap">
-                        <MudStack Spacing="1" AlignItems="AlignItems.Center">
-                            <MudText Typo="Typo.h6">@Resources.AdditionalComments</MudText>
-                            <MudDivider />
-                            <MudSpacer />
-                            <MudText>@Appointment.DropOffInstructions</MudText>
-                        </MudStack>
-                    </MudPaper>
+                    <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Wrap"
+                                  AlignItems="AlignItems.Center"
+                                  Header="@Resources.AdditionalComments"
+                                  Content="@Appointment.DropOffInstructions" />
                 </MudItem>
             </MudGrid>
 
@@ -106,14 +98,9 @@
                     <MudItem lg="@((req == Appointment.Requests.Last()) ? 10: 5)"
                              md="@((req == Appointment.Requests.Last()) ? 8: 4)"
                              xs="12">
-                        <MudPaper Elevation="4" Class="paper-card-wrap">
-                            <MudStack Spacing="1">
-                                <MudText>@req.Description</MudText>
-                            </MudStack>
-                        </MudPaper>
+                        <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Wrap" Content="@req.Description" />
                     </MudItem>
                 }
-
             </MudGrid>
         </MudStack>
     </Content>

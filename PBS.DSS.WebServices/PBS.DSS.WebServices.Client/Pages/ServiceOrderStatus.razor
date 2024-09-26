@@ -6,58 +6,58 @@
         <MudStack AlignItems="AlignItems.Center" Class="mb-20">
             <MudGrid Justify="Justify.Center">
                 <MudItem lg="5" md="6" xs="12">
-                    <MudPaper Elevation="4" Class="paper-card-fit">
-                        <MudStack AlignItems="AlignItems.Stretch" Spacing="1">
-                            <MudText Typo="Typo.h6" Align="Align.Center">@Resources.ServiceOrder</MudText>
-                            <MudDivider />
-                            <MudSpacer />
-                            <MudStack Row="true">
-                                <MudText>@Resources.SO #:</MudText>
-                                <MudSpacer />
-                                <MudText>@ServiceOrder.SONumber</MudText>
+                    <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Fit" Header="@Resources.ServiceOrder">
+                        <ChildContent>
+                            <MudStack AlignItems="AlignItems.Stretch" Spacing="1">
+                                <MudStack Row="true">
+                                    <MudText>@Resources.SO #:</MudText>
+                                    <MudSpacer />
+                                    <MudText>@ServiceOrder.SONumber</MudText>
+                                </MudStack>
+                                <MudStack Row="true">
+                                    <MudText>@Resources.ServiceAdvisor:</MudText>
+                                    <MudSpacer />
+                                    <MudText>@ServiceOrder.AdvisorName</MudText>
+                                </MudStack>
                             </MudStack>
-                            <MudStack Row="true">
-                                <MudText>@Resources.ServiceAdvisor:</MudText>
-                                <MudSpacer />
-                                <MudText>@ServiceOrder.AdvisorName</MudText>
-                            </MudStack>
-                        </MudStack>
-                    </MudPaper>
+                        </ChildContent>
+                    </MudPaperCard>
                 </MudItem>
 
                 <MudItem lg="5" md="6" xs="12">
-                    <MudPaper Elevation="4" Class="paper-card-fit">
-                        <MudStack AlignItems="AlignItems.Center" Spacing="1">
-                            <MudText Typo="Typo.h6">@Resources.VehicleDetails</MudText>
-                            <MudDivider />
-                            <MudSpacer />
-                            <MudText>@ServiceOrder.Vehicle.Description</MudText>
-                            <MudText>@ServiceOrder.Vehicle.VIN</MudText>
-                        </MudStack>
-                    </MudPaper>
+                    <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Fit" Header="@Resources.VehicleDetails">
+                        <ChildContent>
+                            <MudStack AlignItems="AlignItems.Center" Spacing="1">
+                                <MudText>@ServiceOrder.Vehicle.Description</MudText>
+                                <MudText>@ServiceOrder.Vehicle.VIN</MudText>
+                            </MudStack>
+                        </ChildContent>
+                    </MudPaperCard>
                 </MudItem>
             </MudGrid>
 
             <MudGrid Justify="Justify.Center" Class="mb-4">
                 <MudItem lg="10" md="12" xs="12">
-                    <MudPaper Elevation="4" Class="paper-card-flex">
-                        <MudTimeline Class="responsive-timeline" TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Top">
-                            @foreach (ServiceOrderTimeline e in Enum.GetValues(typeof(ServiceOrderTimeline)))
-                            {
-                                <MudTimelineItem Size="Size.Medium"
-                                                 Color="Color.Success"
-                                                 Variant="Variant.Filled"
-                                                 HideDot="@(ServiceOrder.Timeline != e)">
-                                    <ItemDot>
-                                        <MudIcon Icon="@Icons.Material.Outlined.Check" />
-                                    </ItemDot>
-                                    <ItemContent>
-                                        <MudText Align="Align.Center" Typo="Typo.body2">@(e.ToLocalizedString())</MudText>
-                                    </ItemContent>
-                                </MudTimelineItem>
-                            }
-                        </MudTimeline>
-                    </MudPaper>
+                    <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Flex">
+                        <ChildContent>
+                            <MudTimeline Class="responsive-timeline" TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Top">
+                                @foreach (ServiceOrderTimeline e in Enum.GetValues(typeof(ServiceOrderTimeline)))
+                                {
+                                    <MudTimelineItem Size="Size.Medium"
+                                                     Color="Color.Success"
+                                                     Variant="Variant.Filled"
+                                                     HideDot="@(ServiceOrder.Timeline != e)">
+                                        <ItemDot>
+                                            <MudIcon Icon="@Icons.Material.Outlined.Check" />
+                                        </ItemDot>
+                                        <ItemContent>
+                                            <MudText Align="Align.Center" Typo="Typo.body2">@(e.ToLocalizedString())</MudText>
+                                        </ItemContent>
+                                    </MudTimelineItem>
+                                }
+                            </MudTimeline>
+                        </ChildContent>
+                    </MudPaperCard>
                 </MudItem>
             </MudGrid>
 
@@ -99,11 +99,7 @@
                     <MudItem lg="@((approved == ServiceOrder.ApprovedRequests.Last()) ? 10: 5)"
                              md="@((approved == ServiceOrder.ApprovedRequests.Last()) ? 10: 5)"
                              xs="12">
-                        <MudPaper Elevation="4" Class="paper-card-wrap">
-                            <MudStack Spacing="1">
-                                <MudText>@approved.Description</MudText>
-                            </MudStack>
-                        </MudPaper>
+                        <MudPaperCard CardStyle="@MudPaperCard.PaperCardStyle.Wrap" Content="@approved.Description" />
                     </MudItem>
                 }
             </MudGrid>

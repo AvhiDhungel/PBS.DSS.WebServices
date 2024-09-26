@@ -1,0 +1,65 @@
+﻿<MudPaper Elevation="4"
+          Class="@GetPaperClass()"
+          Style="@GetPaperStyle()">
+    <MudStack AlignItems="AlignItems.Stretch" Spacing="1">
+        @if (HasHeader)
+        {
+            <MudText Typo="Typo.h6" Align="Align.Center">@Header</MudText>
+            <MudDivider Class="paper-card-header-divider" />
+            <MudSpacer />
+        }
+        @if (HasChildContent)
+        {
+            @ChildContent
+        }
+        else if (HasContent)
+        {
+            <MudStack AlignItems="@AlignItems" Spacing="1">
+                <MudText>@Content</MudText>
+            </MudStack>
+        }
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public string Header { get; set; } = string.Empty;
+    [Parameter]
+    public PaperCardStyle CardStyle { get; set; } = PaperCardStyle.Fit;
+    [Parameter]
+    public string Content { get; set; } = string.Empty;
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    [Parameter]
+    public AlignItems AlignItems { get; set; } = AlignItems.Baseline;
+    [Parameter]
+    public string? ShadowColor { get; set; } = "white";
+
+    private bool HasHeader => Header.HasValue();
+    private bool HasContent => Content.HasValue();
+    private bool HasChildContent => ChildContent != null;
+
+    public enum PaperCardStyle { Fit, Wrap, Flex }
+
+    private string GetPaperClass()
+    {
+        switch (CardStyle)
+        {
+            case PaperCardStyle.Fit:
+                return "paper-card-fit";
+            case PaperCardStyle.Wrap:
+                return "paper-card-wrap";
+            case PaperCardStyle.Flex:
+                return "paper-card-flex";
+            default:
+                return "paper-card-fit";
+        }
+    }
+
+    private string GetPaperStyle()
+    {
+        if (ShadowColor == null || ShadowColor.IsNullOrWhitespace()) return string.Empty;
+        return $"box-shadow: 0px 2px 4px 2px {ShadowColor};";
+    }
+
+}

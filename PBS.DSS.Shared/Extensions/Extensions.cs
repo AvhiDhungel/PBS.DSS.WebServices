@@ -132,16 +132,16 @@ namespace PBS.DSS.Shared
             }
         }
 
-        public static string PaperShadowStyle(this RecommendedPriority p)
+        public static string GetColor(this RecommendedPriority p)
         {
             switch (p)
             {
                 case RecommendedPriority.Medium:
-                    return "box-shadow: 0px 2px 4px 2px orange;";
+                    return "orange;";
                 case RecommendedPriority.High:
-                    return "box-shadow: 0px 2px 4px 2px red;";
+                    return "red;";
                 default:
-                    return string.Empty;
+                    return "inherit;";
             }
         }
         #endregion
