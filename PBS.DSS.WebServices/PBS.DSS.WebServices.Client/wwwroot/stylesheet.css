@@ -5,6 +5,12 @@
     background-image: url('backgroundimg.jpg');
 }
 
+.main-container {
+    background-color: rgba(12, 18, 16, 0.5);
+    padding-top: 25px;
+    border-radius: 30px;
+}
+
 .page-banner-image {
     height: fit-content;
     max-height: 15em;
@@ -29,6 +35,17 @@
     box-sizing: border-box;
 }
 
+.paper-card-fit {
+    border-radius: 8px;
+    padding: 20px;
+    width: stretch;
+    min-width: max-content;
+    height: 100%;
+    background-color: rgba(12, 18, 37, 0.65);
+    color: floralwhite;
+    box-shadow: 0px 2px 4px 2px ghostwhite;
+}
+
 .paper-card-wrap {
     border-radius: 8px;
     padding: 20px;
@@ -36,18 +53,7 @@
     max-width: contain;
     flex-grow: 1;
     height: 100%;
-    background-color: #0c1215;
-    color: floralwhite;
-    box-shadow: 0px 2px 4px 2px ghostwhite;
-}
-
-.paper-card-fit {
-    border-radius: 8px;
-    padding: 20px;
-    width: stretch;
-    min-width: max-content;
-    height: 100%;
-    background-color: #0c1215;
+    background-color: rgba(12, 18, 37, 0.65);
     color: floralwhite;
     box-shadow: 0px 2px 4px 2px ghostwhite;
 }
@@ -55,7 +61,7 @@
 .paper-card-flex {
     border-radius: 8px;
     padding: 10px;
-    background-color: #0c1215;
+    background-color: rgba(12, 18, 37, 0.65);
     color: floralwhite;
     box-shadow: 0px 2px 4px 2px ghostwhite;
 }
