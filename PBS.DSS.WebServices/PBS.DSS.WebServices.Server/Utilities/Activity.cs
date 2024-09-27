@@ -23,11 +23,8 @@ namespace PBS.DSS.WebServices.Server.Utilities
             Type = type;
         }
 
-        public void LogMessage(string msg)
-        {
-            Log.AppendLine(msg);
-        }
-
+        public void LogMessage(string msg) => Log.AppendLine(msg);
+        public void LogNewLine() => Log.AppendLine(" ");
         public void LogException(Exception ex)
         {
             Log.AppendLine(" ");

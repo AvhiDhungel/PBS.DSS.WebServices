@@ -74,7 +74,7 @@ namespace PBS.DSS.WebServices.Server.Utilities
         #endregion
 
         #region Appointment
-        public static void TranscribeAppointment(ConnectAppt.Appointment connectAppt, Appointment appt)
+        public static void TranscribeAppointment(Appointment appt, ConnectAppt.Appointment connectAppt)
         {
             if (connectAppt == null) return;
 
