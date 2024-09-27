@@ -11,10 +11,14 @@
         </MudStack>
     </MudAppBar>
     <MudMainContent>
-        <MudPageBanner Banner="@SharedStateService.GetBanner()" />
-        <MudContainer MaxWidth="MaxWidth.Large" Class="main-container justify-center align-center">
-            @Body
-        </MudContainer>
+        <MudGrid Justify="Justify.Center" Class="pt-2">
+            <MudItem xs="11" md="11" lg="7">
+                <MudContainer MaxWidth="MaxWidth.Large" Class="main-container justify-center align-center">
+                <MudPageBanner Banner="@SharedStateService.GetBanner()" />
+                    @Body
+                </MudContainer>
+            </MudItem>
+        </MudGrid>
     </MudMainContent>
 </MudLayout>
 
@@ -25,7 +29,7 @@
     protected async override Task OnInitializedAsync()
     {
         //Debug Code
-        var banner = await httpClient.GetByteArrayAsync("banner.png");
+        var banner = await httpClient.GetByteArrayAsync("abcmotors.png");
         SharedStateService.SetBanner(Convert.ToBase64String(banner));
     }
 

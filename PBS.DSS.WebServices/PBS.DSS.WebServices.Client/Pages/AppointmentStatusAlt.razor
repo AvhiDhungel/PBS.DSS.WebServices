@@ -1,0 +1,151 @@
+﻿@page "/AppointmentStatusAlt"
+
+<MudStack AlignItems="AlignItems.Stretch" Class="mb-20">
+    <MudCard Class="card-alt">
+        <MudCardHeader>
+            <MudText Typo="Typo.h5">@Resources.AppointmentDetails</MudText>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h6">@Resources.Appointment</MudText>
+                <MudText Class="card-detail-text">@Appointment.AppointmentNumber</MudText>
+            </MudStack>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h6">@Resources.Date</MudText>
+                <MudText Class="card-detail-text">@Appointment.AppointmentTime.LocalDateTime.ToShortDateString()</MudText>
+            </MudStack>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h6">@Resources.Time</MudText>
+                <MudText Class="card-detail-text">@Appointment.AppointmentTime.LocalDateTime.ToShortTimeString()</MudText>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+    <MudCard Class="card-alt">
+        <MudCardHeader>
+            <MudText Typo="Typo.h5">@Resources.VehicleDetails</MudText>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudStack>
+                <MudText Class="card-detail-text">@Appointment.Vehicle.Description</MudText>
+                <MudText Class="card-detail-text">@Appointment.Vehicle.VIN</MudText>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+    <MudCard Class="card-alt">
+        <MudCardHeader>
+            <MudStack Row="true" Style="width:100%">
+                <MudText Typo="Typo.h5">@Resources.Services</MudText>
+                <MudSpacer />
+                <MudToggleIconButton Variant="Variant.Text"
+                                     Style="color:white;"
+                                     ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp"
+                                     Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                                     Size="Size.Large"
+                                     ToggledSize="Size.Large"
+                                     Toggled="IsServicesExpanded"
+                                     ToggledChanged="ToggleServices" />
+            </MudStack>
+        </MudCardHeader>
+        <MudCollapse Expanded="@IsServicesExpanded">
+            <MudCardContent>
+                <MudStack>
+                    @foreach (var req in Appointment.Requests)
+                    {
+                        <MudText Class="card-detail-text">@req.Description</MudText>
+                    }
+                </MudStack>
+            </MudCardContent>
+        </MudCollapse>
+    </MudCard>
+    <MudGrid Justify="Justify.Center">
+        <MudItem lg="3" md="3" xs="6">
+            <MudButton Class="transparent-button" Variant="Variant.Outlined" OnClick="CheckIn">
+                @Resources.CheckIn.ToUpper()
+            </MudButton>
+        </MudItem>
+        <MudItem lg="3" md="3" xs="6">
+            <MudButton Class="transparent-button" Variant="Variant.Outlined" OnClick="ReSchedule">
+                @Resources.Reschedule.ToUpper()
+            </MudButton>
+        </MudItem>
+        <MudItem lg="3" md="3" xs="6">
+            <MudButton Class="transparent-button" Variant="Variant.Outlined" OnClick="CancelAppointment">
+                @Resources.CancelAppointment.ToUpper()
+            </MudButton>
+        </MudItem>
+        <MudItem lg="3" md="3" xs="6">
+            <MudButton Class="transparent-button" Variant="Variant.Outlined" OnClick="AddToCalendar">
+                @Resources.AddToCalendar.ToUpper()
+            </MudButton>
+        </MudItem>
+    </MudGrid>
+</MudStack>
+
+@code {
+    private Appointment Appointment { get; set; } = new();
+    private string SerialNumber { get; set; } = string.Empty;
+
+    private bool IsServicesExpanded { get; set; } = true;
+
+    protected override void OnInitialized()
+    {
+        Appointment = Appointment.GenerateDummy();
+        SerialNumber = "9999.QA";
+    }
+
+    private void ToggleServices() => IsServicesExpanded = !IsServicesExpanded;
+
+    private void ViewRecommendations()
+    {
+        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{Appointment.Id}");
+    }
+
+    private async Task CheckIn()
+    {
+        if (!await PromptOdometer()) return;
+    }
+
+    private async Task<bool> PromptOdometer()
+    {
+        var options = new DialogOptions();
+        options.CloseOnEscapeKey = false;
+        options.BackdropClick = false;
+        options.Position = DialogPosition.Center;
+        options.MaxWidth = MaxWidth.ExtraSmall;
+
+        var parameters = new DialogParameters<OdomoterEntryDialog>();
+        parameters.Add(x => x.Odometer, Appointment.Odometer);
+
+        var dialog = await DialogService.ShowAsync<OdomoterEntryDialog>(Resources.EnterOdometer, parameters, options);
+        var result = await dialog.Result;
+        var odom = result.GetValue<int>();
+
+        if (odom == 0) return false;
+
+        Appointment.Odometer = odom;
+        return true;
+    }
+
+    private void ReSchedule()
+    {
+        NavigationManager.NavigateTo($"{Utilities.GetWebAppointmentsURL()}/{SerialNumber}/{Appointment.Id}/Reschedule");
+    }
+
+    private void CancelAppointment()
+    {
+
+    }
+
+    private async Task AddToCalendar()
+    {
+        var args = new Helpers.ICSDownloadArgs();
+
+        args.StartDate = Appointment.AppointmentTime.LocalDateTime;
+        args.EndDate = Appointment.PickupDate.LocalDateTime;
+        args.Summary = Appointment.Vehicle.Description;
+        args.Description = string.Join(" ", Appointment.Requests.Select(x => x.Description));
+        args.Reference = Appointment.VehicleRef.ToString();
+
+        await InterOpService.DownloadICS(args);
+    }
+}

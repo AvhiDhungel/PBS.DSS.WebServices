@@ -1,4 +1,4 @@
-﻿<MudDialog>
+﻿<MudDialog Class="transparent-dialog">
     <DialogContent>
         <MudStack>
             <MudTextField Label="@Resources.VehicleOdometer"
@@ -11,15 +11,15 @@
             <MudSpacer />
 
             <MudStack Row="true">
-                <MudButton Variant="Variant.Filled"
-                           Color="Color.Success"
+                <MudButton Class="transparent-button"
+                           Variant="Variant.Outlined"
                            Disabled="@(Odometer == 0)"
                            OnClick="ConfirmOdometer">
                     @Resources.CheckIn
                 </MudButton>
                 <MudSpacer />
-                <MudButton Variant="Variant.Filled"
-                           Color="Color.Error"
+                <MudButton Class="transparent-button"
+                           Variant="Variant.Outlined"
                            OnClick="CancelCheckIn">
                     @Resources.Cancel
                 </MudButton>

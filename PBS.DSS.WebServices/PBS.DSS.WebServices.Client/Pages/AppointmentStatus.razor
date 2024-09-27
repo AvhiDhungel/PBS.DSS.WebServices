@@ -152,7 +152,7 @@
 
     private void ViewRecommendations()
     {
-        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{WorkItemRef}");
+        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{Appointment.Id}");
     }
 
     private async Task CheckIn()
