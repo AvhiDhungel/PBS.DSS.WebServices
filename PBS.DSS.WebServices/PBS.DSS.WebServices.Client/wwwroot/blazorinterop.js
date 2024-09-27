@@ -1,3 +1,8 @@
+function toggleTheme(isDarkMode) {
+    const themeLink = document.getElementById("theme-stylesheet");
+    themeLink.href = isDarkMode ? "dark-theme.css" : "light-theme.css";
+}
+
 function isDevice() {
     return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);
 }

@@ -7,6 +7,11 @@ namespace PBS.DSS.WebServices.Client.Services
     {
         private readonly IJSRuntime _jsRuntime = jsRuntime;
 
+        public async Task ToggleTheme(bool isDark)
+        {
+            await _jsRuntime.InvokeVoidAsync("toggleTheme", isDark);
+        }
+
         public async ValueTask<bool> IsMobile()
         {
             return await _jsRuntime.InvokeAsync<bool>("isDevice");

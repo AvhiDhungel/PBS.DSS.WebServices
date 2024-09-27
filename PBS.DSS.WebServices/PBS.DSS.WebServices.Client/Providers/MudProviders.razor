@@ -1,9 +1,12 @@
-﻿<MudThemeProvider Theme="Theme" IsDarkMode="true" />
+﻿<MudThemeProvider Theme="Theme" @bind-IsDarkMode="IsDarkMode" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 @code {
+    [CascadingParameter]
+    private bool IsDarkMode { get; set; } = true;
+
     private MudTheme Theme { get; set; } = new();
 
     protected override void OnInitialized()
@@ -16,5 +19,8 @@
 
         Theme.PaletteDark.AppbarBackground = Colors.Shades.Black;
         Theme.PaletteDark.Primary = Colors.Shades.White;
+
+        Theme.PaletteLight.AppbarBackground = Colors.Shades.Black;
+        Theme.PaletteLight.Primary = Colors.Shades.Black;
     }
 }

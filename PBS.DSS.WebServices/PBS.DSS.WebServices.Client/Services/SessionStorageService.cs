@@ -10,7 +10,8 @@ namespace PBS.DSS.WebServices.Client.Services
     public sealed class SessionStorageService(ISessionStorageService storageService)
     {
         private const string C_SessionCultureKey = "PBS_DSS_CultureString";
-        private const string C_SharedStateKey = "PBS_SharedState";
+        private const string C_LightThemeKey = "PBS_DSS_LightTheme";
+        private const string C_SharedStateKey = "PBS_DSS_SharedState";
 
         private readonly ISessionStorageService _sessionStorageService = storageService;
 
@@ -45,6 +46,11 @@ namespace PBS.DSS.WebServices.Client.Services
 
             return culture;
         }
+
+        public async Task SetLightMode(bool isLightMode) => await SaveToSessionAsync(C_LightThemeKey, isLightMode);
+        public async Task SetDarkMode(bool isDarkMode) => await SaveToSessionAsync(C_LightThemeKey, !isDarkMode);
+        public async Task<bool> IsLightMode() => await ReadFromSessionAsync<bool>(C_LightThemeKey);
+        public async Task<bool> IsDarkMode() => !(await IsLightMode());
 
         public async Task SaveSharedState(SharedState s) => await SaveToSessionAsync(C_SharedStateKey, s);
         public async Task<SharedState> GetSharedState() => await ReadFromSessionAsync<SharedState>(C_SharedStateKey) ?? new();

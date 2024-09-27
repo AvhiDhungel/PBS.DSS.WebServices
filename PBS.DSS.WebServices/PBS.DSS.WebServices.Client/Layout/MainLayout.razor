@@ -1,20 +1,27 @@
 ﻿@inherits LayoutComponentBase
 
-<MudProviders />
+<CascadingValue Value="IsDarkMode">
+    <MudProviders />
+</CascadingValue>
 
 <MudLayout>
     <MudAppBar Elevation="1" Dense="true">
         <MudSpacer />
         <MudStack Row="true">
-            <MudButton Style="color:white;" OnClick="SetLanguageEN">EN</MudButton>
-            <MudButton Style="color:white;" OnClick="SetLanguageFR">FR</MudButton>
+            <MudToggleIconButton Style="color:white;"
+                                 Toggled="IsDarkMode"
+                                 ToggledChanged="ToggleTheme"
+                                 ToggledIcon="@Icons.Material.Filled.DarkMode"
+                                 Icon="@Icons.Material.Filled.LightMode" />
+            <MudButton Class="mud-appbar-button" Variant="Variant.Text" OnClick="SetLanguageEN">EN</MudButton>
+            <MudButton Class="mud-appbar-button" Variant="Variant.Text" OnClick="SetLanguageFR">FR</MudButton>
         </MudStack>
     </MudAppBar>
     <MudMainContent>
         <MudGrid Justify="Justify.Center" Class="pt-2">
             <MudItem xs="11" md="11" lg="7">
                 <MudContainer MaxWidth="MaxWidth.Large" Class="main-container justify-center align-center">
-                <MudPageBanner Banner="@SharedStateService.GetBanner()" />
+                    <MudPageBanner Banner="@SharedStateService.GetBanner()" />
                     @Body
                 </MudContainer>
             </MudItem>
@@ -23,11 +30,15 @@
 </MudLayout>
 
 @code {
+    private bool IsDarkMode { get; set; } = true;
+
     private async Task SetLanguageEN() { await SetCulture("en-CA"); }
     private async Task SetLanguageFR() { await SetCulture("fr-CA"); }
 
     protected async override Task OnInitializedAsync()
     {
+        if (IsDarkMode != await SessionStorageService.IsDarkMode()) await ToggleTheme();
+
         //Debug Code
         var banner = await httpClient.GetByteArrayAsync("abcmotors.png");
         SharedStateService.SetBanner(Convert.ToBase64String(banner));
@@ -47,5 +58,13 @@
         await SessionStorageService.SetSessionCulture(cInfo.Name);
 
         NavigationManager.Refresh();
+    }
+
+    private async Task ToggleTheme()
+    {
+        IsDarkMode = !IsDarkMode;
+
+        await InterOpService.ToggleTheme(IsDarkMode);
+        await SessionStorageService.SetDarkMode(IsDarkMode);
     }
 }
