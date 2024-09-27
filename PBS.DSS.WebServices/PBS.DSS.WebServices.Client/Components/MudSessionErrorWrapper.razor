@@ -4,14 +4,23 @@
 }
 else
 {
-    <MudStack Class="pb-10" Style="display:flex; align-items:center">
-        <MudText Typo="Typo.h6">
-            @Resources.ErrorLoadingYourPage
-        </MudText>
-        <MudText>
-            @if (SharedStateService.HasErrors()) { @SharedStateService.GetErrors(); }
-        </MudText>
-    </MudStack>
+    <MudCard>
+        <MudCardHeader>
+            <MudText Typo="Typo.h6">
+                @Resources.ErrorLoadingYourPage
+            </MudText>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudStack>
+                <MudText>
+                    @if (SharedStateService.HasErrors())
+                    {
+                        @SharedStateService.GetErrors()
+                    }
+                </MudText>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
 }
 
 @code {
