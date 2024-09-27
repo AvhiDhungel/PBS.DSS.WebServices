@@ -34,6 +34,17 @@
                     </MudStack>
                 </MudCardContent>
             </MudCard>
+            @if (Appointment.DropOffInstructions.HasValue())
+            {
+                <MudCard>
+                    <MudCardHeader>
+                        <MudText Typo="Typo.h5">@Resources.AdditionalComments</MudText>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Class="card-detail-text">@Appointment.DropOffInstructions</MudText>
+                    </MudCardContent>
+                </MudCard>
+            }
             <MudCard>
                 <MudCardHeader>
                     <MudStack Row="true" Style="width:100%">

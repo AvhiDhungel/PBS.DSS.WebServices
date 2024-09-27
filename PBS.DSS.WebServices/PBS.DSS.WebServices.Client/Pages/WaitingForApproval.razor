@@ -4,134 +4,130 @@
 
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
-        <MudContainer>
-            <MudStack AlignItems="AlignItems.Center" Class="mb-20">
-                <MudGrid Justify="Justify.Center">
-                    <MudItem lg="5" md="6" xs="12">
-                        <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Fit" Header="@Resources.ServiceOrder">
-                            <ChildContent>
-                                <MudStack AlignItems="AlignItems.Stretch" Spacing="1">
-                                    <MudStack Row="true">
-                                        <MudText>@Resources.SO #:</MudText>
-                                        <MudSpacer />
-                                        <MudText>@ServiceOrder.SONumber</MudText>
-                                    </MudStack>
-                                    <MudStack Row="true">
-                                        <MudText>@Resources.ServiceAdvisor:</MudText>
-                                        <MudSpacer />
-                                        <MudText>@ServiceOrder.AdvisorName</MudText>
-                                    </MudStack>
-                                    <MudStack Row="true" AlignItems="AlignItems.Center">
-                                        <MudText>@Resources.Inspection:</MudText>
-                                        <MudSpacer />
-                                        <MudButton Variant="Variant.Filled"
-                                                   Color="Color.Primary"
-                                                   StartIcon="@Icons.Material.Outlined.Checklist"
-                                                   OnClick="ViewInspection">
-                                            View
+        <MudStack AlignItems="AlignItems.Stretch" Class="mb-10">
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h5">@Resources.ServiceOrder</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h6">@Resources.ServiceOrder</MudText>
+                        <MudText Class="card-detail-text">@ServiceOrder.SONumber</MudText>
+                    </MudStack>
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h6">@Resources.ServiceAdvisor</MudText>
+                        <MudText Class="card-detail-text">@ServiceOrder.AdvisorName</MudText>
+                    </MudStack>
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h6">@Resources.Inspection</MudText>
+                        <MudButton Variant="Variant.Outlined"
+                                   Class="monochrome-button pl-5 pr-5 pt-1 pb-1"
+                                   StartIcon="@Icons.Material.Outlined.Checklist"
+                                   Style="width:fit-content; height:fit-content;"
+                                   OnClick="ViewInspection">
+                            View
+                        </MudButton>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h5">@Resources.VehicleDetails</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack>
+                        <MudText Class="card-detail-text">@ServiceOrder.Vehicle.Description</MudText>
+                        <MudText Class="card-detail-text">@ServiceOrder.Vehicle.VIN</MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+            @if (ServiceOrder.AdditionalComments.HasValue())
+            {
+                <MudCard>
+                    <MudCardHeader>
+                        <MudText Typo="Typo.h5">@Resources.AdditionalComments</MudText>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Class="card-detail-text">@ServiceOrder.AdditionalComments</MudText>
+                    </MudCardContent>
+                </MudCard>
+            }
+            @if (ServiceOrder.PendingRequests.Count() > 0)
+            {
+                <MudCard>
+                    <MudCardHeader>
+                        <MudText Typo="Typo.h5">@Resources.ServiceRecommendations</MudText>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudStack>
+                            @foreach (var pending in ServiceOrder.PendingRequests)
+                            {
+                                <MudStack Spacing="1" AlignItems="AlignItems.Center">
+                                    <MudText Style="@pending.Priority.LabelStyle()" Class="pl-2 pr-2 mb-2">
+                                        @pending.Priority.FriendlyText()
+                                    </MudText>
+
+                                    <MudGrid Spacing="0">
+                                        <MudItem xs="9">
+                                            <MudText Class="card-detail-text">@pending.Description</MudText>
+                                        </MudItem>
+                                        <MudItem xs="3">
+                                            <MudText Class="card-detail-text" Align="Align.End">@((pending.EstimatedLabour + pending.EstimatedParts).ToString("C2"))</MudText>
+                                        </MudItem>
+                                    </MudGrid>
+
+                                    <MudStack AlignItems="AlignItems.Start"
+                                              Justify="Justify.Center"
+                                              Class="mb-5"
+                                              Row="true">
+                                        <MudButton Color="Color.Success"
+                                                   StartIcon="@Icons.Material.Filled.Check"
+                                                   Size="Size.Small"
+                                                   Variant="@(pending.MarkedForApproval.HasValue && pending.MarkedForApproval.Value ? Variant.Filled: Variant.Outlined)"
+                                                   OnClick="() => SetApproval(pending, true)">
+                                            @Resources.Approve
+                                        </MudButton>
+                                        <MudButton Color="Color.Error"
+                                                   StartIcon="@Icons.Material.Filled.Close"
+                                                   Size="Size.Small"
+                                                   Variant="@(!pending.MarkedForApproval.HasValue || pending.MarkedForApproval.Value ? Variant.Outlined : Variant.Filled)"
+                                                   OnClick="() => SetApproval(pending, false)">
+                                            @Resources.Decline
                                         </MudButton>
                                     </MudStack>
                                 </MudStack>
-                            </ChildContent>
-                        </MudPaperCard>
-                    </MudItem>
-
-                    <MudItem lg="5" md="6" xs="12">
-                        <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Fit" Header="@Resources.VehicleDetails">
-                            <ChildContent>
-                                <MudStack AlignItems="AlignItems.Center" Spacing="1">
-                                    <MudSpacer />
-                                    <MudText>@ServiceOrder.Vehicle.Description</MudText>
-                                    <MudText>@ServiceOrder.Vehicle.VIN</MudText>
-                                </MudStack>
-                            </ChildContent>
-                        </MudPaperCard>
-                    </MudItem>
-
-                    @if (ServiceOrder.AdditionalComments.HasValue())
-                    {
-                        <MudItem lg="10" md="12" xs="12">
-                            <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Wrap"
-                                          AlignItems="AlignItems.Center"
-                                          Header="@Resources.AdditionalComments"
-                                          Content="@ServiceOrder.AdditionalComments" />
-                        </MudItem>
-                    }
-                </MudGrid>
-
-                <MudGrid Justify="Justify.Center" Class="mb-4">
-                    <MudItem lg="10" md="12" xs="12">
-                        <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-4">@Resources.ServiceRecommendations</MudText>
-                        <MudDivider />
-                    </MudItem>
-                </MudGrid>
-
-                <MudGrid Justify="Justify.Center">
-                    @foreach (var pending in ServiceOrder.PendingRequests)
-                    {
-                        <MudItem lg="@((pending == ServiceOrder.PendingRequests.Last()) ? 10: 5)"
-                                 md="@((pending == ServiceOrder.PendingRequests.Last()) ? 8: 4)"
-                                 xs="12">
-                            <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Wrap" ShadowColor="@pending.Priority.GetColor()">
-                                <ChildContent>
-                                    <MudStack Spacing="1" AlignItems="AlignItems.Center">
-                                        <MudText Style="@pending.Priority.LabelStyle()" Class="pl-2 pr-2 mb-2">
-                                            @pending.Priority.FriendlyText()
-                                        </MudText>
-
-                                        <MudGrid Spacing="0">
-                                            <MudItem xs="9">
-                                                <MudText>@pending.Description</MudText>
-                                            </MudItem>
-                                            <MudItem xs="3">
-                                                <MudText Align="Align.End">@((pending.EstimatedLabour + pending.EstimatedParts).ToString("C2"))</MudText>
-                                            </MudItem>
-                                        </MudGrid>
-
-                                        <MudStack AlignItems="AlignItems.Start"
-                                                  Justify="Justify.Center"
-                                                  Row="true">
-                                            <MudButton Color="Color.Success"
-                                                       StartIcon="@Icons.Material.Filled.Check"
-                                                       Size="Size.Small"
-                                                       Variant="@(pending.MarkedForApproval.HasValue && pending.MarkedForApproval.Value ? Variant.Filled: Variant.Outlined)"
-                                                       OnClick="() => SetApproval(pending, true)">
-                                                @Resources.Approve
-                                            </MudButton>
-                                            <MudButton Color="Color.Error"
-                                                       StartIcon="@Icons.Material.Filled.Close"
-                                                       Size="Size.Small"
-                                                       Variant="@(!pending.MarkedForApproval.HasValue || pending.MarkedForApproval.Value ? Variant.Outlined : Variant.Filled)"
-                                                       OnClick="() => SetApproval(pending, false)">
-                                                @Resources.Decline
-                                            </MudButton>
-                                        </MudStack>
-                                    </MudStack>
-                                </ChildContent>
-                            </MudPaperCard>
-                        </MudItem>
-                    }
-                </MudGrid>
-
-                <MudGrid Justify="Justify.Center" Class="mb-4">
-                    <MudItem lg="10" md="12" xs="12">
-                        <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-4">@Resources.ApprovedServices</MudText>
-                        <MudDivider />
-                    </MudItem>
-                </MudGrid>
-
-                <MudGrid Justify="Justify.Center">
-                    @foreach (var approved in ServiceOrder.ApprovedRequests)
-                    {
-                        <MudItem lg="@((approved == ServiceOrder.ApprovedRequests.Last()) ? 10: 5)"
-                                 md="@((approved == ServiceOrder.ApprovedRequests.Last()) ? 8: 4)"
-                                 xs="12">
-                            <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Wrap" Content="@approved.Description" />
-                        </MudItem>
-                    }
-                </MudGrid>
-            </MudStack>
-        </MudContainer>
+                            }
+                        </MudStack>
+                    </MudCardContent>
+                </MudCard>
+            }
+            <MudCard>
+                <MudCardHeader>
+                    <MudStack Row="true" Style="width:100%">
+                        <MudText Typo="Typo.h5">@Resources.ApprovedServices</MudText>
+                        <MudSpacer />
+                        <MudToggleIconButton Class="monochrome-toggle-button"
+                                             Variant="Variant.Text"
+                                             ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp"
+                                             Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                                             Size="Size.Large"
+                                             ToggledSize="Size.Large"
+                                             Toggled="IsApprovedServicesExpanded"
+                                             ToggledChanged="ToggleApprovedServices" />
+                    </MudStack>
+                </MudCardHeader>
+                <MudCollapse Expanded="@IsApprovedServicesExpanded">
+                    <MudCardContent>
+                        <MudStack>
+                            @foreach (var req in ServiceOrder.ApprovedRequests)
+                            {
+                                <MudText Class="card-detail-text">@req.Description</MudText>
+                            }
+                        </MudStack>
+                    </MudCardContent>
+                </MudCollapse>
+            </MudCard>
+        </MudStack>
 
         <MudPaper Elevation="0" class="page-footer-pinned">
             <MudGrid Justify="Justify.FlexEnd" Style="align-items:center;" Spacing="2">
@@ -146,9 +142,9 @@
                     </MudStack>
                 </MudItem>
                 <MudItem xs="8" md="2" lg="2">
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               Style="padding-left:8%; padding-right:8%;"
+                    <MudButton Variant="Variant.Outlined"
+                               Class="monochrome-button"
+                               Style="padding-left:8%; padding-right:8%; width:fit-content;"
                                StartIcon="@Icons.Material.Outlined.CheckCircle"
                                OnClick="Confirm">
                         @Resources.Confirm
@@ -169,6 +165,7 @@
 
     private ServiceOrder ServiceOrder { get; set; } = new();
 
+    private bool IsApprovedServicesExpanded { get; set; } = true;
     private double SubTotal { get; set; } = 0;
     private double Taxes { get; set; } = 0;
     private double Fees { get; set; } = 0;
@@ -214,6 +211,8 @@
 
         return true;
     }
+
+    private void ToggleApprovedServices() => IsApprovedServicesExpanded = !IsApprovedServicesExpanded;
 
     private async Task ViewInspection()
     {
