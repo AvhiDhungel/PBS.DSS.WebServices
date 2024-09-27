@@ -250,6 +250,15 @@ namespace PBS.DSS.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finalizing.
+        /// </summary>
+        public static string Finalizing {
+            get {
+                return ResourceManager.GetString("Finalizing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Full Screen.
         /// </summary>
         public static string FullScreen {
@@ -264,6 +273,15 @@ namespace PBS.DSS.Shared.Resources {
         public static string ImmediateAttentionRequired {
             get {
                 return ResourceManager.GetString("ImmediateAttentionRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Progress.
+        /// </summary>
+        public static string InProgress {
+            get {
+                return ResourceManager.GetString("InProgress", resourceCulture);
             }
         }
         
@@ -327,6 +345,15 @@ namespace PBS.DSS.Shared.Resources {
         public static string PleaseEnterAValidOdometer {
             get {
                 return ResourceManager.GetString("PleaseEnterAValidOdometer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready.
+        /// </summary>
+        public static string Ready {
+            get {
+                return ResourceManager.GetString("Ready", resourceCulture);
             }
         }
         

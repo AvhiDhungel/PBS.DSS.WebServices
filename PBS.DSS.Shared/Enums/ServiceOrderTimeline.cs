@@ -3,10 +3,9 @@
     public enum ServiceOrderTimeline
     {
         CheckedIn,
-        InspectionStarted,
-        InspectionComplete,
-        JobStarted,
-        AllJobsComplete,
-        ReadyForPickup
+        Inspection,
+        InProgress,
+        Finalizing,
+        Ready
     }
 }

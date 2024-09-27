@@ -31,11 +31,18 @@
     color: black;
     padding-left: 3%;
     padding-right: 3%;
+    padding-bottom: 15px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.card-detail-label {
+    font-weight: bold;
+    font-size: large;
 }
 
 .card-detail-text {
     opacity: 1;
+    font-size: large;
 }
 
 .mud-appbar-button {

@@ -19,7 +19,7 @@ namespace PBS.DSS.Shared.Models.WorkItems
         public double FeesTotal { get; set; } = 0;
         public double GrandTotal { get; set; } = 0;
 
-        public ServiceOrderTimeline Timeline { get; set; } = ServiceOrderTimeline.InspectionComplete;
+        public ServiceOrderTimeline Timeline { get; set; } = ServiceOrderTimeline.Inspection;
         public Contact ContactInfo { get; set; } = new Contact();
         public Vehicle Vehicle { get; set; } = new Vehicle();
 
