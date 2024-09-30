@@ -30,20 +30,22 @@
 
         //Debug Code
         var doc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
+        busyDialog.Close(); 
+        return Convert.ToBase64String(doc);
 
         if (SharedStateService.SharedState.WorkItemType == WorkItemTypes.None) return string.Empty;
 
-        if (SharedStateService.SharedState.WorkItemType == WorkItemTypes.ServiceOrder)
-        {
-            
-        }
-        else if (SharedStateService.SharedState.WorkItemType == WorkItemTypes.Appointment)
-        {
+        var docArgs = new ServiceOrderDocumentFetchArgs();
+        docArgs.ServiceOrderRef = SharedStateService.SharedState.WorkItemRef;
+        docArgs.SerialNumber = SharedStateService.SharedState.SerialNumber;
+        docArgs.DocumentType = docType;
 
-        }
+        var resp = await ControllerAPIService.FetchServiceOrderDocument(docArgs);
 
         busyDialog.Close();
 
-        return Convert.ToBase64String(doc);
+        if (resp.HasError || resp.ResponseObject == null) return string.Empty;
+
+        return Convert.ToBase64String(resp.ResponseObject.Content);
     }
 }

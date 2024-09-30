@@ -6,6 +6,7 @@ using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.WebServices.Server.Utilities;
 using PBS.DSS.WebServices.Server.Integrations;
 using PBS.DSS.WebServices.Server.Extensions;
+using PBS.ConnectHub.Library.Messages.Documents;
 
 namespace PBS.DSS.WebServices.Server.Controllers
 {
@@ -82,6 +83,55 @@ namespace PBS.DSS.WebServices.Server.Controllers
             return msg.GetResult();
         }
 
+        [HttpPost]
+        [Route("FetchServiceOrderDocument")]
+        public async Task<ActionResult<Attachment>> FetchServiceOrderDocument(ServiceOrderDocumentFetchArgs args)
+        {
+            var att = new Attachment() { DocumentType = args.DocumentType, FileType = FileTypes.Document, Name = FileTypes.Document.ToString() };
+            var msg = new ConnectReceiveMessage<Attachment>(att, args.SerialNumber, "FetchServiceOrderDocument");
+
+            if (args.DocumentType == Shared.Models.WorkItems.DocumentTypes.None) msg.GetResult();
+
+            msg.LogMessage($"Attempting to Fetch Service Order {args.DocumentType} with the following arguments:");
+            msg.LogSerialized(args);
+            msg.LogNewLine();
+
+            try
+            {
+                using var cl = await ConnectHubIntegration.GetConnectHubClient(args.SerialNumber, (x) => ReceiveServiceOrderDocumentResponse(x, msg, args.SerialNumber));
+                var req = new DocumentRequest
+                {
+                    WorkItemId = args.ServiceOrderRef,
+                    Department = Products.SERVICE,
+                    DesiredFormat = OutputFormats.PDF
+                };
+
+                switch (args.DocumentType)
+                {
+                    case Shared.Models.WorkItems.DocumentTypes.HardCopy:
+                        req.DocumentType = ConnectHub.Library.Messages.Documents.DocumentTypes.HARDCOPY;
+                        break;
+                    case Shared.Models.WorkItems.DocumentTypes.CustomerCopy:
+                        req.DocumentType = ConnectHub.Library.Messages.Documents.DocumentTypes.CUSTOMERCOPY;
+                        break;
+                    case Shared.Models.WorkItems.DocumentTypes.EstimateCopy:
+                        req.DocumentType = ConnectHub.Library.Messages.Documents.DocumentTypes.ESTIMATE;
+                        break;
+                    case Shared.Models.WorkItems.DocumentTypes.Inspection:
+                        req.DocumentType = ConnectHub.Library.Messages.Documents.DocumentTypes.INSPECTION;
+                        break;
+                }
+
+                await cl.SendToServer(req);
+
+                msg.WaitForCompletion();
+            }
+            catch (Exception ex) { msg.LogException(ex); }
+            finally { msg.UpdateLog(); }
+
+            return msg.GetResult();
+        }
+
         #region Connect Message Handlers
         private static void ReceiveServiceOrderResponse(MessageHeaderV2 msgHeader, ConnectReceiveMessage<ServiceOrder> msg, string serial)
         {
@@ -109,6 +159,16 @@ namespace PBS.DSS.WebServices.Server.Controllers
 
             if (msgHeader.IsConnectResponseMatch(typeof(ServiceOrderApproveAWRResponse)))
                 VerifyAWRResponse(msgHeader.RecieveMessage<ServiceOrderApproveAWRResponse>(), msg);
+
+            msg.HasCompleted = true;
+        }
+
+        private static void ReceiveServiceOrderDocumentResponse(MessageHeaderV2 msgHeader, ConnectReceiveMessage<Attachment> msg, string serial)
+        {
+            msg.LogMessageHeader(msgHeader);
+
+            if (msgHeader.IsConnectResponseMatch(typeof(DocumentResponse)))
+                TranscribeDocument(msgHeader.RecieveMessage<DocumentResponse>(), msg, serial);
 
             msg.HasCompleted = true;
         }
@@ -153,6 +213,23 @@ namespace PBS.DSS.WebServices.Server.Controllers
             if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; return; }
 
             msg.Object.RequestsMarkedForApproval.ToList().ForEach(req => req.AWRStatus = AWRStatuses.Approved);
+        }
+        #endregion
+
+        #region "Transcribe Document"
+        private static void TranscribeDocument(DocumentResponse resp, ConnectReceiveMessage<Attachment> msg, string serial)
+        {
+            msg.LogSerializedWithMessage(resp, "Connect Hub Response:");
+
+            if (resp.Document?.Pages == null || resp.Document.Pages.Count == 0)
+            {
+                msg.HasError = true;
+                msg.ErrorMessage = "Received a null or empty response from ConnectHub";
+                return;
+            }
+
+            msg.Object.Content = resp.Document.Pages.First().Content;
+            msg.LogMessage($"Successfully Received Response Message");
         }
         #endregion
     }

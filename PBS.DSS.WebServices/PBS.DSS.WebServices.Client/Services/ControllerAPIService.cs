@@ -55,6 +55,13 @@ namespace PBS.DSS.WebServices.Client.Services
         }
         #endregion
 
+        #region Document
+        public async Task<APIResponse<Attachment>> FetchServiceOrderDocument(ServiceOrderDocumentFetchArgs args)
+        {
+            return await Post<Attachment, ServiceOrderDocumentFetchArgs>(args, "ServiceOrder", "FetchServiceOrderDocument") ?? new();
+        }
+        #endregion
+
         public class APIResponse<T>
         {
             public T? ResponseObject { get; set; }
