@@ -18,16 +18,19 @@
                         <MudText Typo="Typo.h6">@Resources.ServiceAdvisor</MudText>
                         <MudText Class="card-detail-text">@ServiceOrder.AdvisorName</MudText>
                     </MudStack>
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
-                        <MudText Typo="Typo.h6">@Resources.Inspection</MudText>
-                        <MudButton Variant="Variant.Outlined"
-                                   Class="monochrome-button pl-5 pr-5 pt-1 pb-1"
-                                   StartIcon="@Icons.Material.Outlined.Checklist"
-                                   Style="width:fit-content; height:fit-content;"
-                                   OnClick="ViewInspection">
-                            View
-                        </MudButton>
-                    </MudStack>
+                    @if (ServiceOrder.HasInspection())
+                    {
+                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.h6">@Resources.Inspection</MudText>
+                            <MudButton Variant="Variant.Outlined"
+                                       Class="monochrome-button pl-5 pr-5 pt-1 pb-1"
+                                       StartIcon="@Icons.Material.Outlined.Checklist"
+                                       Style="width:fit-content; height:fit-content;"
+                                       OnClick="ViewInspection">
+                                View
+                            </MudButton>
+                        </MudStack>
+                    }
                 </MudCardContent>
             </MudCard>
             <MudCard>

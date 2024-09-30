@@ -19,7 +19,7 @@ namespace PBS.DSS.Shared.Models.WorkItems
         public double FeesTotal { get; set; } = 0;
         public double GrandTotal { get; set; } = 0;
 
-        public ServiceOrderTimeline Timeline { get; set; } = ServiceOrderTimeline.Inspection;
+        public ServiceOrderTimeline Timeline { get; set; } = ServiceOrderTimeline.CheckedIn;
         public Contact ContactInfo { get; set; } = new Contact();
         public Vehicle Vehicle { get; set; } = new Vehicle();
 
@@ -36,7 +36,7 @@ namespace PBS.DSS.Shared.Models.WorkItems
         }
 
         public bool IsValid() => Id != Guid.Empty;
-        public bool HasInspection() => Documents.ContainsKey(DocumentTypes.Inspection);
+        public bool HasInspection() => Requests.Any(x => x.IsInspection);
 
         public static ServiceOrder GenerateDummy()
         {
@@ -61,6 +61,7 @@ namespace PBS.DSS.Shared.Models.WorkItems
             var approved2 = new RequestLine();
             approved2.Description = "Checking the A/C system for leaks and performance. Includes refrigerant recharge if needed.";
             approved2.AWRStatus = AWRStatuses.Approved;
+            approved2.IsInspection = true;
 
             var approved3 = new RequestLine();
             approved3.Description = "Flushing old brake fluid and replacing it to keep your brakes functioning properly. Includes a basic inspection of pads and rotors.";

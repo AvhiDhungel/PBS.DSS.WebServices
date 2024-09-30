@@ -122,6 +122,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
             if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; return; }
 
             ConnectModelHelper.TranscribeServiceOrder(msg.Object, resp.ServiceOrder);
+            ConnectModelHelper.TranscribeSOTimeline(msg.Object, resp.WorkItemTimelineTypes);
             ConnectModelHelper.TranscribeContact(msg.Object.ContactInfo, resp.Contact);
             ConnectModelHelper.TranscribeVehicle(msg.Object.Vehicle, resp.Vehicle);
 
