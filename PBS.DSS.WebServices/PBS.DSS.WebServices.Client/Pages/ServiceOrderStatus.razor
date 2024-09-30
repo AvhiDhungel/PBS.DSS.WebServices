@@ -168,31 +168,25 @@
 
     private async Task ViewInspection()
     {
-        var busyDialog = DialogService.Show<MudBusyDialog>("");
+        if (!SharedStateService.HasModel())
+        {
+            var busyDialog = await DialogService.ShowAsync<MudBusyDialog>("");
+            await SharedStateService.SaveModelToSession(ServiceOrder);
+            busyDialog.Close();
+        }
 
-        var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
-
-        SharedStateService.AddModel(SharedModelTypes.InspectionDocument, Convert.ToBase64String(inspectionDoc));
-        // await SharedStateService.SaveToSession();
-
-        busyDialog.Close();
-
-        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
-        // await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
+        NavigationManager.NavigateTo($"/Document/{DocumentTypes.Inspection.ToString()}");
     }
 
     private async Task ViewCustomerCopy()
     {
-        var busyDialog = DialogService.Show<MudBusyDialog>("");
+        if (!SharedStateService.HasModel())
+        {
+            var busyDialog = await DialogService.ShowAsync<MudBusyDialog>("");
+            await SharedStateService.SaveModelToSession(ServiceOrder);
+            busyDialog.Close();
+        }
 
-        var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
-
-        SharedStateService.AddModel(SharedModelTypes.CustomerCopy, Convert.ToBase64String(inspectionDoc));
-        // await SharedStateService.SaveToSession();
-
-        busyDialog.Close();
-
-        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.CustomerCopy.ToString()}");
-        // await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.CustomerCopy.ToString()}");
+        NavigationManager.NavigateTo($"/Document/{DocumentTypes.CustomerCopy.ToString()}");
     }
 }

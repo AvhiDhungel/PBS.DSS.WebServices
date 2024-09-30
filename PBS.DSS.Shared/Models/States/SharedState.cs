@@ -6,7 +6,9 @@ namespace PBS.DSS.Shared.Models.States
     {
         public string SerialNumber { get; set; } = string.Empty;
         public string Banner { get; set; } = string.Empty;
-        
-        public Dictionary<SharedModelTypes, object> Models { get; set; } = [];
+     
+        public Guid WorkItemRef { get; set; } = Guid.Empty;
+        public WorkItemTypes WorkItemType { get; set; } = WorkItemTypes.None;
+        public object? Model { get; set; }
     }
 }

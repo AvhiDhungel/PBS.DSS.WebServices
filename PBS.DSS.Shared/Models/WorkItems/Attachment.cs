@@ -20,6 +20,7 @@
     public enum DocumentTypes
     {
         None,
+        HardCopy,
         CustomerCopy,
         EstimateCopy,
         Inspection

@@ -26,8 +26,6 @@ namespace PBS.DSS.Shared.Models.WorkItems
         public List<RequestLine> Requests { get; set; } = [];
         public List<Attachment> Attachments { get; set; } = [];
 
-        public Dictionary<DocumentTypes, byte[]> Documents { get; set; } = new();
-
         public IEnumerable<RequestLine> ApprovedRequests { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Approved); }
         public IEnumerable<RequestLine> PendingRequests { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Pending); }
         public IEnumerable<RequestLine> RequestsMarkedForApproval

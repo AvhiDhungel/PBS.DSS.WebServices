@@ -1,6 +1,7 @@
 ﻿using PBS.DSS.Shared.Helpers;
 using PBS.DSS.Shared.Enums;
 using PBS.DSS.Shared.Models.States;
+using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.Shared;
 using System.Text;
 using PBS.DSS.Shared.Resources;
@@ -22,19 +23,31 @@ namespace PBS.DSS.WebServices.Client.Services
             RefreshMainLayout?.Invoke();
         }
 
-        public void AddModel(SharedModelTypes type, object model) => SharedState.Models[type] = model;
+        public bool HasModel() => SharedState.Model != null;
+        public async Task SaveModelToSession(ServiceOrder model) { SetModel(model); await SaveToSession(); }
+        public async Task SaveModelToSession(Appointment model) { SetModel(model); await SaveToSession(); }
 
-        public T? GetModel<T>(SharedModelTypes type)
+        public void SetModel(ServiceOrder model)
         {
-            if (!SharedState.Models.TryGetValue(type, out object? model)) return default;
-            if (model.GetType() != typeof(T)) return default;
-
-            return (T)model;
+            SharedState.Model = model;
+            SharedState.WorkItemRef = model.Id;
+            SharedState.WorkItemType = WorkItemTypes.ServiceOrder;
         }
 
-        public string GetBase64Document(SharedModelTypes type)
+        public void SetModel(Appointment model)
         {
-            return SharedState.Models.TryGetValue(type, out object? model) ? (model?.ToString() ?? string.Empty) : string.Empty;
+            SharedState.Model = model;
+            SharedState.WorkItemRef = model.Id;
+            SharedState.WorkItemType = WorkItemTypes.Appointment;
+        }
+
+        public T? GetModel<T>()
+        {
+            if (SharedState.WorkItemType == WorkItemTypes.None) return default;
+            if (SharedState.Model == null) return default;
+            if (SharedState.Model.GetType() != typeof(T)) return default;
+
+            return (T)SharedState.Model;
         }
 
         public async Task SaveToSession() => await _sessionStorageService.SaveSharedState(SharedState);

@@ -22,12 +22,28 @@
     private async Task<string> GetBase64()
     {
         if (DocumentType.IsNullOrWhitespace()) return string.Empty;
-        if (!Enum.TryParse(DocumentType, out SharedModelTypes docType)) return string.Empty;
+        if (!Enum.TryParse(DocumentType, out DocumentTypes docType)) return string.Empty;
 
-        var doc = SharedStateService.GetBase64Document(docType) ?? string.Empty;
-        if (doc.HasValue()) return doc;
+        var busyDialog = await DialogService.ShowAsync<MudBusyDialog>("");
 
         await SharedStateService.GetFromSession();
-        return SharedStateService.GetBase64Document(docType) ?? string.Empty;
+
+        //Debug Code
+        var doc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
+
+        if (SharedStateService.SharedState.WorkItemType == WorkItemTypes.None) return string.Empty;
+
+        if (SharedStateService.SharedState.WorkItemType == WorkItemTypes.ServiceOrder)
+        {
+            
+        }
+        else if (SharedStateService.SharedState.WorkItemType == WorkItemTypes.Appointment)
+        {
+
+        }
+
+        busyDialog.Close();
+
+        return Convert.ToBase64String(doc);
     }
 }
