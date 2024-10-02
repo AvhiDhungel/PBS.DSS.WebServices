@@ -130,7 +130,7 @@
         SerialNumber = "9999.QA";
         return;
 
-        var busyDialog = DialogService.Show<MudBusyDialog>("");
+        var busyDialog = await DialogService.ShowBusyDialog();
         var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
 
         var resp = await ControllerAPIService.FetchServiceOrder(args);
@@ -169,24 +169,16 @@
     private async Task ViewInspection()
     {
         if (!SharedStateService.HasModel())
-        {
-            var busyDialog = await DialogService.ShowAsync<MudBusyDialog>("");
-            await SharedStateService.SaveModelToSession(ServiceOrder);
-            busyDialog.Close();
-        }
+            await DialogService.PerformBusy(SharedStateService.SaveModelToSession(ServiceOrder));
 
-        NavigationManager.NavigateTo($"/Document/{DocumentTypes.Inspection.ToString()}");
+        await InterOpService.OpenLinkInNewTab($"/Document/{DocumentTypes.Inspection.ToString()}");
     }
 
     private async Task ViewCustomerCopy()
     {
         if (!SharedStateService.HasModel())
-        {
-            var busyDialog = await DialogService.ShowAsync<MudBusyDialog>("");
-            await SharedStateService.SaveModelToSession(ServiceOrder);
-            busyDialog.Close();
-        }
+            await DialogService.PerformBusy(SharedStateService.SaveModelToSession(ServiceOrder));
 
-        NavigationManager.NavigateTo($"/Document/{DocumentTypes.CustomerCopy.ToString()}");
+        await InterOpService.OpenLinkInNewTab($"/Document/{DocumentTypes.CustomerCopy.ToString()}");
     }
 }

@@ -1,51 +1,112 @@
-﻿@page "/Document/{DocumentType}"
+﻿@page "/Document/{DocumentTypeString}"
+
+@using MudExtensions
 
 <MudSessionErrorWrapper FetchAsync="LoadBase64String">
     <Content>
-        <MudPDFViewer Base64String="@Base64String" />
+        <MudGrid Justify="Justify.Center" Class="pb-10">
+            <MudItem xs="12">
+                <MudPDFViewer Base64String="@Base64Document" />
+            </MudItem>
+            @if (RequiresSignature)
+            {
+                <MudItem xs="12">
+                    <MudSignaturePad @bind-Value="Signature"
+                                     CanvasContainerStyle="height:100%; width:100%; background-color:white;"
+                                     Variant="Variant.Filled"
+                                     ShowDownload="false"
+                                     ShowLineJoinStyle="false"
+                                     ShowLineWidth="false"
+                                     ShowStrokeStyle="false"
+                                     ShowLineCapStyle="false">
+                    </MudSignaturePad>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudSpacer />
+                    <MudButton Class="monochrome-button"
+                               Variant="Variant.Outlined"
+                               StartIcon="@Icons.Material.Filled.Create"
+                               OnClick="Sign">
+                        Sign
+                    </MudButton>
+                    <MudSpacer />
+                </MudItem>
+            }
+        </MudGrid>
     </Content>
 </MudSessionErrorWrapper>
 
 @code {
     [Parameter]
-    public string DocumentType { get; set; } = string.Empty;
+    public string DocumentTypeString { get; set; } = string.Empty;
 
-    private string Base64String { get; set; } = string.Empty;
+    private DocumentTypes DocumentType { get; set; } = DocumentTypes.None;
+    private string Base64Document { get; set; } = string.Empty;
+
+    private bool RequiresSignature { get; set; } = false;
+    private byte[] Signature { get; set; } = [];
 
     private async Task LoadBase64String()
     {
-        Base64String = await GetBase64();
+        if (DocumentTypeString.IsNullOrWhitespace()) return;
+        if (!Enum.TryParse(DocumentTypeString, out DocumentTypes docType)) return;
 
-        if (Base64String.IsEmpty()) SharedStateService.AddError(Resources.UnableToLocateDocument);
+        await SharedStateService.GetFromSession();
+
+        DocumentType = docType;
+        RequiresSignature = SharedStateService.RequiresSignature(docType);
+        Base64Document = await GetBase64();
+
+        if (Base64Document.IsEmpty()) SharedStateService.AddError(Resources.UnableToLocateDocument);
     }
 
     private async Task<string> GetBase64()
     {
-        if (DocumentType.IsNullOrWhitespace()) return string.Empty;
-        if (!Enum.TryParse(DocumentType, out DocumentTypes docType)) return string.Empty;
-
-        var busyDialog = await DialogService.ShowAsync<MudBusyDialog>("");
-
-        await SharedStateService.GetFromSession();
+        var busyDialog = await DialogService.ShowBusyDialog();
 
         //Debug Code
         var doc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
-        busyDialog.Close(); 
+        busyDialog.Close();
         return Convert.ToBase64String(doc);
 
-        if (SharedStateService.SharedState.WorkItemType == WorkItemTypes.None) return string.Empty;
-
-        var docArgs = new ServiceOrderDocumentFetchArgs();
-        docArgs.ServiceOrderRef = SharedStateService.SharedState.WorkItemRef;
-        docArgs.SerialNumber = SharedStateService.SharedState.SerialNumber;
-        docArgs.DocumentType = docType;
-
-        var resp = await ControllerAPIService.FetchServiceOrderDocument(docArgs);
-
+        var document = await DocumentSignatureService.FetchDocument(DocumentType);
         busyDialog.Close();
 
-        if (resp.HasError || resp.ResponseObject == null) return string.Empty;
+        if (document.HasValue()) return Convert.ToBase64String(document);
+    }
 
-        return Convert.ToBase64String(resp.ResponseObject.Content);
+    private async Task Sign()
+    {
+        if (Signature == null || Signature.Length == 0)
+        {
+            SnackbarService.Add("Please add your signature to the above signature area.", Severity.Error);
+            return;
+        }
+
+        var success = await DialogService.PerformBusyResult(DocumentSignatureService.SignDocument(DocumentType, Signature));
+
+        if (!success)
+        {
+            SnackbarService.Add("Something went wrong attempting to sign your document. Please try again.", Severity.Error);
+            return;
+        }
+
+        await RedirectAfterSigning();
+    }
+
+    private async Task RedirectAfterSigning()
+    {
+        var actionType = SharedStateService.GetSignature(DocumentType).ActionTypes;
+        var serial = SharedStateService.SharedState.SerialNumber;
+        var workItemRef = SharedStateService.SharedState.WorkItemRef;
+
+        if (actionType == SignatureActionTypes.AppointmentCheckIn)
+        {
+            await DialogService.ShowMessageBox("Check In Successful", "Successfully Checked In for Appointment");
+
+            //Debug Code
+            NavigationManager.NavigateTo($"/AppointmentStatus", forceLoad:true);
+            // NavigationManager.NavigateTo($"/AppointmentStatus/{serial}/{workItemRef}", forceLoad:true);
+        }
     }
 }

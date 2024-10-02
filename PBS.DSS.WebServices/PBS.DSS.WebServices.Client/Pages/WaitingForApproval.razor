@@ -185,7 +185,7 @@
 
         SharedStateService.SharedState.SerialNumber = SerialNumber;
 
-        var busyDialog = DialogService.Show<MudBusyDialog>("");
+        var busyDialog = await DialogService.ShowBusyDialog();
         var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
 
         var resp = await ControllerAPIService.FetchServiceOrder(args);
@@ -220,11 +220,7 @@
     private async Task ViewInspection()
     {
         if (!SharedStateService.HasModel())
-        {
-            var busyDialog = await DialogService.ShowAsync<MudBusyDialog>("");
-            await SharedStateService.SaveModelToSession(ServiceOrder);
-            busyDialog.Close();
-        }
+            await DialogService.PerformBusy(SharedStateService.SaveModelToSession(ServiceOrder));
 
         await InterOpService.OpenLinkInNewTab($"/Document/{DocumentTypes.Inspection.ToString()}");
     }

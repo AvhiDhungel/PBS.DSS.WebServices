@@ -4,6 +4,8 @@ namespace PBS.DSS.Shared.Models.WorkItems
 {
     public class ServiceOrder
     {
+        public string SerialNumber { get; set; } = string.Empty;
+
         public Guid Id { get; set; } = Guid.Empty;
         public Guid ContactRef { get; set; } = Guid.Empty;
         public Guid VehicleRef { get; set; } = Guid.Empty;

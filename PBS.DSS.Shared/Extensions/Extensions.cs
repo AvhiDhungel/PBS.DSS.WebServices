@@ -81,13 +81,20 @@ namespace PBS.DSS.Shared
         }
         #endregion
 
-        #region "Enum"
+        #region Enum
         public static string ToLocalizedString(this Enum e)
         {
             var key = e.ToString() ?? string.Empty;
             if (!key.HasValue()) return string.Empty;
 
             return Resources.Resources.ResourceManager.GetString(key) ?? key.ToString();
+        }
+        #endregion
+
+        #region Byte
+        public static bool HasValue(this byte[] b)
+        {
+            return b != null && b.Length > 0;
         }
         #endregion
 

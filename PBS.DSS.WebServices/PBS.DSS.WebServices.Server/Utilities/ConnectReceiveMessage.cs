@@ -17,7 +17,8 @@ namespace PBS.DSS.WebServices.Server.Utilities
         public bool HasError { get; set; } = false;
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public ActionResult<T> GetResult()
+        public ActionResult GetResult() => HasError ? new ObjectResult(ErrorMessage) { StatusCode = 500 } : new OkResult();
+        public ActionResult<T> GetObjectResult()
         {
             return HasError ? new ObjectResult(ErrorMessage) { StatusCode = 500 } : Object;
         }

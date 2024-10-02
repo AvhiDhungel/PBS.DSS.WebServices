@@ -23,6 +23,7 @@ builder.Services.AddScoped<SessionStorageService>();
 builder.Services.AddScoped<NavigationManagerService>();
 builder.Services.AddScoped<SharedStateService>();
 builder.Services.AddScoped<ControllerAPIService>();
+builder.Services.AddScoped<DocumentSignatureService>();
 
 var host = builder.Build();
 

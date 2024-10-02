@@ -114,7 +114,9 @@
         SerialNumber = "9999.QA";
         return;
 
-        var busyDialog = DialogService.Show<MudBusyDialog>("");
+        SharedStateService.SharedState.SerialNumber = SerialNumber;
+
+        var busyDialog = await DialogService.ShowBusyDialog();
         var args = new AppointmentFetchArgs() { SerialNumber = SerialNumber, AppointmentRef = Appointment.Id };
 
         var resp = await ControllerAPIService.FetchAppointment(args);
@@ -153,6 +155,14 @@
     private async Task CheckIn()
     {
         if (!await PromptOdometer()) return;
+
+        if (!SharedStateService.HasModel())
+        {
+            SharedStateService.SetSignatureRequired(DocumentTypes.HardCopy, SignatureActionTypes.AppointmentCheckIn);
+            await DialogService.PerformBusy(SharedStateService.SaveModelToSession(Appointment));
+        }
+
+        NavigationManager.NavigateTo($"/Document/{DocumentTypes.HardCopy.ToString()}", forceLoad:true);
     }
 
     private async Task<bool> PromptOdometer()

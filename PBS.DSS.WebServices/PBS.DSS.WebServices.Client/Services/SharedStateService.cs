@@ -5,6 +5,8 @@ using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.Shared;
 using System.Text;
 using PBS.DSS.Shared.Resources;
+using System.Reflection.Metadata;
+using PBS.DSS.Shared.Criteria;
 
 namespace PBS.DSS.WebServices.Client.Services
 {
@@ -23,6 +25,7 @@ namespace PBS.DSS.WebServices.Client.Services
             RefreshMainLayout?.Invoke();
         }
 
+        #region StateModel
         public bool HasModel() => SharedState.Model != null;
         public async Task SaveModelToSession(ServiceOrder model) { SetModel(model); await SaveToSession(); }
         public async Task SaveModelToSession(Appointment model) { SetModel(model); await SaveToSession(); }
@@ -52,6 +55,7 @@ namespace PBS.DSS.WebServices.Client.Services
 
         public async Task SaveToSession() => await _sessionStorageService.SaveSharedState(SharedState);
         public async Task GetFromSession() => SharedState = await _sessionStorageService.GetSharedState();
+        #endregion
 
         #region Errors
         private readonly StringBuilder _errors = new();
@@ -90,6 +94,26 @@ namespace PBS.DSS.WebServices.Client.Services
             if (!isValid) SetInvalidAppointmentError();
 
             return isValid;
+        }
+        #endregion
+
+        #region Signatures
+        public void SetSignatureRequired(DocumentTypes t, SignatureActionTypes a) => SharedState.Signatures[t] = new Signature(a);
+        public void SetSignature(DocumentTypes t, byte[] sig) { GetSignature(t).Bytes = sig; SetSignature(t, GetSignature(t)); }
+        public void SetSignature(DocumentTypes t, Signature sig) => SharedState.Signatures[t] = sig;
+
+        public bool RequiresSignature(DocumentTypes t)
+        {
+            if (SharedState.Signatures.Count == 0) return false;
+            if (!SharedState.Signatures.TryGetValue(t, out Signature? sig)) return false;
+
+            return (sig == null || !sig.HasSignature);
+        }
+
+        public Signature GetSignature(DocumentTypes t)
+        {
+            if (!SharedState.Signatures.TryGetValue(t, out Signature? sig)) return new();
+            return sig ?? new();
         }
         #endregion
     }

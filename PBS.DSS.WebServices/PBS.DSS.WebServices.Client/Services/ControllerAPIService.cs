@@ -60,6 +60,11 @@ namespace PBS.DSS.WebServices.Client.Services
         {
             return await Post<Attachment, ServiceOrderDocumentFetchArgs>(args, "ServiceOrder", "FetchServiceOrderDocument") ?? new();
         }
+
+        public async Task<APIResponse<Attachment>> FetchAppointmentDocument(AppointmentDocumentFetchArgs args)
+        {
+            return await Post<Attachment, AppointmentDocumentFetchArgs>(args, "Appointment", "FetchAppointmentDocument") ?? new();
+        }
         #endregion
 
         public class APIResponse<T>

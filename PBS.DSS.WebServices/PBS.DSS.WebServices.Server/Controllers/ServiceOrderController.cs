@@ -34,21 +34,21 @@ namespace PBS.DSS.WebServices.Server.Controllers
             catch (Exception ex) { msg.LogException(ex); }
             finally { msg.UpdateLog(); }
 
-            return msg.GetResult();
+            return msg.GetObjectResult();
         }
 
         [HttpPost]
         [Route("CalculateApprovedAWR")]
-        public async Task<ActionResult<ServiceOrder>> CalculateApprovedAWR(ServiceOrder so, string serial)
+        public async Task<ActionResult<ServiceOrder>> CalculateApprovedAWR(ServiceOrder so)
         {
-            var msg = new ConnectReceiveMessage<ServiceOrder>(so, serial, "CalculateApprovedAWR");
+            var msg = new ConnectReceiveMessage<ServiceOrder>(so, so.SerialNumber, "CalculateApprovedAWR");
 
-            msg.LogMessage($"Attempting to Calculate Approved AWR totals for Serial {serial} for SO# {so.SONumber} ID: {so.Id}");
+            msg.LogMessage($"Attempting to Calculate Approved AWR totals for Serial {so.SerialNumber} for SO# {so.SONumber} ID: {so.Id}");
             msg.LogNewLine();
 
             try
             {
-                using var cl = await ConnectHubIntegration.GetConnectHubClient(serial, (x) => ReceiveCalculateApprovedAWRResponse(x, msg));
+                using var cl = await ConnectHubIntegration.GetConnectHubClient(so.SerialNumber, (x) => ReceiveCalculateApprovedAWRResponse(x, msg));
                 var reqRefs = so.RequestsMarkedForApproval.Select(x => x.RequestRef).ToList();
                 await cl.SendToServer(new CalculateApprovedAWRRequest() { ServiceOrderRef = so.Id, ApprovedRequestRefs = reqRefs });
 
@@ -57,21 +57,21 @@ namespace PBS.DSS.WebServices.Server.Controllers
             catch (Exception ex) { msg.LogException(ex); }
             finally { msg.UpdateLog(); }
 
-            return msg.GetResult();
+            return msg.GetObjectResult();
         }
 
         [HttpPost]
         [Route("ApproveAWR")]
-        public async Task<ActionResult<ServiceOrder>> ApproveAWR(ServiceOrder so, string serial)
+        public async Task<ActionResult<ServiceOrder>> ApproveAWR(ServiceOrder so)
         {
-            var msg = new ConnectReceiveMessage<ServiceOrder>(so, serial, "ApproveAWR");
+            var msg = new ConnectReceiveMessage<ServiceOrder>(so, so.SerialNumber, "ApproveAWR");
 
-            msg.LogMessage($"Attempting to Approve AWR for Serial {serial} for SO# {so.SONumber} ID: {so.Id}");
+            msg.LogMessage($"Attempting to Approve AWR for Serial {so.SerialNumber} for SO# {so.SONumber} ID: {so.Id}");
             msg.LogNewLine();
 
             try
             {
-                using var cl = await ConnectHubIntegration.GetConnectHubClient(serial, (x) => ReceiveApprovedAWRResponse(x, msg));
+                using var cl = await ConnectHubIntegration.GetConnectHubClient(so.SerialNumber, (x) => ReceiveApprovedAWRResponse(x, msg));
                 var reqRefs = so.RequestsMarkedForApproval.Select(x => x.RequestRef).ToList();
                 await cl.SendToServer(new ServiceOrderApproveAWRRequest() { ServiceOrderRef = so.Id, ApprovedRequestRefs = reqRefs });
 
@@ -80,7 +80,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
             catch (Exception ex) { msg.LogException(ex); }
             finally { msg.UpdateLog(); }
 
-            return msg.GetResult();
+            return msg.GetObjectResult();
         }
 
         [HttpPost]
@@ -90,7 +90,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
             var att = new Attachment() { DocumentType = args.DocumentType, FileType = FileTypes.Document, Name = FileTypes.Document.ToString() };
             var msg = new ConnectReceiveMessage<Attachment>(att, args.SerialNumber, "FetchServiceOrderDocument");
 
-            if (args.DocumentType == Shared.Models.WorkItems.DocumentTypes.None) msg.GetResult();
+            if (args.DocumentType == Shared.Models.WorkItems.DocumentTypes.None) msg.GetObjectResult();
 
             msg.LogMessage($"Attempting to Fetch Service Order {args.DocumentType} with the following arguments:");
             msg.LogSerialized(args);
@@ -129,7 +129,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
             catch (Exception ex) { msg.LogException(ex); }
             finally { msg.UpdateLog(); }
 
-            return msg.GetResult();
+            return msg.GetObjectResult();
         }
 
         #region Connect Message Handlers

@@ -30,7 +30,7 @@
 
     private async Task Initialize()
     {
-        var busyDialog = await DialogService.ShowAsync<MudBusyDialog>("");
+        var busyDialog = await DialogService.ShowBusyDialog();
         var img = await httpClient.GetByteArrayAsync("backgroundimg.jpg");
 
         var attachment1 = new Attachment();
