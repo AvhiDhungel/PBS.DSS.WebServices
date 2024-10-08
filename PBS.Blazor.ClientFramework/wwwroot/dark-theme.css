@@ -1,6 +1,7 @@
 ﻿body {
     background-repeat: no-repeat;
-    background-image: url('backgroundimg.jpg');
+    background-image: url('darkimage.jpg');
+    background-size: cover;
     background-color: black;
 }
 
@@ -29,11 +30,12 @@
 }
 
 .mud-card {
-    background-color: rgba(0, 0, 0, 0.70);
+    background-color: rgba(0, 0, 0, 0.75);
     color: white;
     padding-left: 3%;
     padding-right: 3%;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
 }
 
 .card-detail-text {

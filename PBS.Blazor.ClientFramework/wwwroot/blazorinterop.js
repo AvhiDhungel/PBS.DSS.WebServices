@@ -1,6 +1,6 @@
 function toggleTheme(isDarkMode) {
     const themeLink = document.getElementById("theme-stylesheet");
-    themeLink.href = isDarkMode ? "dark-theme.css" : "light-theme.css";
+    themeLink.href = isDarkMode ? "_content/PBS.Blazor.ClientFramework/dark-theme.css" : "_content/PBS.Blazor.ClientFramework/light-theme.css";
 }
 
 function isDevice() {
