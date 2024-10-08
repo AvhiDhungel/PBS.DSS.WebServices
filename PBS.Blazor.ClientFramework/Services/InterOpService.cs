@@ -1,7 +1,7 @@
 ﻿using Microsoft.JSInterop;
-using PBS.DSS.WebServices.Client.Helpers;
+using PBS.Blazor.Framework.Helpers;
 
-namespace PBS.DSS.WebServices.Client.Services
+namespace PBS.Blazor.ClientFramework.Services
 {
     public sealed class InterOpService(IJSRuntime jsRuntime)
     {

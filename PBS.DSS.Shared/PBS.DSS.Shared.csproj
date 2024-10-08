@@ -25,4 +25,8 @@
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PBS.Blazor.Framework\PBS.Blazor.Framework.csproj" />
+  </ItemGroup>
+
 </Project>

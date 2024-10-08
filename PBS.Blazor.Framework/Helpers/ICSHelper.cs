@@ -1,4 +1,4 @@
-﻿namespace PBS.DSS.WebServices.Client.Helpers
+﻿namespace PBS.Blazor.Framework.Helpers
 {
     public class ICSDownloadArgs
     {

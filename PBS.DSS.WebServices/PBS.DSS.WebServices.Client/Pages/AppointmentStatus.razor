@@ -198,7 +198,7 @@
 
     private async Task AddToCalendar()
     {
-        var args = new Helpers.ICSDownloadArgs();
+        var args = new ICSDownloadArgs();
 
         args.StartDate = Appointment.AppointmentTime.LocalDateTime;
         args.EndDate = Appointment.PickupDate.LocalDateTime;

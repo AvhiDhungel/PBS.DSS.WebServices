@@ -1,4 +1,6 @@
-﻿namespace PBS.DSS.Shared.Helpers
+﻿using PBS.Blazor.Framework.Extensions;
+
+namespace PBS.Blazor.Framework.Helpers
 {
     public class ValidationHelper
     {

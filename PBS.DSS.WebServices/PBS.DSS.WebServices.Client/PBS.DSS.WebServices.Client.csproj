@@ -26,6 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\PBS.Blazor.ClientFramework\PBS.Blazor.ClientFramework.csproj" />
+    <ProjectReference Include="..\..\PBS.Blazor.Framework\PBS.Blazor.Framework.csproj" />
     <ProjectReference Include="..\..\PBS.DSS.Shared\PBS.DSS.Shared.csproj" />
   </ItemGroup>
 

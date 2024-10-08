@@ -1,16 +1,16 @@
 ﻿using PBS.DataAccess.Core;
 using System.Text;
 
-namespace PBS.DSS.WebServices.Server.Utilities
+namespace PBS.Blazor.ServerFramework
 {
-    internal class Activity
+    public class Activity
     {
         private readonly StringBuilder Log = new();
 
         public int Id { get; set; } = 0;
         public string SerialNumber { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
-        public Guid WorkItemRef { get; set; } = Guid.Empty;
+        public Guid BODId { get; set; } = Guid.Empty;
         public DateTime Date { get; set; } = DateTime.UtcNow;
 
         public string LogText { get => Log.ToString(); }
@@ -49,7 +49,7 @@ namespace PBS.DSS.WebServices.Server.Utilities
                     a.Id = dr.GetInt32("fldId");
                     a.SerialNumber = dr.GetString("fldSerialNumber");
                     a.Type = dr.GetString("fldType");
-                    a.WorkItemRef = dr.GetGuid("fldWorkItemRef");
+                    a.BODId = dr.GetGuid("fldBODId");
                     a.Date = dr.GetDateTime("fldDate");
                     a.Log.Append(dr.GetString("fldLog"));
                 }
@@ -71,7 +71,7 @@ namespace PBS.DSS.WebServices.Server.Utilities
                 fields["fldId"] = Id;
                 fields["fldSerialNumber"] = SerialNumber;
                 fields["fldType"] = Type;
-                fields["fldWorkItemRef"] = WorkItemRef;
+                fields["fldBODId"] = BODId;
                 fields["fldDate"] = Date;
                 fields["fldLog"] = LogText;
 

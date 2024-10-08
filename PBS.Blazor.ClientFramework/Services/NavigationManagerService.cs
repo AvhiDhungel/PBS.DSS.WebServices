@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace PBS.DSS.WebServices.Client.Services
+namespace PBS.Blazor.ClientFramework.Services
 {
     public class NavigationManagerService(NavigationManager navigationManager)
     {

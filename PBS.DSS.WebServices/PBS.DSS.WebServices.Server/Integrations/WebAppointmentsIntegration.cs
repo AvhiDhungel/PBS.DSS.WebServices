@@ -1,5 +1,6 @@
-﻿using PBS.DataAccess.Core;
-using PBS.DSS.Shared;
+﻿using PBS.Blazor.Framework.Extensions;
+using PBS.Blazor.ServerFramework;
+using PBS.DataAccess.Core;
 
 namespace PBS.DSS.WebServices.Server.Integrations
 {
@@ -44,7 +45,7 @@ namespace PBS.DSS.WebServices.Server.Integrations
             }
             catch (Exception ex)
             {
-                var log = new Utilities.Activity(serialNumber, "ShopBannerFetch");
+                var log = new Activity(serialNumber, "ShopBannerFetch");
 
                 log.LogMessage("Ran into an exception when trying to fetch the shop banner");
                 log.LogException(ex);

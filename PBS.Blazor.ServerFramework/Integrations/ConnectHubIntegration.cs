@@ -1,7 +1,7 @@
 ﻿using PBS.ConnectHub.Library;
 using CHubClient = PBS.ConnectHubV2.Client.Client;
 
-namespace PBS.DSS.WebServices.Server.Integrations
+namespace PBS.Blazor.ServerFramework.Integrations
 {
     public class ConnectHubIntegration
     {

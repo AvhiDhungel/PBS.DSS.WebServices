@@ -1,14 +1,16 @@
-﻿using PBS.DSS.Shared;
+﻿using PBS.Blazor.ClientFramework.Services;
+using PBS.Blazor.Framework.Extensions;
 using PBS.DSS.Shared.Criteria;
 using PBS.DSS.Shared.Enums;
 using PBS.DSS.Shared.Models.States;
 using PBS.DSS.Shared.Models.WorkItems;
+using PBS.DSS.WebServices.Client.ServiceExtensions;
 
 namespace PBS.DSS.WebServices.Client.Services
 {
-    public sealed class DocumentSignatureService(SharedStateService sharedStateService, ControllerAPIService controllerAPIService)
+    public sealed class DocumentSignatureService(SharedStateService<SharedState> sharedStateService, ControllerAPIService controllerAPIService)
     {
-        private readonly SharedStateService _sharedStateService = sharedStateService;
+        private readonly SharedStateService<SharedState> _sharedStateService = sharedStateService;
         private readonly ControllerAPIService _controllerAPIService = controllerAPIService;
 
         private SharedState SharedState => _sharedStateService.SharedState;

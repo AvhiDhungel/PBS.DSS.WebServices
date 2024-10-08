@@ -1,6 +1,7 @@
 using MudBlazor.Services;
 using MudExtensions.Services;
-using PBS.DSS.WebServices.Server.Integrations;
+using PBS.Blazor.ServerFramework;
+using PBS.Blazor.ServerFramework.Integrations;
 using DSSUtilities = PBS.DSS.WebServices.Server.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,7 +39,7 @@ app.MapFallbackToFile("index.html");
 
 PBS.DataAccess.Core.ConfigurationManager.GetConnectionString = DSSUtilities.Utility.DBConnectionString;
 
-var log = new DSSUtilities.Activity("", "ServerStarted");
+var log = new Activity("", "ServerStarted");
 log.LogMessage("PBS DSS Server Started");
 log.LogMessage($"Connect Hub Message ID: {ConnectHubIntegration.GetMessageId()}");
 log.Update();

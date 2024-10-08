@@ -4,7 +4,7 @@ using Connect = PBS.ConnectHub.Library.Messages;
 using PBS.ConnectHub.Library;
 using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.Shared.Models;
-using PBS.DSS.Shared;
+using PBS.Blazor.Framework.Extensions;
 
 namespace PBS.DSS.WebServices.Server.Utilities
 {

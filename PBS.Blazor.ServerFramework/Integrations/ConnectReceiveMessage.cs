@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PBS.ConnectHub.Library;
-using PBS.DSS.WebServices.Server.Extensions;
 
-namespace PBS.DSS.WebServices.Server.Utilities
+namespace PBS.Blazor.ServerFramework.Integrations
 {
-    public class ConnectReceiveMessage<T>(T o, string serial, string messageType)
+public class ConnectReceiveMessage<T>(T o, string serial, string messageType)
     {
         private static readonly int TimeOut = 2 * 60 * 1000;
         private Activity Log { get; set; } = new Activity(serial, messageType);

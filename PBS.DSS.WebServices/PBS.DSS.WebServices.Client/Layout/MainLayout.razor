@@ -46,7 +46,7 @@
 
     protected override void OnInitialized()
     {
-        SharedStateService.RefreshMainLayout = StateHasChanged;
+        SharedStateService.OnRefreshMainLayout = StateHasChanged;
     }
 
     private async Task SetCulture(string c)

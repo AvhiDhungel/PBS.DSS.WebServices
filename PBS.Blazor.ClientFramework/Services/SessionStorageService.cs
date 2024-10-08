@@ -2,16 +2,15 @@
 using System.Text.Json;
 using System.Text;
 using System.Globalization;
-using PBS.DSS.Shared;
-using PBS.DSS.Shared.Models.States;
+using PBS.Blazor.Framework.Extensions;
 
-namespace PBS.DSS.WebServices.Client.Services
+namespace PBS.Blazor.ClientFramework.Services
 {
     public sealed class SessionStorageService(ISessionStorageService storageService)
     {
-        private const string C_SessionCultureKey = "PBS_DSS_CultureString";
-        private const string C_LightThemeKey = "PBS_DSS_LightTheme";
-        private const string C_SharedStateKey = "PBS_DSS_SharedState";
+        private const string C_SessionCultureKey = "PBS_Blazor_CultureString";
+        private const string C_LightThemeKey = "PBS_Blazor_LightTheme";
+        private const string C_SharedStateKey = "PBS_Blazor_SharedState";
 
         private readonly ISessionStorageService _sessionStorageService = storageService;
 
@@ -52,7 +51,7 @@ namespace PBS.DSS.WebServices.Client.Services
         public async Task<bool> IsLightMode() => await ReadFromSessionAsync<bool>(C_LightThemeKey);
         public async Task<bool> IsDarkMode() => !(await IsLightMode());
 
-        public async Task SaveSharedState(SharedState s) => await SaveToSessionAsync(C_SharedStateKey, s);
-        public async Task<SharedState> GetSharedState() => await ReadFromSessionAsync<SharedState>(C_SharedStateKey) ?? new();
+        public async Task SaveSharedState<T>(T s) => await SaveToSessionAsync(C_SharedStateKey, s);
+        public async Task<T?> GetSharedState<T>() => await ReadFromSessionAsync<T>(C_SharedStateKey);
     }
 }

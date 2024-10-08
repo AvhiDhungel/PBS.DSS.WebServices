@@ -1,8 +1,6 @@
-﻿using PBS.DSS.Shared.Criteria;
-using PBS.DSS.Shared.Models.WorkItems;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 
-namespace PBS.DSS.WebServices.Client.Services
+namespace PBS.Blazor.ClientFramework.Services
 {
     public sealed class ControllerAPIService(HttpClient httpClient)
     {
@@ -11,6 +9,19 @@ namespace PBS.DSS.WebServices.Client.Services
         public async Task<T?> Get<T>(string controllerName, string methodName)
         {
             return await _httpClient.GetFromJsonAsync<T>($"/api/{controllerName}/{methodName}");
+        }
+
+        public async Task<T?> Get<T>(string controllerName, string methodName, List<KeyValuePair<string, string>> parameters)
+        {
+            var uri = new System.Text.StringBuilder($"/api/{controllerName}/{methodName}");
+
+            foreach (var p in parameters)
+            {
+                uri.Append(parameters.IndexOf(p) == 1 ? '?' : '&');
+                uri.Append($"{p.Key}={p.Value}");
+            }
+
+            return await _httpClient.GetFromJsonAsync<T>(uri.ToString());
         }
 
         public async Task<HttpResponseMessage?> Post<T>(T args, string controllerName, string methodName)
@@ -26,7 +37,7 @@ namespace PBS.DSS.WebServices.Client.Services
             if (resp == null)
             {
                 result.HasError = true;
-                result.ErrorMessage = "Was not able to completed request";
+                result.ErrorMessage = "Was not able to complete request";
             }
             else if (resp.IsSuccessStatusCode)
             {
@@ -40,32 +51,6 @@ namespace PBS.DSS.WebServices.Client.Services
 
             return result;
         }
-
-        #region Service Order
-        public async Task<APIResponse<ServiceOrder>> FetchServiceOrder(ServiceOrderFetchArgs args)
-        {
-            return await Post<ServiceOrder, ServiceOrderFetchArgs>(args, "ServiceOrder", "FetchServiceOrder") ?? new();
-        }
-        #endregion
-
-        #region Appointment
-        public async Task<APIResponse<Appointment>> FetchAppointment(AppointmentFetchArgs args)
-        {
-            return await Post<Appointment, AppointmentFetchArgs>(args, "Appointment", "FetchAppointment") ?? new();
-        }
-        #endregion
-
-        #region Document
-        public async Task<APIResponse<Attachment>> FetchServiceOrderDocument(ServiceOrderDocumentFetchArgs args)
-        {
-            return await Post<Attachment, ServiceOrderDocumentFetchArgs>(args, "ServiceOrder", "FetchServiceOrderDocument") ?? new();
-        }
-
-        public async Task<APIResponse<Attachment>> FetchAppointmentDocument(AppointmentDocumentFetchArgs args)
-        {
-            return await Post<Attachment, AppointmentDocumentFetchArgs>(args, "Appointment", "FetchAppointmentDocument") ?? new();
-        }
-        #endregion
 
         public class APIResponse<T>
         {

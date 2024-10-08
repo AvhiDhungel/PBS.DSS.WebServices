@@ -1,6 +1,6 @@
 ﻿using PBS.ConnectHub.Library;
 
-namespace PBS.DSS.WebServices.Server.Extensions
+namespace PBS.Blazor.ServerFramework
 {
     public static partial class Extensions
     {

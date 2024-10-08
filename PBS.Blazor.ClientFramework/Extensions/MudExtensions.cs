@@ -1,12 +1,12 @@
 ﻿using MudBlazor;
-using PBS.DSS.Shared;
-using PBS.DSS.WebServices.Client.Components;
-using System;
+using PBS.Blazor.Framework.Extensions;
+using PBS.Blazor.ClientFramework.MudComponents;
 
-namespace PBS.DSS.WebServices.Client
+namespace PBS.Blazor.ClientFramework.Extensions
 {
-    public static partial class Extensions
+    public static partial class MudExtensions
     {
+        #region Busy Dialog
         public static async Task<IDialogReference> ShowBusyDialog(this IDialogService s)
         {
             return await ShowBusyDialog(s, string.Empty);
@@ -41,15 +41,18 @@ namespace PBS.DSS.WebServices.Client
         {
             var d = await s.ShowBusyDialog(message);
             var result = await t;
-            
+
             d.Close();
             return result;
         }
+        #endregion
 
+        #region Mud Dialog
         public static T? GetValue<T>(this DialogResult? d)
         {
             if (d == null || d.Canceled || d.Data == null || d.Data.GetType() != typeof(T)) return default;
             return (T)d.Data;
         }
+        #endregion
     }
 }
