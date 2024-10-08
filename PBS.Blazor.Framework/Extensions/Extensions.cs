@@ -87,6 +87,19 @@ namespace PBS.Blazor.Framework.Extensions
         }
         #endregion
 
+        #region SiteThemes
+        public static string GetStyleSheet(this SiteThemes t)
+        {
+            var basePath = "_content/PBS.Blazor.ClientFramework/";
+            return t switch
+            {
+                SiteThemes.LightBase => $"{basePath}light-theme.css",
+                SiteThemes.DarkBase => $"{basePath}dark-theme.css",
+                _ => $"{basePath}dark-theme.css",
+            };
+        }
+        #endregion
+
         #region regex
         [GeneratedRegex(@"^\d+$")]
         private static partial Regex IntegerRegex();

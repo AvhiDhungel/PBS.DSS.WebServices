@@ -3,6 +3,10 @@ function toggleTheme(isDarkMode) {
     themeLink.href = isDarkMode ? "_content/PBS.Blazor.ClientFramework/dark-theme.css" : "_content/PBS.Blazor.ClientFramework/light-theme.css";
 }
 
+function setStyleSheet(path) {
+    document.getElementById("theme-stylesheet").href = path;
+}
+
 function isDevice() {
     return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);
 }

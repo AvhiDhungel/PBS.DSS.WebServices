@@ -1,4 +1,6 @@
 ﻿using Microsoft.JSInterop;
+using PBS.Blazor.Framework;
+using PBS.Blazor.Framework.Extensions;
 using PBS.Blazor.Framework.Helpers;
 
 namespace PBS.Blazor.ClientFramework.Services
@@ -10,6 +12,11 @@ namespace PBS.Blazor.ClientFramework.Services
         public async Task ToggleTheme(bool isDark)
         {
             await _jsRuntime.InvokeVoidAsync("toggleTheme", isDark);
+        }
+
+        public async Task SetStyleSheet(SiteThemes t)
+        {
+            await _jsRuntime.InvokeVoidAsync("setStyleSheet", t.GetStyleSheet());
         }
 
         public async ValueTask<bool> IsMobile()
