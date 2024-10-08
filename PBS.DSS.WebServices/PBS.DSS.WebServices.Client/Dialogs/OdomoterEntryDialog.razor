@@ -11,15 +11,13 @@
             <MudSpacer />
 
             <MudStack Row="true">
-                <MudButton Class="monochrome-button"
-                           Variant="Variant.Outlined"
+                <MudButton Variant="Variant.Outlined"
                            Disabled="@(Odometer == 0)"
                            OnClick="ConfirmOdometer">
                     @Resources.CheckIn
                 </MudButton>
                 <MudSpacer />
-                <MudButton Class="monochrome-button"
-                           Variant="Variant.Outlined"
+                <MudButton Variant="Variant.Outlined"
                            OnClick="CancelCheckIn">
                     @Resources.Cancel
                 </MudButton>

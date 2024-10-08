@@ -54,7 +54,7 @@
     color: white;
 }
 
-.monochrome-button {
+.mud-button {
     color: white;
     opacity: 0.85;
     padding-top: 15px;
@@ -68,7 +68,7 @@
     height: 100%;
 }
 
-    .monochrome-button:hover {
+    .mud-button:hover {
         color: white;
         opacity: 0.85;
         padding-top: 15px;
@@ -82,7 +82,7 @@
         height: 100%;
     }
 
-    .monochrome-button:disabled {
+    .mud-button:disabled {
         color: black;
         opacity: 0.85;
         padding-top: 15px;
