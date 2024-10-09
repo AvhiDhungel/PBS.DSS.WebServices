@@ -1,0 +1,45 @@
+﻿@if (!SharedStateService.HasErrors())
+{
+    @Content
+}
+else
+{
+    <MudCard>
+        <MudCardHeader>
+            <MudText Typo="Typo.h6">
+                @FrameworkResources.ErrorLoadingYourPage
+            </MudText>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudStack>
+                <MudText>
+                    @if (SharedStateService.HasErrors())
+                    {
+                        @SharedStateService.GetErrors()
+                    }
+                </MudText>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+}
+
+@code {
+    [Parameter]
+    public RenderFragment? Content { get; set; }
+
+    [Parameter]
+    public Func<bool>? Validate { get; set; }
+
+    [Parameter]
+    public Action? Fetch { get; set; }
+    [Parameter]
+    public Func<Task>? FetchAsync { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Validate?.Invoke() ?? false) return;
+
+        if (FetchAsync != null) await FetchAsync.Invoke();
+        if (Fetch != null) Fetch.Invoke();
+    }
+}

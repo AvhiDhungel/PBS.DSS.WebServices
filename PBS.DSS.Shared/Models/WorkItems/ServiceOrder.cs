@@ -4,6 +4,8 @@ namespace PBS.DSS.Shared.Models.WorkItems
 {
     public class ServiceOrder
     {
+        public string SerialNumber { get; set; } = string.Empty;
+
         public Guid Id { get; set; } = Guid.Empty;
         public Guid ContactRef { get; set; } = Guid.Empty;
         public Guid VehicleRef { get; set; } = Guid.Empty;
@@ -13,20 +15,19 @@ namespace PBS.DSS.Shared.Models.WorkItems
         public string AdvisorName { get; set; } = string.Empty;
         public string AdditionalComments { get; set; } = string.Empty;
         public string ShopBanner { get; set; } = string.Empty;
+        public string Requestor {  get; set; } = string.Empty;
 
         public double SubTotal { get; set; } = 0;
         public double TaxTotal { get; set; } = 0;
         public double FeesTotal { get; set; } = 0;
         public double GrandTotal { get; set; } = 0;
 
-        public ServiceOrderTimeline Timeline { get; set; } = ServiceOrderTimeline.InspectionComplete;
+        public ServiceOrderTimeline Timeline { get; set; } = ServiceOrderTimeline.CheckedIn;
         public Contact ContactInfo { get; set; } = new Contact();
         public Vehicle Vehicle { get; set; } = new Vehicle();
 
         public List<RequestLine> Requests { get; set; } = [];
         public List<Attachment> Attachments { get; set; } = [];
-
-        public Dictionary<DocumentTypes, byte[]> Documents { get; set; } = new();
 
         public IEnumerable<RequestLine> ApprovedRequests { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Approved); }
         public IEnumerable<RequestLine> PendingRequests { get => Requests.Where((x) => x.AWRStatus == AWRStatuses.Pending); }
@@ -36,7 +37,7 @@ namespace PBS.DSS.Shared.Models.WorkItems
         }
 
         public bool IsValid() => Id != Guid.Empty;
-        public bool HasInspection() => Documents.ContainsKey(DocumentTypes.Inspection);
+        public bool HasInspection() => Requests.Any(x => x.IsInspection);
 
         public static ServiceOrder GenerateDummy()
         {
@@ -61,6 +62,7 @@ namespace PBS.DSS.Shared.Models.WorkItems
             var approved2 = new RequestLine();
             approved2.Description = "Checking the A/C system for leaks and performance. Includes refrigerant recharge if needed.";
             approved2.AWRStatus = AWRStatuses.Approved;
+            approved2.IsInspection = true;
 
             var approved3 = new RequestLine();
             approved3.Description = "Flushing old brake fluid and replacing it to keep your brakes functioning properly. Includes a basic inspection of pads and rotors.";

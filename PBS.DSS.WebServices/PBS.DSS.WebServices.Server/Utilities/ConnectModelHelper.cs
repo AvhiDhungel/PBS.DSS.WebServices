@@ -4,6 +4,7 @@ using Connect = PBS.ConnectHub.Library.Messages;
 using PBS.ConnectHub.Library;
 using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.Shared.Models;
+using PBS.Blazor.Framework.Extensions;
 
 namespace PBS.DSS.WebServices.Server.Utilities
 {
@@ -37,6 +38,7 @@ namespace PBS.DSS.WebServices.Server.Utilities
                 req.Description = connectReq.RequestDescription;
                 req.EstimatedLabour = (double)connectReq.EstimatedLabour;
                 req.EstimatedParts = (double)connectReq.EstimatedParts;
+                req.IsInspection = connectReq.RequestLineType.IsInSet(ConnectSO.RequestLineTypes.MemoInspection, ConnectSO.RequestLineTypes.BillableInspection);
 
                 switch (connectReq.RequestLineStatus)
                 {
@@ -69,6 +71,21 @@ namespace PBS.DSS.WebServices.Server.Utilities
                 }
 
                 so.Requests.Add(req);
+            }
+        }
+
+        public static void TranscribeSOTimeline(ServiceOrder so, List<ConnectSO.WorkItemTimelineTypes> entries)
+        {
+            foreach (var entry in entries.OrderDescending())
+            {
+                if (entry == ConnectSO.WorkItemTimelineTypes.ReadyForPickup && so.Timeline < Shared.Enums.ServiceOrderTimeline.Ready)
+                    so.Timeline = Shared.Enums.ServiceOrderTimeline.Ready;
+                else if (entry == ConnectSO.WorkItemTimelineTypes.AllJobsComplete && so.Timeline < Shared.Enums.ServiceOrderTimeline.Finalizing)
+                    so.Timeline = Shared.Enums.ServiceOrderTimeline.Finalizing;
+                else if (entry == ConnectSO.WorkItemTimelineTypes.JobStarted && so.Timeline < Shared.Enums.ServiceOrderTimeline.InProgress)
+                    so.Timeline = Shared.Enums.ServiceOrderTimeline.InProgress;
+                else if (entry == ConnectSO.WorkItemTimelineTypes.InspectionStarted && so.Timeline < Shared.Enums.ServiceOrderTimeline.Inspection)
+                    so.Timeline = Shared.Enums.ServiceOrderTimeline.Inspection;
             }
         }
         #endregion

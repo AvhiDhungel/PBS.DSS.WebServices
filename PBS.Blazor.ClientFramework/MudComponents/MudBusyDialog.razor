@@ -1,0 +1,23 @@
+﻿<MudDialog Style="opacity: 0.75;">
+    <DialogContent>
+        <MudPaper Elevation="0"
+                  Class="d-flex align-content-center flex-wrap flex-grow-1 gap-4"
+                  Style="background-color:transparent;"
+                  MinHeight="300px"
+                  MinWidth="300px">
+            <MudGrid Justify="MudBlazor.Justify.Center">
+                <MudItem>
+                    <MudStack>
+                        <MudProgressCircular Color="Color.Inherit" StrokeWidth="8" Size="Size.Large" Indeterminate="true" />
+                        <MudText>@Message</MudText>
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public string Message { get; set; } = FrameworkResources.Loading;
+}

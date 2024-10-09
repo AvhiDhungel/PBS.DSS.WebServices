@@ -13,6 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.DSS.WebServices.Server"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.DSS.WebServices.Client", "PBS.DSS.WebServices\PBS.DSS.WebServices.Client\PBS.DSS.WebServices.Client.csproj", "{55CFF772-4EAA-4807-97B4-658930DD168A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.Blazor.ServerFramework", "PBS.Blazor.ServerFramework\PBS.Blazor.ServerFramework.csproj", "{08EC1BA3-13F5-4E05-92C6-2C908123120E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBS.Blazor.Framework", "PBS.Blazor.Framework\PBS.Blazor.Framework.csproj", "{7B8E18CE-7924-4E48-94B4-247C6FC090D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PBS.Blazor.ClientFramework", "PBS.Blazor.ClientFramework\PBS.Blazor.ClientFramework.csproj", "{B1D1F1D8-0CEE-4D0B-A4F2-C9B250ABC512}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,13 +45,25 @@ Global
 		{55CFF772-4EAA-4807-97B4-658930DD168A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55CFF772-4EAA-4807-97B4-658930DD168A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55CFF772-4EAA-4807-97B4-658930DD168A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08EC1BA3-13F5-4E05-92C6-2C908123120E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08EC1BA3-13F5-4E05-92C6-2C908123120E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08EC1BA3-13F5-4E05-92C6-2C908123120E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08EC1BA3-13F5-4E05-92C6-2C908123120E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B8E18CE-7924-4E48-94B4-247C6FC090D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B8E18CE-7924-4E48-94B4-247C6FC090D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B8E18CE-7924-4E48-94B4-247C6FC090D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B8E18CE-7924-4E48-94B4-247C6FC090D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1D1F1D8-0CEE-4D0B-A4F2-C9B250ABC512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1D1F1D8-0CEE-4D0B-A4F2-C9B250ABC512}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1D1F1D8-0CEE-4D0B-A4F2-C9B250ABC512}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1D1F1D8-0CEE-4D0B-A4F2-C9B250ABC512}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D48255B8-0008-46E0-8AE7-B6FB5AF78054}
-		RESX_CultureCountyOverrides = fr=fr-CA
 		RESX_NeutralResourcesLanguage = en-CA
+		RESX_CultureCountyOverrides = fr=fr-CA
+		SolutionGuid = {D48255B8-0008-46E0-8AE7-B6FB5AF78054}
 	EndGlobalSection
 EndGlobal

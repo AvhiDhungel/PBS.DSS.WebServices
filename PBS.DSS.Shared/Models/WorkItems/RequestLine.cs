@@ -8,6 +8,7 @@
         public string Description { get; set; } = string.Empty;
         public double EstimatedLabour { get; set; } = 0;
         public double EstimatedParts { get; set; } = 0;
+        public bool IsInspection { get; set; } = false;
         public AWRStatuses AWRStatus { get; set; } = AWRStatuses.Approved;
         public RecommendedPriority Priority { get; set; } = RecommendedPriority.None;
 

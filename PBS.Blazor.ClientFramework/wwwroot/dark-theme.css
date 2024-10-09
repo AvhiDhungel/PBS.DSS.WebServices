@@ -1,0 +1,157 @@
+﻿body {
+    background-repeat: no-repeat;
+    background-image: url('darkimage.jpg');
+    background-size: cover;
+    background-color: black;
+}
+
+.page-banner-image {
+    height: fit-content;
+    max-height: 15em;
+    width: 100%;
+}
+
+.page-footer-pinned {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+    border-radius: 8px;
+    color: floralwhite;
+    background-color: black;
+    box-sizing: border-box;
+}
+
+.mud-card {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding-left: 3%;
+    padding-right: 3%;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+}
+
+.card-detail-text {
+    opacity: 0.65;
+    font-size: large;
+}
+
+.mud-button {
+    color: white;
+    opacity: 0.85;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 15px;
+    border-color: rgba(255, 255, 255, 0.60);
+    width: 100%;
+    height: 100%;
+}
+
+    .mud-button:hover {
+        color: white;
+        opacity: 0.85;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 30px;
+        padding-right: 30px;
+        border-radius: 15px;
+        border-color: rgba(255, 255, 255, 0.60);
+        background-color: rgba(255, 255, 255, 0.35);
+        width: 100%;
+        height: 100%;
+    }
+
+    .mud-button:disabled {
+        opacity: 0.85;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 30px;
+        padding-right: 30px;
+        border-radius: 15px;
+        border-color: rgba(255, 255, 255, 0.60);
+        width: 100%;
+        height: 100%;
+    }
+
+.monochrome-toggle-button {
+    color: white;
+}
+
+    .monochrome-toggle-button:hover {
+        color: white;
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+
+.mud-dialog {
+    background-color: black;
+    color: white;
+    width: 100%;
+    border-radius: 10px;
+    border-color: rgba(255, 255, 255, 0.30);
+    border-width: 1px;
+}
+
+.pdf-viewer-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 5%;
+}
+
+.pdf-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.attachment-carousel {
+    height: 45em;
+    border-radius: 8px;
+    background-color: #0c1210;
+}
+
+@media (max-width: 768px) {
+    .pdf-viewer-container {
+        height: 80vh;
+    }
+}
+
+/* The following 3 are for the loading spinner in index.html which shows while the blazor app loads */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.spinner {
+    border: 15px solid rgba(0, 0, 0, 0.1);
+    border-top: 15px solid floralwhite;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

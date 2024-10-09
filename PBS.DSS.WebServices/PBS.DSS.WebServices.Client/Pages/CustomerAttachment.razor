@@ -1,12 +1,13 @@
 ﻿@page "/CustomerAttachment"
-@page "/CustomerAttachment/{SerialNumber}/{WorkItemRef}/{NotificationRef}"
+@page "/CustomerAttachment/{SerialNumber}/{WorkItemRef}/{NotificationRef}/{Requestor}"
 
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
         <MudStack>
             <MudButton Style="align-self:center; width:fit-content"
                        Variant="Variant.Filled"
-                       Color="Color.Tertiary"
+                       Color="Color.Dark"
+                       StartIcon="@Icons.Material.Outlined.Recommend"
                        OnClick="ViewRecommendations">
                 @Resources.ViewYourRecommendations
             </MudButton>
@@ -24,28 +25,24 @@
     public string WorkItemRef { get; set; } = string.Empty;
     [Parameter]
     public string NotificationRef { get; set; } = string.Empty;
+    [Parameter]
+    public string Requestor { get; set; } = string.Empty;
 
     private List<Attachment> Attachments { get; set; } = new();
 
     private async Task Initialize()
     {
-        var busyDialog = await DialogService.ShowAsync<MudBusyDialog>("");
-        var img = await httpClient.GetByteArrayAsync("backgroundimg.jpg");
+        //Debug Code
+        SerialNumber = "1156.QA";
+        WorkItemRef = Guid.NewGuid().ToString();
+        Requestor = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("BATMAN"));
 
         var attachment1 = new Attachment();
         attachment1.Name = "Banner";
         attachment1.FileType = FileTypes.Image;
-        attachment1.Content = Convert.FromBase64String(SharedStateService.GetBanner());
+        attachment1.Content = await httpClient.GetByteArrayAsync("abcmotors.png");
 
-        var attachment2 = new Attachment();
-        attachment2.Name = "Car";
-        attachment2.FileType = FileTypes.Image;
-        attachment2.Content = img;
-
-        Attachments.Add(attachment2);
         Attachments.Add(attachment1);
-
-        busyDialog.Close();
     }
 
     private bool ValidateParams()
@@ -66,6 +63,6 @@
 
     private void ViewRecommendations()
     {
-        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{WorkItemRef}");
+        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{WorkItemRef}/{Requestor}");
     }
 }

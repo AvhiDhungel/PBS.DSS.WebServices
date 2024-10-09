@@ -247,4 +247,13 @@
   <data name="ReadyForPickup" xml:space="preserve">
     <value>Ready For Pickup</value>
   </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="Finalizing" xml:space="preserve">
+    <value>Finalizing</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>In Progress</value>
+  </data>
 </root>

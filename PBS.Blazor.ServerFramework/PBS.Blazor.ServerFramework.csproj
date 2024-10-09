@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Csla" Version="8.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="8.0.10" />
+    <PackageReference Include="PBS.DataAccess.Core" Version="1.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PBS.Blazor.Framework\PBS.Blazor.Framework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PBS.ConnectHubV2.Client">
+      <HintPath>..\References\PBS.ConnectHubV2.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

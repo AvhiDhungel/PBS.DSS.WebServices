@@ -1,105 +1,105 @@
 ﻿@page "/ServiceOrderStatus"
-@page "/ServiceOrderStatus/{SerialNumber}/{WorkItemRef}"
+@page "/ServiceOrderStatus/{SerialNumber}/{WorkItemRef}/{Requestor}"
 
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
-        <MudStack AlignItems="AlignItems.Center" Class="mb-20">
+        <MudStack AlignItems="AlignItems.Stretch" Class="mb-20">
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h5">@Resources.ServiceOrder</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h6">@Resources.ServiceOrder</MudText>
+                        <MudText Class="card-detail-text">@ServiceOrder.SONumber</MudText>
+                    </MudStack>
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h6">@Resources.ServiceAdvisor</MudText>
+                        <MudText Class="card-detail-text">@ServiceOrder.AdvisorName</MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h5">@Resources.VehicleDetails</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack>
+                        <MudText Class="card-detail-text">@ServiceOrder.Vehicle.Description</MudText>
+                        <MudText Class="card-detail-text">@ServiceOrder.Vehicle.VIN</MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+            <MudCard>
+                <MudTimeline Class="pb-5"
+                             TimelineOrientation="TimelineOrientation.Horizontal"
+                             TimelinePosition="@(IsMobile ? TimelinePosition.Alternate : TimelinePosition.Top)">
+                    @foreach (ServiceOrderTimeline e in Enum.GetValues(typeof(ServiceOrderTimeline)))
+                    {
+                        <MudTimelineItem Size="Size.Medium"
+                                         Color="Color.Success"
+                                         Variant="Variant.Filled"
+                                         HideDot="@(ServiceOrder.Timeline != e)">
+                            <ItemDot>
+                                <MudIcon Icon="@Icons.Material.Outlined.Check" />
+                            </ItemDot>
+                            <ItemContent>
+                                <MudText Align="Align.Center" Typo="Typo.body2">@(e.ToLocalizedString())</MudText>
+                            </ItemContent>
+                        </MudTimelineItem>
+                    }
+                </MudTimeline>
+            </MudCard>
+            <MudCard>
+                <MudCardHeader>
+                    <MudStack Row="true" Style="width:100%">
+                        <MudText Typo="Typo.h5">@Resources.Services</MudText>
+                        <MudSpacer />
+                        <MudToggleIconButton Class="monochrome-toggle-button"
+                                             Variant="Variant.Text"
+                                             ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp"
+                                             Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                                             Size="Size.Large"
+                                             ToggledSize="Size.Large"
+                                             Toggled="IsServicesExpanded"
+                                             ToggledChanged="ToggleServices" />
+                    </MudStack>
+                </MudCardHeader>
+                <MudCollapse Expanded="@IsServicesExpanded">
+                    <MudCardContent>
+                        <MudStack>
+                            @foreach (var req in ServiceOrder.ApprovedRequests)
+                            {
+                                <MudText Class="card-detail-text">@req.Description</MudText>
+                            }
+                        </MudStack>
+                    </MudCardContent>
+                </MudCollapse>
+            </MudCard>
             <MudGrid Justify="Justify.Center">
-                <MudItem lg="5" md="6" xs="12">
-                    <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Fit" Header="@Resources.ServiceOrder">
-                        <ChildContent>
-                            <MudStack AlignItems="AlignItems.Stretch" Spacing="1">
-                                <MudStack Row="true">
-                                    <MudText>@Resources.SO #:</MudText>
-                                    <MudSpacer />
-                                    <MudText>@ServiceOrder.SONumber</MudText>
-                                </MudStack>
-                                <MudStack Row="true">
-                                    <MudText>@Resources.ServiceAdvisor:</MudText>
-                                    <MudSpacer />
-                                    <MudText>@ServiceOrder.AdvisorName</MudText>
-                                </MudStack>
-                            </MudStack>
-                        </ChildContent>
-                    </MudPaperCard>
-                </MudItem>
-
-                <MudItem lg="5" md="6" xs="12">
-                    <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Fit" Header="@Resources.VehicleDetails">
-                        <ChildContent>
-                            <MudStack AlignItems="AlignItems.Center" Spacing="1">
-                                <MudText>@ServiceOrder.Vehicle.Description</MudText>
-                                <MudText>@ServiceOrder.Vehicle.VIN</MudText>
-                            </MudStack>
-                        </ChildContent>
-                    </MudPaperCard>
-                </MudItem>
-            </MudGrid>
-
-            <MudGrid Justify="Justify.Center" Class="mb-4">
-                <MudItem lg="10" md="12" xs="12">
-                    <MudPaperCard CardStyle="MudPaperCard.PaperCardStyle.Flex">
-                        <ChildContent>
-                            <MudTimeline Class="responsive-timeline" TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Top">
-                                @foreach (ServiceOrderTimeline e in Enum.GetValues(typeof(ServiceOrderTimeline)))
-                                {
-                                    <MudTimelineItem Size="Size.Medium"
-                                                     Color="Color.Success"
-                                                     Variant="Variant.Filled"
-                                                     HideDot="@(ServiceOrder.Timeline != e)">
-                                        <ItemDot>
-                                            <MudIcon Icon="@Icons.Material.Outlined.Check" />
-                                        </ItemDot>
-                                        <ItemContent>
-                                            <MudText Align="Align.Center" Typo="Typo.body2">@(e.ToLocalizedString())</MudText>
-                                        </ItemContent>
-                                    </MudTimelineItem>
-                                }
-                            </MudTimeline>
-                        </ChildContent>
-                    </MudPaperCard>
-                </MudItem>
-            </MudGrid>
-
-            <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Row="true" Wrap="Wrap.Wrap">
                 @if (!ServiceOrder.IsOpen)
                 {
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               OnClick="ViewInspection">
-                        @Resources.Inspection
-                    </MudButton>
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               OnClick="ViewCustomerCopy">
-                        @Resources.CustomerCopy
-                    </MudButton>
+                    <MudItem lg="3" md="3" xs="6">
+                        <MudButton Variant="Variant.Outlined"
+                                   OnClick="ViewInspection">
+                            @Resources.Inspection
+                        </MudButton>
+                    </MudItem>
+                    <MudItem lg="3" md="3" xs="6">
+                        <MudButton Variant="Variant.Outlined"
+                                   OnClick="ViewCustomerCopy">
+                            @Resources.CustomerCopy
+                        </MudButton>
+                    </MudItem>
                 }
                 else if (ServiceOrder.PendingRequests.Count() > 0)
                 {
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               StartIcon="@Icons.Material.Outlined.Recommend"
-                               OnClick="ViewRecommendations">
-                        @Resources.ViewYourRecommendations
-                    </MudButton>
-                }
-            </MudStack>
-
-            <MudGrid Justify="Justify.Center" Class="mb-4">
-                <MudItem lg="10" md="12" xs="12">
-                    <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-4">@Resources.ApprovedServices</MudText>
-                    <MudDivider />
-                </MudItem>
-            </MudGrid>
-
-            <MudGrid Justify="Justify.Center">
-                @foreach (var approved in ServiceOrder.ApprovedRequests)
-                {
-                    <MudItem lg="@((approved == ServiceOrder.ApprovedRequests.Last()) ? 10: 5)"
-                             md="@((approved == ServiceOrder.ApprovedRequests.Last()) ? 10: 5)"
-                             xs="12">
-                        <MudPaperCard CardStyle="@MudPaperCard.PaperCardStyle.Wrap" Content="@approved.Description" />
+                    <MudItem lg="6" md="6" xs="12">
+                        <MudButton Variant="Variant.Outlined"
+                                   StartIcon="@Icons.Material.Outlined.Recommend"
+                                   OnClick="ViewRecommendations">
+                            @Resources.ViewYourRecommendations
+                        </MudButton>
                     </MudItem>
                 }
             </MudGrid>
@@ -112,17 +112,25 @@
     public string SerialNumber { get; set; } = string.Empty;
     [Parameter]
     public string WorkItemRef { get; set; } = string.Empty;
+    [Parameter]
+    public string Requestor { get; set; } = string.Empty;
 
     private ServiceOrder ServiceOrder { get; set; } = new();
 
+    private bool IsServicesExpanded { get; set; } = true;
+    private bool IsMobile { get; set; } = true;
+
     private async Task Initialize()
     {
+        IsMobile = await InterOpService.IsMobile();
+
         //Debug Code
         ServiceOrder = ServiceOrder.GenerateDummy();
-        SerialNumber = "9999.QA";
+        Requestor = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("BATMAN"));
+        SerialNumber = "1156.QA";
         return;
 
-        var busyDialog = DialogService.Show<MudBusyDialog>("");
+        var busyDialog = await DialogService.ShowBusyDialog();
         var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
 
         var resp = await ControllerAPIService.FetchServiceOrder(args);
@@ -151,38 +159,26 @@
         return true;
     }
 
+    private void ToggleServices() => IsServicesExpanded = !IsServicesExpanded;
+
     private void ViewRecommendations()
     {
-        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{ServiceOrder.Id}");
+        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{ServiceOrder.Id}/{Requestor}");
     }
 
     private async Task ViewInspection()
     {
-        var busyDialog = DialogService.Show<MudBusyDialog>("");
+        if (!SharedStateService.HasModel())
+            await DialogService.PerformBusy(SharedStateService.SaveModelToSession(ServiceOrder));
 
-        var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
-
-        SharedStateService.AddModel(SharedModelTypes.InspectionDocument, Convert.ToBase64String(inspectionDoc));
-        // await SharedStateService.SaveToSession();
-
-        busyDialog.Close();
-
-        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
-        // await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.InspectionDocument.ToString()}");
+        await InterOpService.OpenLinkInNewTab($"/Document/{DocumentTypes.Inspection.ToString()}");
     }
 
     private async Task ViewCustomerCopy()
     {
-        var busyDialog = DialogService.Show<MudBusyDialog>("");
+        if (!SharedStateService.HasModel())
+            await DialogService.PerformBusy(SharedStateService.SaveModelToSession(ServiceOrder));
 
-        var inspectionDoc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
-
-        SharedStateService.AddModel(SharedModelTypes.CustomerCopy, Convert.ToBase64String(inspectionDoc));
-        // await SharedStateService.SaveToSession();
-
-        busyDialog.Close();
-
-        NavigationManager.NavigateTo($"/Document/{SharedModelTypes.CustomerCopy.ToString()}");
-        // await InterOpService.OpenLinkInNewTab($"/Document/{SharedModelTypes.CustomerCopy.ToString()}");
+        await InterOpService.OpenLinkInNewTab($"/Document/{DocumentTypes.CustomerCopy.ToString()}");
     }
 }

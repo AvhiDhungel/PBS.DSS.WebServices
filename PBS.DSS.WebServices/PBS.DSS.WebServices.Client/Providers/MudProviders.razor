@@ -1,9 +1,12 @@
-﻿<MudThemeProvider Theme="Theme" />
+﻿<MudThemeProvider Theme="Theme" @bind-IsDarkMode="IsDarkMode" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 @code {
+    [CascadingParameter]
+    private bool IsDarkMode { get; set; } = true;
+
     private MudTheme Theme { get; set; } = new();
 
     protected override void OnInitialized()
@@ -14,9 +17,10 @@
         SnackbarService.Configuration.SnackbarVariant = Variant.Filled;
         SnackbarService.Configuration.PreventDuplicates = true;
 
-        Theme.PaletteLight.AppbarBackground = "#0c1210";
-        Theme.PaletteLight.Primary = "#003994";
-        Theme.PaletteLight.Secondary = Colors.Purple.Darken4;
-        Theme.PaletteLight.Tertiary = Colors.Blue.Darken3;
+        Theme.PaletteDark.AppbarBackground = Colors.Shades.Black;
+        Theme.PaletteDark.Primary = Colors.Shades.White;
+
+        Theme.PaletteLight.AppbarBackground = Colors.Shades.Black;
+        Theme.PaletteLight.Primary = Colors.Shades.Black;
     }
 }

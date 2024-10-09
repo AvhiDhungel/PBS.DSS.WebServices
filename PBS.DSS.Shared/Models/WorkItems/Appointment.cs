@@ -2,6 +2,8 @@
 {
     public class Appointment
     {
+        public string SerialNumber { get; set; } = string.Empty;
+
         public Guid Id { get; set; } = Guid.Empty;
         public Guid ContactRef { get; set; } = Guid.Empty;
         public Guid VehicleRef { get; set; } = Guid.Empty;

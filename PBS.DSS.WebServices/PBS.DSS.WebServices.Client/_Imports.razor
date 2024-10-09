@@ -1,24 +1,23 @@
-﻿@using System.Net.Http
-@using System.Net.Http.Json
-@using Microsoft.AspNetCore.Components.Forms
-@using Microsoft.AspNetCore.Components.Routing
-@using Microsoft.AspNetCore.Components.Web
-@using Microsoft.AspNetCore.Components.Web.Virtualization
-@using Microsoft.JSInterop
+﻿@using Microsoft.AspNetCore.Components.Routing
+@using PBS.Blazor.Framework.Extensions
+@using PBS.Blazor.Framework.Helpers
+@using PBS.Blazor.ClientFramework.Services
+@using PBS.Blazor.ClientFramework.Extensions
+@using PBS.Blazor.ClientFramework.MudComponents
 @using PBS.DSS.WebServices.Client
 @using PBS.DSS.WebServices.Client.Providers
 @using PBS.DSS.WebServices.Client.Components
 @using PBS.DSS.WebServices.Client.Dialogs
 @using PBS.DSS.WebServices.Client.Layout
 @using PBS.DSS.WebServices.Client.Services
+@using PBS.DSS.WebServices.Client.ServiceExtensions
 @using PBS.DSS.Shared
 @using PBS.DSS.Shared.Resources
 @using PBS.DSS.Shared.Models
 @using PBS.DSS.Shared.Models.States
 @using PBS.DSS.Shared.Models.WorkItems
-@using PBS.DSS.Shared.Criteria;
-@using PBS.DSS.Shared.Helpers;
-@using PBS.DSS.Shared.Enums;
+@using PBS.DSS.Shared.Criteria
+@using PBS.DSS.Shared.Enums
 @using MudBlazor
 @using MudBlazor.Services
 @using Blazored.SessionStorage
@@ -32,5 +31,6 @@
 @inject NavigationManager NavigationManager
 @inject InterOpService InterOpService
 @inject SessionStorageService SessionStorageService
-@inject SharedStateService SharedStateService
 @inject ControllerAPIService ControllerAPIService
+@inject DocumentSignatureService DocumentSignatureService
+@inject SharedStateService<SharedState> SharedStateService
