@@ -176,6 +176,7 @@
     {
         //Debug Code
         ServiceOrder = ServiceOrder.GenerateDummy();
+        ServiceOrder.AccessType = DSSAccessTypes.WaitingForApproval;
         Requestor = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("BATMAN"));
         SerialNumber = "1156.QA";
         CalculateTotals();
@@ -197,7 +198,9 @@
         }
 
         ServiceOrder = resp.ResponseObject ?? ServiceOrder;
+        ServiceOrder.AccessType = DSSAccessTypes.WaitingForApproval;
         SharedStateService.SetBanner(ServiceOrder.ShopBanner);
+
         CalculateTotals();
     }
 

@@ -23,6 +23,8 @@ namespace PBS.DSS.Shared.Models.WorkItems
         public double GrandTotal { get; set; } = 0;
 
         public ServiceOrderTimeline Timeline { get; set; } = ServiceOrderTimeline.CheckedIn;
+        public DSSAccessTypes AccessType { get; set; } = DSSAccessTypes.None;
+
         public Contact ContactInfo { get; set; } = new Contact();
         public Vehicle Vehicle { get; set; } = new Vehicle();
 
