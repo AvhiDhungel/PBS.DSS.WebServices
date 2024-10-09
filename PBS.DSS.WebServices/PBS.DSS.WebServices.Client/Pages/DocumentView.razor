@@ -82,7 +82,7 @@
             return;
         }
 
-        var success = await DialogService.PerformBusyResult(DocumentSignatureService.SignDocument(DocumentType, Signature));
+        var success = await DialogService.PerformBusyResult(DocumentSignatureService.SignDocument(DocumentType, Signature), "Confirming");
 
         if (!success)
         {
@@ -103,9 +103,19 @@
         {
             await DialogService.ShowMessageBox("Check In Successful", "Successfully Checked In for Appointment");
 
-            //Debug Code
-            NavigationManager.NavigateTo($"/AppointmentStatus", forceLoad:true);
-            // NavigationManager.NavigateTo($"/AppointmentStatus/{serial}/{workItemRef}", forceLoad:true);
+            NavigationManager.NavigateTo($"/AppointmentStatus/{serial}/{workItemRef}", forceLoad: true);
+        }
+        else if (actionType == SignatureActionTypes.SignRecommendedServices)
+        {
+            await DialogService.ShowMessageBox("Services Confirmed", "Your Approval Response has been successfully submitted.");
+
+            NavigationManager.NavigateTo($"/ServiceOrderStatus/{serial}/{workItemRef}/{SharedStateService.SharedState.EncodedRequestor}", forceLoad: true);
+        }
+        else if (actionType == SignatureActionTypes.SignInvoice)
+        {
+            await DialogService.ShowMessageBox("Invoice Signed", "Successfully Signed Invoice for your Service");
+
+            NavigationManager.NavigateTo($"/ServiceOrderStatus/{serial}/{workItemRef}/{SharedStateService.SharedState.EncodedRequestor}", forceLoad: true);
         }
     }
 }

@@ -3,6 +3,8 @@
     public enum SignatureActionTypes
     {
         None,
-        AppointmentCheckIn
+        AppointmentCheckIn,
+        SignRecommendedServices,
+        SignInvoice,
     }
 }

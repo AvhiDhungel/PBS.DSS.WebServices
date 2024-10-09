@@ -7,6 +7,7 @@ namespace PBS.DSS.Shared.Models.States
     public class SharedState : ISharedState
     {
         public string SerialNumber { get; set; } = string.Empty;
+        public string EncodedRequestor { get; set; } = string.Empty;
         public string Banner { get; set; } = string.Empty;
      
         public Guid WorkItemRef { get; set; } = Guid.Empty;

@@ -174,15 +174,18 @@
 
     private async Task Initialize()
     {
-        //Debug Code
+        /* Debug Code */
         ServiceOrder = ServiceOrder.GenerateDummy();
         ServiceOrder.AccessType = DSSAccessTypes.WaitingForApproval;
         Requestor = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("BATMAN"));
         SerialNumber = "1156.QA";
         CalculateTotals();
-        return;
+        /* End Debug Code */
 
+        SharedStateService.SharedState.EncodedRequestor = Requestor;
         SharedStateService.SharedState.SerialNumber = SerialNumber;
+
+        return; //Debug Code
 
         var busyDialog = await DialogService.ShowBusyDialog();
         var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
@@ -255,15 +258,12 @@
 
         ServiceOrder.Requestor = Utilities.DecodeRequestor(Requestor);
 
-        return; //Debug Code
-
-        var resp = await ControllerAPIService.Post<ServiceOrder>(ServiceOrder, "ServiceOrder", "ApproveAWR");
-        if ( resp == null || !resp.IsSuccessStatusCode)
+        if (!SharedStateService.HasModel())
         {
-            SnackbarService.Add("Something went wrong during the approval. Please try confirming again.", Severity.Error);
-            return;
+            SharedStateService.SetSignatureRequired(DocumentTypes.EstimateCopy, SignatureActionTypes.SignRecommendedServices);
+            await DialogService.PerformBusy(SharedStateService.SaveModelToSession(ServiceOrder));
         }
 
-        SnackbarService.Add("Success. We'll do something here later :)", Severity.Success);
+        NavigationManager.NavigateTo($"/Document/{DocumentTypes.EstimateCopy.ToString()}", forceLoad: true);
     }
 }

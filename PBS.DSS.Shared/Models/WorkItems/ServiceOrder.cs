@@ -12,6 +12,7 @@ namespace PBS.DSS.Shared.Models.WorkItems
 
         public bool IsOpen { get; set; } = false;
         public bool SentForApproval { get; set; } = false;
+        public bool IsInvoiceSigned { get; set; } = false; //Not implemented
 
         public string SONumber { get; set; } = string.Empty;
         public string AdvisorName { get; set; } = string.Empty;
@@ -43,6 +44,7 @@ namespace PBS.DSS.Shared.Models.WorkItems
         public bool IsValid() => Id != Guid.Empty;
         public bool HasInspection() => Requests.Any(x => x.IsInspection);
         public bool RequiresApproval() => IsValid() && IsOpen && SentForApproval && PendingRequests.Any();
+        public bool RequiresInvoiceSignature() => IsValid() && !IsOpen && !IsInvoiceSigned && Timeline == ServiceOrderTimeline.Ready;
 
         public static ServiceOrder GenerateDummy()
         {

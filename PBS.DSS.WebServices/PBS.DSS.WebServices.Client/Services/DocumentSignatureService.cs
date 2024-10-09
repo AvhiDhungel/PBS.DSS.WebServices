@@ -71,8 +71,35 @@ namespace PBS.DSS.WebServices.Client.Services
 
             if (signature.ActionTypes == SignatureActionTypes.AppointmentCheckIn)
                 return await CheckInAppointment(signature);
+            else if (signature.ActionTypes == SignatureActionTypes.SignRecommendedServices)
+                return await ConfirmAWR(signature);
+            else if (signature.ActionTypes == SignatureActionTypes.SignInvoice)
+                return await SignSOInvoice(signature);
 
             return false;
+        }
+        #endregion
+
+        #region Service Order
+        public async Task<bool> ConfirmAWR(Signature signature)
+        {
+            var so = _sharedStateService.GetModel<ServiceOrder>();
+            if (so == null || so.SerialNumber.IsEmpty() || so.Id == Guid.Empty) return false;
+
+            var docRes = await _controllerAPIService.Post(signature, "DocumentSignature", "SignServiceOrderCustomerCopy");
+            if (docRes != null && docRes.IsSuccessStatusCode) return false;
+
+            var soResp = await _controllerAPIService.Post(so, "ServiceOrder", "ApproveAWR");
+            return soResp?.IsSuccessStatusCode ?? false;
+        }
+
+        public async Task<bool> SignSOInvoice(Signature signature)
+        {
+            var so = _sharedStateService.GetModel<ServiceOrder>();
+            if (so == null || so.SerialNumber.IsEmpty() || so.Id == Guid.Empty) return false;
+
+            var docRes = await _controllerAPIService.Post(signature, "DocumentSignature", "SignServiceOrderCustomerCopy");
+            return docRes != null && docRes.IsSuccessStatusCode;
         }
         #endregion
 

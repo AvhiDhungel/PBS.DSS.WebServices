@@ -162,7 +162,7 @@
             await DialogService.PerformBusy(SharedStateService.SaveModelToSession(Appointment));
         }
 
-        NavigationManager.NavigateTo($"/Document/{DocumentTypes.HardCopy.ToString()}", forceLoad:true);
+        NavigationManager.NavigateTo($"/Document/{DocumentTypes.HardCopy.ToString()}", forceLoad: true);
     }
 
     private async Task<bool> PromptOdometer()
