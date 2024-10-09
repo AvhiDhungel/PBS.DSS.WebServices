@@ -3,6 +3,7 @@
     public enum MudClasses
     {
         MudDialog,
+        MudPaperSticky,
         MudCard,
         MudCardDetail,
         MudButton,

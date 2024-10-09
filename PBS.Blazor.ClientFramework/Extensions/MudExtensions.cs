@@ -62,6 +62,7 @@ namespace PBS.Blazor.ClientFramework.Extensions
             return c switch
             {
                 MudClasses.MudDialog => "mud-dialog",
+                MudClasses.MudPaperSticky => "mud-paper-sticky",
                 MudClasses.MudCard => "mud-card",
                 MudClasses.MudCardDetail => "mud-card-detail",
                 MudClasses.MudButton => "mud-button",

@@ -29,13 +29,21 @@
     box-sizing: border-box;
 }
 
+.mud-paper-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10%;
+    border-radius: 20px;
+    background-color: transparent;
+}
+
 .mud-card {
     background-color: rgba(0, 0, 0, 0.75);
     color: white;
     padding-left: 3%;
     padding-right: 3%;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 .mud-card-detail {
