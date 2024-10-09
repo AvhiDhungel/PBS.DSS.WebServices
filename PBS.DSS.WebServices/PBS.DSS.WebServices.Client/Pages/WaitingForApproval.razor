@@ -191,15 +191,21 @@
 
         busyDialog.Close();
 
-        if (resp.HasError)
+        if (resp.HasError || resp.ResponseObject == null)
         {
             SharedStateService.SetInvalidServiceOrderError();
             return;
         }
 
-        ServiceOrder = resp.ResponseObject ?? ServiceOrder;
+        ServiceOrder = resp.ResponseObject;
         ServiceOrder.AccessType = DSSAccessTypes.WaitingForApproval;
         SharedStateService.SetBanner(ServiceOrder.ShopBanner);
+
+        if (!ServiceOrder.RequiresApproval())
+        {
+            NavigationManager.NavigateTo($"/ServiceOrderStatus/{SerialNumber}/{ServiceOrder.Id}/{Requestor}");
+            return;
+        }
 
         CalculateTotals();
     }

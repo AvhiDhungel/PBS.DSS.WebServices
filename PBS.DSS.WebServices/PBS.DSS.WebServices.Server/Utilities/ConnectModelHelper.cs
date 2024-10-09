@@ -78,6 +78,8 @@ namespace PBS.DSS.WebServices.Server.Utilities
         {
             foreach (var entry in entries.OrderDescending())
             {
+                if (entry == ConnectSO.WorkItemTimelineTypes.AWRSent) so.SentForApproval = true;
+
                 if (entry == ConnectSO.WorkItemTimelineTypes.ReadyForPickup && so.Timeline < Shared.Enums.ServiceOrderTimeline.Ready)
                     so.Timeline = Shared.Enums.ServiceOrderTimeline.Ready;
                 else if (entry == ConnectSO.WorkItemTimelineTypes.AllJobsComplete && so.Timeline < Shared.Enums.ServiceOrderTimeline.Finalizing)

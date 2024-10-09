@@ -92,7 +92,7 @@
                         </MudButton>
                     </MudItem>
                 }
-                else if (ServiceOrder.PendingRequests.Count() > 0)
+                else if (ServiceOrder.RequiresApproval())
                 {
                     <MudItem lg="6" md="6" xs="12">
                         <MudButton Variant="Variant.Outlined"
@@ -137,13 +137,13 @@
 
         busyDialog.Close();
 
-        if (resp.HasError)
+        if (resp.HasError || resp.ResponseObject == null)
         {
             SharedStateService.SetInvalidServiceOrderError();
             return;
         }
 
-        ServiceOrder = resp.ResponseObject ?? ServiceOrder;
+        ServiceOrder = resp.ResponseObject;
         SharedStateService.SetBanner(ServiceOrder.ShopBanner);
     }
 

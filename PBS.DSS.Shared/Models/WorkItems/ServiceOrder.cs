@@ -11,11 +11,13 @@ namespace PBS.DSS.Shared.Models.WorkItems
         public Guid VehicleRef { get; set; } = Guid.Empty;
 
         public bool IsOpen { get; set; } = false;
+        public bool SentForApproval { get; set; } = false;
+
         public string SONumber { get; set; } = string.Empty;
         public string AdvisorName { get; set; } = string.Empty;
         public string AdditionalComments { get; set; } = string.Empty;
         public string ShopBanner { get; set; } = string.Empty;
-        public string Requestor {  get; set; } = string.Empty;
+        public string Requestor { get; set; } = string.Empty;
 
         public double SubTotal { get; set; } = 0;
         public double TaxTotal { get; set; } = 0;
@@ -40,6 +42,7 @@ namespace PBS.DSS.Shared.Models.WorkItems
 
         public bool IsValid() => Id != Guid.Empty;
         public bool HasInspection() => Requests.Any(x => x.IsInspection);
+        public bool RequiresApproval() => IsValid() && IsOpen && SentForApproval && PendingRequests.Any();
 
         public static ServiceOrder GenerateDummy()
         {
