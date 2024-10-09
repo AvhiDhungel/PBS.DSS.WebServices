@@ -11,11 +11,11 @@
                 <MudCardContent>
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudText Typo="Typo.h6">@Resources.ServiceOrder</MudText>
-                        <MudText Class="card-detail-text">@ServiceOrder.SONumber</MudText>
+                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@ServiceOrder.SONumber</MudText>
                     </MudStack>
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudText Typo="Typo.h6">@Resources.ServiceAdvisor</MudText>
-                        <MudText Class="card-detail-text">@ServiceOrder.AdvisorName</MudText>
+                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@ServiceOrder.AdvisorName</MudText>
                     </MudStack>
                 </MudCardContent>
             </MudCard>
@@ -25,8 +25,8 @@
                 </MudCardHeader>
                 <MudCardContent>
                     <MudStack>
-                        <MudText Class="card-detail-text">@ServiceOrder.Vehicle.Description</MudText>
-                        <MudText Class="card-detail-text">@ServiceOrder.Vehicle.VIN</MudText>
+                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@ServiceOrder.Vehicle.Description</MudText>
+                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@ServiceOrder.Vehicle.VIN</MudText>
                     </MudStack>
                 </MudCardContent>
             </MudCard>
@@ -55,7 +55,7 @@
                     <MudStack Row="true" Style="width:100%">
                         <MudText Typo="Typo.h5">@Resources.Services</MudText>
                         <MudSpacer />
-                        <MudToggleIconButton Class="monochrome-toggle-button"
+                        <MudToggleIconButton Class="@MudClasses.ToggleButton.GetClass()"
                                              Variant="Variant.Text"
                                              ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp"
                                              Icon="@Icons.Material.Filled.KeyboardArrowDown"
@@ -70,7 +70,7 @@
                         <MudStack>
                             @foreach (var req in ServiceOrder.ApprovedRequests)
                             {
-                                <MudText Class="card-detail-text">@req.Description</MudText>
+                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@req.Description</MudText>
                             }
                         </MudStack>
                     </MudCardContent>

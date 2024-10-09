@@ -1,6 +1,7 @@
 ﻿using MudBlazor;
 using PBS.Blazor.Framework.Extensions;
 using PBS.Blazor.ClientFramework.MudComponents;
+using PBS.Blazor.Framework.Enums;
 
 namespace PBS.Blazor.ClientFramework.Extensions
 {
@@ -52,6 +53,27 @@ namespace PBS.Blazor.ClientFramework.Extensions
         {
             if (d == null || d.Canceled || d.Data == null || d.Data.GetType() != typeof(T)) return default;
             return (T)d.Data;
+        }
+        #endregion
+
+        #region Mud Class
+        public static string GetClass(this MudClasses c)
+        {
+            return c switch
+            {
+                MudClasses.MudDialog => "mud-dialog",
+                MudClasses.MudCard => "mud-card",
+                MudClasses.MudCardDetail => "mud-card-detail",
+                MudClasses.MudButton => "mud-button",
+                MudClasses.ColoredButton => "colored-button",
+                MudClasses.ToggleButton => "toggle-button",
+                MudClasses.PDFViewerContainer => "pdf-viewer-container",
+                MudClasses.PDFFrame => "pdf-frame",
+                MudClasses.MediaCarousel => "media-carousel",
+                MudClasses.PinnedFooter => "page-footer-pinned",
+                MudClasses.PageBanner => "page-banner-image",
+                _ => string.Empty,
+            };
         }
         #endregion
     }

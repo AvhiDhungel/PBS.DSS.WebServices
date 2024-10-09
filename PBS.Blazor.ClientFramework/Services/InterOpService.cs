@@ -1,5 +1,5 @@
 ﻿using Microsoft.JSInterop;
-using PBS.Blazor.Framework;
+using PBS.Blazor.Framework.Enums;
 using PBS.Blazor.Framework.Extensions;
 using PBS.Blazor.Framework.Helpers;
 

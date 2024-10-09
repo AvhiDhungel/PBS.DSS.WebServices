@@ -1,4 +1,4 @@
-﻿namespace PBS.Blazor.Framework
+﻿namespace PBS.Blazor.Framework.Enums
 {
     public enum SiteThemes
     {

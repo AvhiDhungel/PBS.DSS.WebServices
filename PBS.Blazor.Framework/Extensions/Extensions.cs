@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using PBS.Blazor.Framework.Enums;
 
 namespace PBS.Blazor.Framework.Extensions
 {

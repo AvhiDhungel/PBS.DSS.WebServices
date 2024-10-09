@@ -38,7 +38,7 @@
     border-radius: 20px;
 }
 
-.card-detail-text {
+.mud-card-detail {
     opacity: 0.65;
     font-size: large;
 }
@@ -82,11 +82,45 @@
         height: 100%;
     }
 
-.monochrome-toggle-button {
+.colored-button {
+    opacity: 1;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+}
+
+    .colored-button:hover {
+        opacity: 0.85;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 15px;
+        background-color: rgba(255, 255, 255, 0.35);
+        width: 100%;
+        height: 100%;
+    }
+
+    .colored-button:disabled {
+        opacity: 0.55;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 15px;
+        width: 100%;
+        height: 100%;
+    }
+
+.toggle-button {
     color: white;
 }
 
-    .monochrome-toggle-button:hover {
+    .toggle-button:hover {
         color: white;
         background-color: rgba(255, 255, 255, 0.25);
     }
@@ -116,7 +150,7 @@
     border: none;
 }
 
-.attachment-carousel {
+.media-carousel {
     height: 45em;
     border-radius: 8px;
     background-color: #0c1210;

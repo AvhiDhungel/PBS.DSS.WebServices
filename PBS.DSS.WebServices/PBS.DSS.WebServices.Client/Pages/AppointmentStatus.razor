@@ -11,15 +11,15 @@
                 <MudCardContent>
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudText Typo="Typo.h6">@Resources.Appointment</MudText>
-                        <MudText Class="card-detail-text">@Appointment.AppointmentNumber</MudText>
+                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.AppointmentNumber</MudText>
                     </MudStack>
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudText Typo="Typo.h6">@Resources.Date</MudText>
-                        <MudText Class="card-detail-text">@Appointment.AppointmentTime.LocalDateTime.ToShortDateString()</MudText>
+                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.AppointmentTime.LocalDateTime.ToShortDateString()</MudText>
                     </MudStack>
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudText Typo="Typo.h6">@Resources.Time</MudText>
-                        <MudText Class="card-detail-text">@Appointment.AppointmentTime.LocalDateTime.ToShortTimeString()</MudText>
+                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.AppointmentTime.LocalDateTime.ToShortTimeString()</MudText>
                     </MudStack>
                 </MudCardContent>
             </MudCard>
@@ -29,8 +29,8 @@
                 </MudCardHeader>
                 <MudCardContent>
                     <MudStack>
-                        <MudText Class="card-detail-text">@Appointment.Vehicle.Description</MudText>
-                        <MudText Class="card-detail-text">@Appointment.Vehicle.VIN</MudText>
+                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.Vehicle.Description</MudText>
+                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.Vehicle.VIN</MudText>
                     </MudStack>
                 </MudCardContent>
             </MudCard>
@@ -41,7 +41,7 @@
                         <MudText Typo="Typo.h5">@Resources.AdditionalComments</MudText>
                     </MudCardHeader>
                     <MudCardContent>
-                        <MudText Class="card-detail-text">@Appointment.DropOffInstructions</MudText>
+                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.DropOffInstructions</MudText>
                     </MudCardContent>
                 </MudCard>
             }
@@ -50,7 +50,7 @@
                     <MudStack Row="true" Style="width:100%">
                         <MudText Typo="Typo.h5">@Resources.Services</MudText>
                         <MudSpacer />
-                        <MudToggleIconButton Class="monochrome-toggle-button"
+                        <MudToggleIconButton Class="@MudClasses.ToggleButton.GetClass()"
                                              Variant="Variant.Text"
                                              ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp"
                                              Icon="@Icons.Material.Filled.KeyboardArrowDown"
@@ -65,7 +65,7 @@
                         <MudStack>
                             @foreach (var req in Appointment.Requests)
                             {
-                                <MudText Class="card-detail-text">@req.Description</MudText>
+                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@req.Description</MudText>
                             }
                         </MudStack>
                     </MudCardContent>

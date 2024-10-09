@@ -10,8 +10,8 @@
     </MudTooltip>
 </MudContainer>
 
-<MudPaper Class="pdf-viewer-container" Elevation="3">
-    <iframe id="pdfIFrame" src="@($"data:application/pdf;base64,{Base64String}")" class="pdf-frame" allowfullscreen></iframe>
+<MudPaper Class="@MudClasses.PDFViewerContainer.GetClass()" Elevation="3">
+    <iframe id="pdfIFrame" src="@($"data:application/pdf;base64,{Base64String}")" class="@MudClasses.PDFFrame.GetClass()" allowfullscreen></iframe>
 </MudPaper>
 
 @code {
