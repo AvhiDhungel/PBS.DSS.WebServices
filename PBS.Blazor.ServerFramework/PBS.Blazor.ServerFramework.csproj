@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Csla" Version="8.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="8.0.10" />
     <PackageReference Include="PBS.DataAccess.Core" Version="1.0.11" />
   </ItemGroup>
 
