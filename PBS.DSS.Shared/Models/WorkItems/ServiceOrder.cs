@@ -15,6 +15,7 @@ namespace PBS.DSS.Shared.Models.WorkItems
         public string AdvisorName { get; set; } = string.Empty;
         public string AdditionalComments { get; set; } = string.Empty;
         public string ShopBanner { get; set; } = string.Empty;
+        public string Requestor {  get; set; } = string.Empty;
 
         public double SubTotal { get; set; } = 0;
         public double TaxTotal { get; set; } = 0;

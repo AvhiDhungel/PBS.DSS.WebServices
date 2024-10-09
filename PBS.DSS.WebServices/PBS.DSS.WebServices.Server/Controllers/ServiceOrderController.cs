@@ -8,6 +8,7 @@ using PBS.DSS.Shared.Criteria;
 using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.WebServices.Server.Utilities;
 using PBS.DSS.WebServices.Server.Integrations;
+using PBS.Blazor.Framework.Extensions;
 
 namespace PBS.DSS.WebServices.Server.Controllers
 {
@@ -68,13 +69,14 @@ namespace PBS.DSS.WebServices.Server.Controllers
             var msg = new ConnectReceiveMessage<ServiceOrder>(so, so.SerialNumber, "ApproveAWR");
 
             msg.LogMessage($"Attempting to Approve AWR for Serial {so.SerialNumber} for SO# {so.SONumber} ID: {so.Id}");
+            if (so.Requestor.HasValue()) msg.LogMessage($"Approval requested by {so.Requestor}");
             msg.LogNewLine();
 
             try
             {
                 using var cl = await ConnectHubIntegration.GetConnectHubClient(so.SerialNumber, (x) => ReceiveApprovedAWRResponse(x, msg));
                 var reqRefs = so.RequestsMarkedForApproval.Select(x => x.RequestRef).ToList();
-                await cl.SendToServer(new ServiceOrderApproveAWRRequest() { ServiceOrderRef = so.Id, ApprovedRequestRefs = reqRefs });
+                await cl.SendToServer(new ServiceOrderApproveAWRRequest() { ServiceOrderRef = so.Id, ApprovedRequestRefs = reqRefs, Requestor = so.Requestor });
 
                 msg.WaitForCompletion();
             }

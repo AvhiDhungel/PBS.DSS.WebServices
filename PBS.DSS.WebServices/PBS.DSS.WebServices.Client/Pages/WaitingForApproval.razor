@@ -1,5 +1,4 @@
 ﻿@page "/WaitingForApproval"
-@page "/WaitingForApproval/{SerialNumber}/{WorkItemRef}"
 @page "/WaitingForApproval/{SerialNumber}/{WorkItemRef}/{Requestor}"
 
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
@@ -173,11 +172,11 @@
     private double Fees { get; set; } = 0;
     private double GrandTotal => SubTotal + Taxes + Fees;
 
-
     private async Task Initialize()
     {
         //Debug Code
         ServiceOrder = ServiceOrder.GenerateDummy();
+        Requestor = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("BATMAN"));
         SerialNumber = "1156.QA";
         CalculateTotals();
         return;
@@ -237,11 +236,25 @@
         CalculateTotals();
     }
 
-    private void Confirm()
+    private async void Confirm()
     {
         if (ServiceOrder.PendingRequests.Any(x => !x.MarkedForApproval.HasValue))
         {
             SnackbarService.Add("Please Approve or Decline all Recommended Services Prior to Confirming", Severity.Error);
+            return;
         }
+
+        ServiceOrder.Requestor = Utilities.DecodeRequestor(Requestor);
+
+        return; //Debug Code
+
+        var resp = await ControllerAPIService.Post<ServiceOrder>(ServiceOrder, "ServiceOrder", "ApproveAWR");
+        if ( resp == null || !resp.IsSuccessStatusCode)
+        {
+            SnackbarService.Add("Something went wrong during the approval. Please try confirming again.", Severity.Error);
+            return;
+        }
+
+        SnackbarService.Add("Success. We'll do something here later :)", Severity.Success);
     }
 }

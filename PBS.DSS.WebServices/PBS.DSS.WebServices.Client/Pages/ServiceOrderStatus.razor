@@ -1,5 +1,5 @@
 ﻿@page "/ServiceOrderStatus"
-@page "/ServiceOrderStatus/{SerialNumber}/{WorkItemRef}"
+@page "/ServiceOrderStatus/{SerialNumber}/{WorkItemRef}/{Requestor}"
 
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
@@ -112,6 +112,8 @@
     public string SerialNumber { get; set; } = string.Empty;
     [Parameter]
     public string WorkItemRef { get; set; } = string.Empty;
+    [Parameter]
+    public string Requestor { get; set; } = string.Empty;
 
     private ServiceOrder ServiceOrder { get; set; } = new();
 
@@ -124,7 +126,8 @@
 
         //Debug Code
         ServiceOrder = ServiceOrder.GenerateDummy();
-        SerialNumber = "9999.QA";
+        Requestor = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("BATMAN"));
+        SerialNumber = "1156.QA";
         return;
 
         var busyDialog = await DialogService.ShowBusyDialog();
@@ -160,7 +163,7 @@
 
     private void ViewRecommendations()
     {
-        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{ServiceOrder.Id}");
+        NavigationManager.NavigateTo($"/WaitingForApproval/{SerialNumber}/{ServiceOrder.Id}/{Requestor}");
     }
 
     private async Task ViewInspection()
