@@ -7,6 +7,8 @@
         MudCard,
         MudCardDetail,
         MudButton,
+        MudButtonDense,
+        MudButtonFitContent,
         ColoredButton,
         ToggleButton,
         PDFViewerContainer,

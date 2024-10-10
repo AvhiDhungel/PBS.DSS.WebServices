@@ -3,48 +3,9 @@
 
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
-        <MudGrid>
+        <MudGrid Class="mb-10">
             <MudItem xs="12" md="8" lg="8">
-                <MudStack AlignItems="AlignItems.Stretch" Class="mb-10">
-                    <MudCard>
-                        <MudCardHeader>
-                            <MudText Typo="Typo.h5">@Resources.ServiceOrder</MudText>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudStack Row="true" AlignItems="AlignItems.Center">
-                                <MudText Typo="Typo.h6">@Resources.ServiceOrder</MudText>
-                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@ServiceOrder.SONumber</MudText>
-                            </MudStack>
-                            <MudStack Row="true" AlignItems="AlignItems.Center">
-                                <MudText Typo="Typo.h6">@Resources.ServiceAdvisor</MudText>
-                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@ServiceOrder.AdvisorName</MudText>
-                            </MudStack>
-                            @if (ServiceOrder.HasInspection())
-                            {
-                                <MudStack Row="true" AlignItems="AlignItems.Center">
-                                    <MudText Typo="Typo.h6">@Resources.Inspection</MudText>
-                                    <MudButton Variant="Variant.Outlined"
-                                               Class="pl-5 pr-5 pt-1 pb-1"
-                                               StartIcon="@Icons.Material.Outlined.Checklist"
-                                               Style="width:fit-content; height:fit-content;"
-                                               OnClick="ViewInspection">
-                                        View
-                                    </MudButton>
-                                </MudStack>
-                            }
-                        </MudCardContent>
-                    </MudCard>
-                    <MudCard>
-                        <MudCardHeader>
-                            <MudText Typo="Typo.h5">@Resources.VehicleDetails</MudText>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudStack>
-                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@ServiceOrder.Vehicle.Description</MudText>
-                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@ServiceOrder.Vehicle.VIN</MudText>
-                            </MudStack>
-                        </MudCardContent>
-                    </MudCard>
+                <MudStack AlignItems="AlignItems.Stretch">
                     @if (ServiceOrder.AdditionalComments.HasValue())
                     {
                         <MudCard>
@@ -137,56 +98,92 @@
             </MudItem>
 
             <MudItem xs="12" md="4">
-                <MudHidden Breakpoint="Breakpoint.SmAndDown">
-                    <MudPaper Elevation="0" Class="@MudClasses.MudPaperSticky.GetClass()">
+                <MudPaper Elevation="0" Class="@MudClasses.MudPaperSticky.GetClass()">
+                    <MudStack>
                         <MudCard>
                             <MudCardContent>
                                 <MudStack>
-                                    <MudStack AlignItems="AlignItems.Center">
-                                        <MudStack Row="true" Spacing="3">
-                                            <MudText Typo="Typo.h6">@Resources.Subtotal: @SubTotal.ToString("C2")</MudText>
-                                            <MudText Typo="Typo.h6">@Resources.Taxes: @Taxes.ToString("C2")</MudText>
-                                            <MudText Typo="Typo.h6">@Resources.Fees: @Fees.ToString("C2")</MudText>
-                                        </MudStack>
-                                        <MudText Typo="Typo.h6">@Resources.Total: @GrandTotal.ToString("C2")</MudText>
+                                    <MudText Typo="Typo.h6">@(Resources.SO)# @ServiceOrder.SONumber</MudText>
+
+                                    <MudStack Spacing="0">
+                                        <MudText Typo="Typo.h6">@ServiceOrder.Vehicle.Description</MudText>
+                                        <MudText Typo="Typo.h6">@ServiceOrder.Vehicle.VIN</MudText>
                                     </MudStack>
-                                    <MudButton Variant="Variant.Outlined"
-                                               Class="@MudClasses.ColoredButton.GetClass()"
-                                               StartIcon="@Icons.Material.Outlined.CheckCircle"
-                                               OnClick="Confirm">
-                                        @Resources.Confirm
-                                    </MudButton>
+
+                                    @if (ServiceOrder.HasInspection())
+                                    {
+                                        <MudButton Variant="Variant.Outlined"
+                                                   Class="@MudClasses.MudButtonDense.GetClass()"
+                                                   StartIcon="@Icons.Material.Outlined.Checklist"
+                                                   OnClick="ViewInspection">
+                                            View Inspection
+                                        </MudButton>
+                                    }
                                 </MudStack>
                             </MudCardContent>
                         </MudCard>
-                    </MudPaper>
-                </MudHidden>
+
+                        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                            <MudCard>
+                                <MudCardContent>
+                                    <MudStack AlignItems="AlignItems.Center">
+                                        <MudGrid Spacing="0">
+                                            <MudItem xs="8">
+                                                <MudText Typo="Typo.h6">@Resources.Subtotal:</MudText>
+                                            </MudItem>
+                                            <MudItem xs="4">
+                                                <MudText Class="@MudClasses.MudCardDetail.GetClass()" Align="Align.End">@SubTotal.ToString("C2")</MudText>
+                                            </MudItem>
+                                            <MudItem xs="8">
+                                                <MudText Typo="Typo.h6">@Resources.Taxes:</MudText>
+                                            </MudItem>
+                                            <MudItem xs="4">
+                                                <MudText Class="@MudClasses.MudCardDetail.GetClass()" Align="Align.End">@Taxes.ToString("C2")</MudText>
+                                            </MudItem>
+                                            <MudItem xs="8">
+                                                <MudText Typo="Typo.h6">@Resources.Fees:</MudText>
+                                            </MudItem>
+                                            <MudItem xs="4">
+                                                <MudText Class="@MudClasses.MudCardDetail.GetClass()" Align="Align.End">@Fees.ToString("C2")</MudText>
+                                            </MudItem>
+                                            <MudItem xs="8">
+                                                <MudText Typo="Typo.h6">@Resources.Total:</MudText>
+                                            </MudItem>
+                                            <MudItem xs="4">
+                                                <MudText Class="@MudClasses.MudCardDetail.GetClass()" Align="Align.End">@GrandTotal.ToString("C2")</MudText>
+                                            </MudItem>
+                                        </MudGrid>
+                                        <MudButton Variant="Variant.Outlined"
+                                                   Class="@MudClasses.MudButtonDense.GetClass()"
+                                                   StartIcon="@Icons.Material.Outlined.CheckCircle"
+                                                   OnClick="Confirm">
+                                            @Resources.Confirm
+                                        </MudButton>
+                                    </MudStack>
+                                </MudCardContent>
+                            </MudCard>
+                        </MudHidden>
+                    </MudStack>
+                </MudPaper>
             </MudItem>
         </MudGrid>
 
         <MudHidden Breakpoint="Breakpoint.MdAndUp">
-            <MudPaper Elevation="0" class="@MudClasses.PinnedFooter.GetClass()">
-                <MudGrid Justify="Justify.FlexEnd" Style="align-items:center;" Spacing="2">
-                    <MudItem xs="12" lg="8">
-                        <MudStack AlignItems="AlignItems.Center" Spacing="0">
-                            <MudStack Row="true" Spacing="3">
-                                <MudText Typo="Typo.h6">@Resources.Subtotal: @SubTotal.ToString("C2")</MudText>
-                                <MudText Typo="Typo.h6">@Resources.Taxes: @Taxes.ToString("C2")</MudText>
-                                <MudText Typo="Typo.h6">@Resources.Fees: @Fees.ToString("C2")</MudText>
-                            </MudStack>
-                            <MudText Typo="Typo.h6">@Resources.Total: @GrandTotal.ToString("C2")</MudText>
-                        </MudStack>
-                    </MudItem>
-                    <MudItem xs="8" md="7" lg="2">
-                        <MudButton Variant="Variant.Outlined"
-                                   Class="@MudClasses.ColoredButton.GetClass()"
-                                   Style="padding-left:8%; padding-right:8%; width:fit-content;"
-                                   StartIcon="@Icons.Material.Outlined.CheckCircle"
-                                   OnClick="Confirm">
-                            @Resources.Confirm
-                        </MudButton>
-                    </MudItem>
-                </MudGrid>
+            <MudPaper Elevation="0" Class="@MudClasses.PinnedFooter.GetClass()">
+                <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="1">
+                    <MudStack Row="true">
+                        <MudText Align="Align.Center">@Resources.Subtotal: @SubTotal.ToString("C2")</MudText>
+                        <MudText Align="Align.Center">@Resources.Taxes: @Taxes.ToString("C2")</MudText>
+                        <MudText Align="Align.Center">@Resources.Fees: @Fees.ToString("C2")</MudText>
+                    </MudStack>
+                    <MudText>@Resources.Total: @GrandTotal.ToString("C2")</MudText>
+                    <MudButton Variant="Variant.Outlined"
+                               Class="@MudClasses.MudButtonFitContent.GetClass()"
+                               StartIcon="@Icons.Material.Outlined.CheckCircle"
+                               OnClick="Confirm">
+                        @Resources.Confirm
+                    </MudButton>
+                </MudStack>
             </MudPaper>
         </MudHidden>
     </Content>

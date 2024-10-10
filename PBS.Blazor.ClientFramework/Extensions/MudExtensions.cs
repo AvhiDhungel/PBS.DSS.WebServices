@@ -66,6 +66,8 @@ namespace PBS.Blazor.ClientFramework.Extensions
                 MudClasses.MudCard => "mud-card",
                 MudClasses.MudCardDetail => "mud-card-detail",
                 MudClasses.MudButton => "mud-button",
+                MudClasses.MudButtonDense => "mud-button-dense",
+                MudClasses.MudButtonFitContent => "mud-button-fit-content",
                 MudClasses.ColoredButton => "colored-button",
                 MudClasses.ToggleButton => "toggle-button",
                 MudClasses.PDFViewerContainer => "pdf-viewer-container",
