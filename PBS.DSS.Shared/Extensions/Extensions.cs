@@ -15,7 +15,33 @@ namespace PBS.DSS.Shared
         }
         #endregion
 
-        #region Models
+        #region Appointment Statuses
+        public static bool IsOpen(this Appointment a) => a.Status == Enums.AppointmentStatuses.Open;
+        public static bool IsArrived(this Appointment a) => a.Status == Enums.AppointmentStatuses.Arrived;
+        public static bool IsDeleted(this Appointment a) => a.Status == Enums.AppointmentStatuses.Deleted;
+        public static bool IsPending(this Appointment a) => a.Status == Enums.AppointmentStatuses.Pending;
+        public static bool IsConfirmed(this Appointment a) => a.Status == Enums.AppointmentStatuses.Confirmed;
+        public static bool IsCheckedIn(this Appointment a) => a.Status == Enums.AppointmentStatuses.CheckedIn;
+        public static bool CanCheckIn(this Appointment a)
+        {
+            var dayDiff = DateTime.UtcNow.Subtract(a.AppointmentTime.UtcDateTime).TotalDays;
+            if (dayDiff < -1 || dayDiff > 1) return false;
+
+            return a.SelfCheckInEnabled && a.IsOpen();
+        }
+        public static bool CanCancel(this Appointment a)
+        {
+            if (a.AppointmentTime.UtcDateTime >= DateTime.UtcNow || a.AppointmentTime.UtcDateTime <= DateTime.UtcNow.AddDays(-1)) return false;
+            return a.IsOpen() || a.IsConfirmed();
+        }
+        public static bool CanReschedule(this Appointment a)
+        {
+            if (a.AppointmentTime.UtcDateTime >= DateTime.UtcNow || a.AppointmentTime.UtcDateTime <= DateTime.UtcNow.AddDays(-1)) return false;
+            return a.IsOpen() || a.IsConfirmed();
+        }
+        #endregion
+
+        #region Requests
         public static bool IsApproved(this RequestLine req)
         {
             return req.AWRStatus == AWRStatuses.Approved;

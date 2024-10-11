@@ -50,6 +50,7 @@
 .mud-card-detail {
     opacity: 1;
     font-size: large;
+    white-space: pre-wrap;
 }
 
 .mud-button {

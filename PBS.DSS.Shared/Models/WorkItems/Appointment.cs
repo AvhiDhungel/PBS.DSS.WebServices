@@ -1,4 +1,6 @@
-﻿namespace PBS.DSS.Shared.Models.WorkItems
+﻿using PBS.DSS.Shared.Enums;
+
+namespace PBS.DSS.Shared.Models.WorkItems
 {
     public class Appointment
     {
@@ -9,14 +11,9 @@
         public Guid VehicleRef { get; set; } = Guid.Empty;
         public DateTimeOffset AppointmentTime { get; set; } = DateTimeOffset.UtcNow;
         public DateTimeOffset PickupDate { get; set; } = DateTimeOffset.UtcNow;
-
-        public bool IsCheckedIn { get; set; } = false;
-        public bool IsCanceled { get; set; } = false;
+        public AppointmentStatuses Status { get; set; } = AppointmentStatuses.Open;
 
         public bool SelfCheckInEnabled { get; set; } = false;
-        public bool CanReschedule { get; set; } = false;
-        public bool CanCancel { get; set; } = false;
-
         public int Odometer { get; set; } = 0;
         public string AppointmentNumber { get; set; } = string.Empty;
         public string DropOffInstructions { get; set; } = string.Empty;
@@ -34,9 +31,6 @@
             var appt = new Appointment();
 
             appt.AppointmentNumber = "81881";
-            appt.SelfCheckInEnabled = true;
-            appt.CanReschedule = true;
-            appt.CanCancel = true;
             appt.DropOffInstructions = "Please park your vehicle on the left of the drive through and drop the keys in the box after you've checked in";
 
             var req1 = new RequestLine();

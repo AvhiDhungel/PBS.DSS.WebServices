@@ -62,30 +62,39 @@
                                 </MudStack>
 
                                 <MudGrid Spacin="3" Justify="Justify.FlexStart" Style="align-items: stretch;">
-                                    <MudItem xs="6">
-                                        <MudButton Variant="Variant.Outlined"
-                                                   Class="@MudClasses.MudButton.GetClass()"
-                                                   StartIcon="@Icons.Material.Outlined.CheckCircleOutline"
-                                                   OnClick="CheckIn">
-                                            @Resources.CheckIn.ToUpper()
-                                        </MudButton>
-                                    </MudItem>
-                                    <MudItem xs="6">
-                                        <MudButton Variant="Variant.Outlined"
-                                                   Class="@MudClasses.MudButtonDense.GetClass()"
-                                                   StartIcon="@Icons.Material.Outlined.EditCalendar"
-                                                   OnClick="ReSchedule">
-                                            @Resources.Reschedule.ToUpper()
-                                        </MudButton>
-                                    </MudItem>
-                                    <MudItem xs="6">
-                                        <MudButton Variant="Variant.Outlined"
-                                                   Class="@MudClasses.MudButtonDense.GetClass()"
-                                                   StartIcon="@Icons.Material.Outlined.Cancel"
-                                                   OnClick="CancelAppointment">
-                                            @Resources.CancelAppointment.ToUpper()
-                                        </MudButton>
-                                    </MudItem>
+                                    @if (Appointment.CanCheckIn())
+                                    {
+                                        <MudItem xs="6">
+                                            <MudButton Variant="Variant.Outlined"
+                                                       Class="@MudClasses.MudButton.GetClass()"
+                                                       StartIcon="@Icons.Material.Outlined.CheckCircleOutline"
+                                                       OnClick="CheckIn">
+                                                @Resources.CheckIn.ToUpper()
+                                            </MudButton>
+                                        </MudItem>
+                                    }
+                                    @if (Appointment.CanReschedule())
+                                    {
+                                        <MudItem xs="6">
+                                            <MudButton Variant="Variant.Outlined"
+                                                       Class="@MudClasses.MudButtonDense.GetClass()"
+                                                       StartIcon="@Icons.Material.Outlined.EditCalendar"
+                                                       OnClick="ReSchedule">
+                                                @Resources.Reschedule.ToUpper()
+                                            </MudButton>
+                                        </MudItem>
+                                    }
+                                    @if (Appointment.CanCancel())
+                                    {
+                                        <MudItem xs="6">
+                                            <MudButton Variant="Variant.Outlined"
+                                                       Class="@MudClasses.MudButtonDense.GetClass()"
+                                                       StartIcon="@Icons.Material.Outlined.Cancel"
+                                                       OnClick="CancelAppointment">
+                                                @Resources.CancelAppointment.ToUpper()
+                                            </MudButton>
+                                        </MudItem>
+                                    }
                                     <MudItem xs="6">
                                         <MudButton Variant="Variant.Outlined"
                                                    Class="@MudClasses.MudButtonDense.GetClass()"
@@ -116,11 +125,6 @@
 
     private async Task Initialize()
     {
-        //Debug Code
-        Appointment = Appointment.GenerateDummy();
-        SerialNumber = "9999.QA";
-        return;
-
         SharedStateService.SharedState.SerialNumber = SerialNumber;
 
         var busyDialog = await DialogService.ShowBusyDialog();
@@ -130,20 +134,18 @@
 
         busyDialog.Close();
 
-        if (resp.HasError)
+        if (resp.HasError || resp.ResponseObject == null)
         {
             SharedStateService.SetInvalidAppointmentError();
             return;
         }
 
-        Appointment = resp.ResponseObject ?? Appointment;
+        Appointment = resp.ResponseObject;
         SharedStateService.SetBanner(Appointment.ShopBanner);
     }
 
     private bool ValidateParams()
     {
-        return true; //Debug code
-
         if (!SharedStateService.ValidateSerialNumber(SerialNumber)) return false;
         if (!SharedStateService.ValidateAppointmentRef(WorkItemRef, out Guid parsedWorkItemRef)) return false;
 

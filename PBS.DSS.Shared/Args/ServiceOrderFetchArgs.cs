@@ -1,4 +1,5 @@
-﻿using PBS.DSS.Shared.Models.WorkItems;
+﻿using PBS.DSS.Shared.Enums;
+using PBS.DSS.Shared.Models.WorkItems;
 
 namespace PBS.DSS.Shared.Criteria
 {
@@ -6,6 +7,7 @@ namespace PBS.DSS.Shared.Criteria
     {
         public Guid ServiceOrderRef { get; set; } = Guid.Empty;
         public string SerialNumber { get; set; } = string.Empty;
+        public DSSAccessTypes ViewedFrom { get; set; } = DSSAccessTypes.None;
     }
 
     public class ServiceOrderDocumentFetchArgs

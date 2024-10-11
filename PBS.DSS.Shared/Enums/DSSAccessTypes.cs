@@ -2,9 +2,9 @@
 {
     public enum DSSAccessTypes
     {
-        None,
-        WaitingForApproval,
-        ServiceOrderStatus,
-        CustomerAttachment
+        None = 0,
+        WaitingForApproval = 1,
+        ServiceOrderStatus = 2,
+        CustomerAttachment = 3
     }
 }

@@ -5,6 +5,7 @@ using PBS.ConnectHub.Library;
 using PBS.DSS.Shared.Models.WorkItems;
 using PBS.DSS.Shared.Models;
 using PBS.Blazor.Framework.Extensions;
+using PBS.DSS.Shared.Enums;
 
 namespace PBS.DSS.WebServices.Server.Utilities
 {
@@ -104,8 +105,7 @@ namespace PBS.DSS.WebServices.Server.Utilities
             appt.AppointmentTime = connectAppt.AppointmentDateUTC;
             appt.PickupDate = connectAppt.PickupTimeUTC;
             appt.Odometer = connectAppt.OdomIn;
-            appt.IsCheckedIn = connectAppt.Status == ConnectAppt.Appointment.AppointmentStatuses.CHECKEDIN;
-            appt.IsCanceled = connectAppt.Status == ConnectAppt.Appointment.AppointmentStatuses.DELETED;
+            appt.Status = (AppointmentStatuses)connectAppt.Status;
 
             foreach (var connectReq in connectAppt.Requests)
             {

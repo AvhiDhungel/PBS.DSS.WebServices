@@ -2,3 +2,4 @@ Site 37
 Serial 1156.QA
 
 ApptStatus: AppointmentStatus/1156.QA/cf0df370-5435-4dcd-88ea-cb498070dd0a
+SOStatus: ServiceOrderStatus/1156.QA/51f4c5ab-3f3e-4404-bf73-ff841a79458c/avhi

@@ -174,14 +174,14 @@ namespace PBS.DSS.WebServices.Server.Controllers
 
             if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; return; }
 
-            msg.Object.DropOffInstructions = resp.DropOffInstructions;
-            msg.Object.SelfCheckInEnabled = resp.IsSelfCheckInEnabled;
-
             ConnectModelHelper.TranscribeAppointment(msg.Object, resp.Appointment);
             ConnectModelHelper.TranscribeContact(msg.Object.ContactInfo, resp.Contact);
             ConnectModelHelper.TranscribeVehicle(msg.Object.Vehicle, resp.Vehicle);
 
+            msg.Object.DropOffInstructions = resp.DropOffInstructions;
+            msg.Object.SelfCheckInEnabled = resp.IsSelfCheckInEnabled;
             msg.Object.ShopBanner = WebAppointmentsIntegration.GetShopBanner(serial, resp.Appointment.ShopRef);
+
             msg.LogSerializedWithMessage(msg.Object, "Transcribed Response Message:");
         }
         #endregion
@@ -193,7 +193,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
 
             if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; return; }
 
-            msg.Object.IsCheckedIn = true;
+            msg.Object.Status = Shared.Enums.AppointmentStatuses.CheckedIn;
             msg.LogSerializedWithMessage(msg.Object, "Transcribed Response Message:");
         }
         #endregion
@@ -205,9 +205,7 @@ namespace PBS.DSS.WebServices.Server.Controllers
 
             if (!resp.Success) { msg.HasError = true; msg.ErrorMessage = resp.Message; return; }
 
-            msg.Object.IsCheckedIn = false;
-            msg.Object.IsCanceled = false;
-
+            msg.Object.Status = Shared.Enums.AppointmentStatuses.Deleted;
             msg.LogSerializedWithMessage(msg.Object, "Transcribed Response Message:");
         }
         #endregion

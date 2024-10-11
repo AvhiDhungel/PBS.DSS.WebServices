@@ -114,19 +114,11 @@
 
     private async Task Initialize()
     {
-        /* Debug Code */
-        ServiceOrder = ServiceOrder.GenerateDummy();
-        Requestor = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("BATMAN"));
-        SerialNumber = "1156.QA";
-        /* End Debug Code */
-
         IsMobile = await InterOpService.IsMobile();
         SharedStateService.SharedState.EncodedRequestor = Requestor;
 
-        return; //Debug Code
-
         var busyDialog = await DialogService.ShowBusyDialog();
-        var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id };
+        var args = new ServiceOrderFetchArgs() { SerialNumber = SerialNumber, ServiceOrderRef = ServiceOrder.Id, ViewedFrom = DSSAccessTypes.ServiceOrderStatus };
 
         var resp = await ControllerAPIService.FetchServiceOrder(args);
 
@@ -144,8 +136,6 @@
 
     private bool ValidateParams()
     {
-        return true; //Debug code
-
         if (!SharedStateService.ValidateSerialNumber(SerialNumber)) return false;
         if (!SharedStateService.ValidateServiceOrderRef(WorkItemRef, out Guid parsedWorkItemRef)) return false;
 
