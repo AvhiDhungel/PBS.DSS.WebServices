@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.SessionStorage" Version="2.4.0" />
-    <PackageReference Include="MudBlazor" Version="7.9.0" />
+    <PackageReference Include="MudBlazor" Version="7.10.0" />
   </ItemGroup>
 
   <ItemGroup>
