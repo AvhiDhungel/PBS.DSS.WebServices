@@ -3,113 +3,114 @@
 
 <MudSessionErrorWrapper Validate="ValidateParams" FetchAsync="Initialize">
     <Content>
-        <MudGrid Class="mb-20">
-            <MudItem xs="12" md="8" lg="8">
-                <MudStack AlignItems="AlignItems.Stretch">
-                    @if (Appointment.DropOffInstructions.HasValue())
-                    {
-                        <MudCard>
-                            <MudCardHeader>
-                                <MudText Typo="Typo.h5">@Resources.AdditionalComments</MudText>
-                            </MudCardHeader>
-                            <MudCardContent>
-                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.DropOffInstructions</MudText>
-                            </MudCardContent>
-                        </MudCard>
-                    }
-                    <MudCard>
-                        <MudCardHeader>
-                            <MudStack Row="true" Style="width:100%">
-                                <MudText Typo="Typo.h5">@Resources.Services</MudText>
-                                <MudSpacer />
-                                <MudToggleIconButton Class="@MudClasses.ToggleButton.GetClass()"
-                                                     Variant="Variant.Text"
-                                                     ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp"
-                                                     Icon="@Icons.Material.Filled.KeyboardArrowDown"
-                                                     Size="Size.Large"
-                                                     ToggledSize="Size.Large"
-                                                     Toggled="IsServicesExpanded"
-                                                     ToggledChanged="ToggleServices" />
-                            </MudStack>
-                        </MudCardHeader>
-                        <MudCollapse Expanded="@IsServicesExpanded">
-                            <MudCardContent>
-                                <MudStack>
-                                    @foreach (var req in Appointment.Requests)
-                                    {
-                                        <MudText Class="@MudClasses.MudCardDetail.GetClass()">@req.Description</MudText>
-                                    }
-                                </MudStack>
-                            </MudCardContent>
-                        </MudCollapse>
-                    </MudCard>
-                </MudStack>
-            </MudItem>
-            <MudItem xs="12" md="4">
-                <MudPaper Elevation="0" Class="@MudClasses.MudPaperSticky.GetClass()">
-                    <MudCard>
-                        <MudCardContent>
-                            <MudStack>
-                                <MudStack Spacing="0">
-                                    <MudText Typo="Typo.h6">@(Resources.Appt)# @Appointment.AppointmentNumber</MudText>
-                                    <MudText Typo="Typo.h6">@Appointment.AppointmentTime.LocalDateTime.ToShortDateString()</MudText>
-                                    <MudText Typo="Typo.h6">@Appointment.AppointmentTime.LocalDateTime.ToShortTimeString()</MudText>
-                                </MudStack>
+        <MudStack AlignItems="AlignItems.Stretch">
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h5">@Resources.AppointmentDetails</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack>
+                        <MudGrid Spacing="1">
+                            <MudItem md="2" xs="3">
+                                <MudText Typo="Typo.h6">#</MudText>
+                            </MudItem>
+                            <MudItem md="10" xs="9">
+                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.AppointmentNumber</MudText>
+                            </MudItem>
+                            <MudItem md="2" xs="3">
+                                <MudText Typo="Typo.h6">Vehicle</MudText>
+                            </MudItem>
+                            <MudItem md="10" xs="9">
+                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.Vehicle.Description</MudText>
+                            </MudItem>
+                            <MudItem md="2" xs="3">
+                                <MudText Typo="Typo.h6">@(Resources.Date)</MudText>
+                            </MudItem>
+                            <MudItem md="10" xs="9">
+                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.AppointmentTime.LocalDateTime.ToShortDateString()</MudText>
+                            </MudItem>
+                            <MudItem md="2" xs="3">
+                                <MudText Typo="Typo.h6">@(Resources.Time)</MudText>
+                            </MudItem>
+                            <MudItem md="10" xs="9">
+                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.AppointmentTime.LocalDateTime.ToShortTimeString()</MudText>
+                            </MudItem>
+                        </MudGrid>
 
-                                <MudStack Spacing="0">
-                                    <MudText Typo="Typo.h6">@Appointment.Vehicle.Description</MudText>
-                                    <MudText Typo="Typo.h6">@Appointment.Vehicle.VIN</MudText>
-                                </MudStack>
+                        @if (Appointment.DropOffInstructions.HasValue())
+                        {
+                            <MudText Class="@MudClasses.MudCardDetail.GetClass()">@Appointment.DropOffInstructions</MudText>
+                        }
 
-                                <MudGrid Spacin="3" Justify="Justify.FlexStart" Style="align-items: stretch;">
-                                    @if (Appointment.CanCheckIn())
-                                    {
-                                        <MudItem xs="6">
-                                            <MudButton Variant="Variant.Outlined"
-                                                       Class="@MudClasses.MudButton.GetClass()"
-                                                       StartIcon="@Icons.Material.Outlined.CheckCircleOutline"
-                                                       OnClick="CheckIn">
-                                                @Resources.CheckIn.ToUpper()
-                                            </MudButton>
-                                        </MudItem>
-                                    }
-                                    @if (Appointment.CanReschedule())
-                                    {
-                                        <MudItem xs="6">
-                                            <MudButton Variant="Variant.Outlined"
-                                                       Class="@MudClasses.MudButtonDense.GetClass()"
-                                                       StartIcon="@Icons.Material.Outlined.EditCalendar"
-                                                       OnClick="ReSchedule">
-                                                @Resources.Reschedule.ToUpper()
-                                            </MudButton>
-                                        </MudItem>
-                                    }
-                                    @if (Appointment.CanCancel())
-                                    {
-                                        <MudItem xs="6">
-                                            <MudButton Variant="Variant.Outlined"
-                                                       Class="@MudClasses.MudButtonDense.GetClass()"
-                                                       StartIcon="@Icons.Material.Outlined.Cancel"
-                                                       OnClick="CancelAppointment">
-                                                @Resources.CancelAppointment.ToUpper()
-                                            </MudButton>
-                                        </MudItem>
-                                    }
-                                    <MudItem xs="6">
-                                        <MudButton Variant="Variant.Outlined"
-                                                   Class="@MudClasses.MudButtonDense.GetClass()"
-                                                   StartIcon="@Icons.Material.Outlined.CalendarToday"
-                                                   OnClick="AddToCalendar">
-                                            @Resources.AddToCalendar.ToUpper()
-                                        </MudButton>
-                                    </MudItem>
-                                </MudGrid>
-                            </MudStack>
-                        </MudCardContent>
-                    </MudCard>
-                </MudPaper>
-            </MudItem>
-        </MudGrid>
+                        <MudGrid Class="mt-1">
+                            @if (Appointment.CanCheckIn())
+                            {
+                                <MudItem md="3" xs="6">
+                                    <MudButton Variant="Variant.Outlined"
+                                               StartIcon="@Icons.Material.Outlined.Check"
+                                               OnClick="CheckIn">
+                                        @Resources.CheckIn.ToUpper()
+                                    </MudButton>
+                                </MudItem>
+                            }
+                            @if (Appointment.CanReschedule())
+                            {
+                                <MudItem md="3" xs="6">
+                                    <MudButton Variant="Variant.Outlined"
+                                               StartIcon="@Icons.Material.Outlined.Refresh"
+                                               OnClick="ReSchedule">
+                                        @Resources.Reschedule.ToUpper()
+                                    </MudButton>
+                                </MudItem>
+                            }
+                            @if (Appointment.CanCancel())
+                            {
+                                <MudItem md="3" xs="6">
+                                    <MudButton Variant="Variant.Outlined"
+                                               StartIcon="@Icons.Material.Outlined.Close"
+                                               OnClick="CancelAppointment">
+                                        @Resources.CancelAppointment.ToUpper()
+                                    </MudButton>
+                                </MudItem>
+                            }
+                            <MudItem md="3" xs="6">
+                                <MudButton Variant="Variant.Outlined"
+                                           StartIcon="@Icons.Material.Outlined.CalendarToday"
+                                           OnClick="AddToCalendar">
+                                    @Resources.AddToCalendar.ToUpper()
+                                </MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+            <MudCard>
+                <MudCardHeader>
+                    <MudStack Row="true" Style="width:100%">
+                        <MudText Typo="Typo.h5">@Resources.Services</MudText>
+                        <MudSpacer />
+                        <MudToggleIconButton Class="@MudClasses.ToggleButton.GetClass()"
+                                             Variant="Variant.Text"
+                                             ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp"
+                                             Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                                             Size="Size.Large"
+                                             ToggledSize="Size.Large"
+                                             Toggled="IsServicesExpanded"
+                                             ToggledChanged="ToggleServices" />
+                    </MudStack>
+                </MudCardHeader>
+                <MudCollapse Expanded="@IsServicesExpanded">
+                    <MudCardContent>
+                        <MudStack>
+                            @foreach (var req in Appointment.Requests)
+                            {
+                                <MudText Class="@MudClasses.MudCardDetail.GetClass()">@req.Description</MudText>
+                            }
+                        </MudStack>
+                    </MudCardContent>
+                </MudCollapse>
+            </MudCard>
+        </MudStack>
     </Content>
 </MudSessionErrorWrapper>
 
