@@ -2,7 +2,6 @@ using System.Globalization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
-using MudExtensions.Services;
 using Blazored.SessionStorage;
 using PBS.Blazor.ClientFramework.Services;
 using PBS.Blazor.ClientFramework.Extensions;
@@ -15,7 +14,6 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddMudServices();
-builder.Services.AddMudExtensions();
 builder.Services.AddLocalization();
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddSharedState<SharedState>();

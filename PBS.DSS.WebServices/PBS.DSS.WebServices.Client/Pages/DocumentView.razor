@@ -1,7 +1,5 @@
 ﻿@page "/Document/{DocumentTypeString}"
 
-@using MudExtensions
-
 <MudSessionErrorWrapper FetchAsync="LoadBase64String">
     <Content>
         @if (Base64Document.HasValue())
@@ -13,15 +11,7 @@
                 @if (RequiresSignature)
                 {
                     <MudItem xs="12">
-                        <MudSignaturePad @bind-Value="Signature"
-                                         CanvasContainerStyle="height:100%; width:100%; background-color:white;"
-                                         Variant="Variant.Filled"
-                                         ShowDownload="false"
-                                         ShowLineJoinStyle="false"
-                                         ShowLineWidth="false"
-                                         ShowStrokeStyle="false"
-                                         ShowLineCapStyle="false">
-                        </MudSignaturePad>
+                        <MudSignaturePad @bind-Signature="Signature" />
                     </MudItem>
                     <MudItem xs="12">
                         <MudSpacer />
@@ -45,6 +35,7 @@
     private DocumentTypes DocumentType { get; set; } = DocumentTypes.None;
     private string Base64Document { get; set; } = string.Empty;
 
+    public SignaturePad SigPad { get; set; } = new();
     private bool RequiresSignature { get; set; } = false;
     private byte[] Signature { get; set; } = [];
 

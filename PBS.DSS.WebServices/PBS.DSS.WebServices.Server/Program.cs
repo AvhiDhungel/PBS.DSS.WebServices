@@ -1,5 +1,4 @@
 using MudBlazor.Services;
-using MudExtensions.Services;
 using PBS.Blazor.ServerFramework;
 using PBS.Blazor.ServerFramework.Integrations;
 using DSSUtilities = PBS.DSS.WebServices.Server.Utilities;
@@ -13,7 +12,6 @@ builder.Services.AddRazorComponents()
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddMudServices();
-builder.Services.AddMudExtensions();
 
 var app = builder.Build();
 

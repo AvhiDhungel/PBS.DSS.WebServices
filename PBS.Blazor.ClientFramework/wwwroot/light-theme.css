@@ -215,6 +215,30 @@
     background-color: #0c1210;
 }
 
+.signature-pad {
+    width: 100%;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.signature-pad-button {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    margin-top: 15px;
+    padding: 20px 15px;
+    border-radius: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    width: 100%;
+}
+
+    .signature-pad-button:hover {
+        background-color: rgba(0, 0, 0, 0.60);
+    }
+
 @media (max-width: 768px) {
     .pdf-viewer-container {
         height: 80vh;

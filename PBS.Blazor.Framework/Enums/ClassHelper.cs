@@ -15,6 +15,6 @@
         PDFFrame,
         MediaCarousel,
         PinnedFooter,
-        PageBanner,
+        PageBanner
     }
 }

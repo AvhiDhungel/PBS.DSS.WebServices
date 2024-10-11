@@ -1,0 +1,24 @@
+﻿@using SignaturePad
+
+<SignaturePad Class="signature-pad"
+              ClearButtonClass="signature-pad-button"
+              ClearButtonText="Clear"
+              ShowClearButton="ShowClearButton"
+              Value="Signature"
+              ValueChanged="OnSignatureChanged" />
+
+@code {
+    [Parameter]
+    public byte[] Signature { get; set; } = [];
+    [Parameter]
+    public bool ShowClearButton { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<byte[]> SignatureChanged { get; set; }
+
+    private void OnSignatureChanged(byte[] sig)
+    {
+        Signature = sig;
+        SignatureChanged.InvokeAsync(sig);
+    }
+}
