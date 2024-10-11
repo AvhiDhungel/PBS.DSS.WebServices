@@ -31,12 +31,12 @@ namespace PBS.DSS.Shared
         }
         public static bool CanCancel(this Appointment a)
         {
-            if (a.AppointmentTime.UtcDateTime >= DateTime.UtcNow || a.AppointmentTime.UtcDateTime <= DateTime.UtcNow.AddDays(-1)) return false;
+            if (a.AppointmentTime.UtcDateTime < DateTime.UtcNow.AddDays(-1)) return false;
             return a.IsOpen() || a.IsConfirmed();
         }
         public static bool CanReschedule(this Appointment a)
         {
-            if (a.AppointmentTime.UtcDateTime >= DateTime.UtcNow || a.AppointmentTime.UtcDateTime <= DateTime.UtcNow.AddDays(-1)) return false;
+            if (a.AppointmentTime.UtcDateTime < DateTime.UtcNow.AddDays(-1)) return false;
             return a.IsOpen() || a.IsConfirmed();
         }
         #endregion

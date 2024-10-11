@@ -4,34 +4,37 @@
 
 <MudSessionErrorWrapper FetchAsync="LoadBase64String">
     <Content>
-        <MudGrid Justify="Justify.Center" Class="pb-10">
-            <MudItem xs="12">
-                <MudPDFViewer Base64String="@Base64Document" />
-            </MudItem>
-            @if (RequiresSignature)
-            {
+        @if (Base64Document.HasValue())
+        {
+            <MudGrid Justify="Justify.Center" Class="pb-10">
                 <MudItem xs="12">
-                    <MudSignaturePad @bind-Value="Signature"
-                                     CanvasContainerStyle="height:100%; width:100%; background-color:white;"
-                                     Variant="Variant.Filled"
-                                     ShowDownload="false"
-                                     ShowLineJoinStyle="false"
-                                     ShowLineWidth="false"
-                                     ShowStrokeStyle="false"
-                                     ShowLineCapStyle="false">
-                    </MudSignaturePad>
+                    <MudPDFViewer Base64String="@Base64Document" />
                 </MudItem>
-                <MudItem xs="12">
-                    <MudSpacer />
-                    <MudButton Variant="Variant.Outlined"
-                               StartIcon="@Icons.Material.Filled.Create"
-                               OnClick="Sign">
-                        Sign
-                    </MudButton>
-                    <MudSpacer />
-                </MudItem>
-            }
-        </MudGrid>
+                @if (RequiresSignature)
+                {
+                    <MudItem xs="12">
+                        <MudSignaturePad @bind-Value="Signature"
+                                         CanvasContainerStyle="height:100%; width:100%; background-color:white;"
+                                         Variant="Variant.Filled"
+                                         ShowDownload="false"
+                                         ShowLineJoinStyle="false"
+                                         ShowLineWidth="false"
+                                         ShowStrokeStyle="false"
+                                         ShowLineCapStyle="false">
+                        </MudSignaturePad>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudSpacer />
+                        <MudButton Variant="Variant.Outlined"
+                                   StartIcon="@Icons.Material.Filled.Create"
+                                   OnClick="Sign">
+                            Sign
+                        </MudButton>
+                        <MudSpacer />
+                    </MudItem>
+                }
+            </MudGrid>
+        }
     </Content>
 </MudSessionErrorWrapper>
 
@@ -63,15 +66,10 @@
     {
         var busyDialog = await DialogService.ShowBusyDialog();
 
-        //Debug Code
-        var doc = await httpClient.GetByteArrayAsync("samplepdf.pdf");
-        busyDialog.Close();
-        return Convert.ToBase64String(doc);
-
         var document = await DocumentSignatureService.FetchDocument(DocumentType);
         busyDialog.Close();
 
-        if (document.HasValue()) return Convert.ToBase64String(document);
+        return (document != null && document.HasValue()) ? Convert.ToBase64String(document) : string.Empty;
     }
 
     private async Task Sign()

@@ -1,10 +1,13 @@
 ﻿using PBS.Blazor.ClientFramework.Services;
 using PBS.Blazor.Framework.Extensions;
+using PBS.DSS.Shared.Args;
 using PBS.DSS.Shared.Criteria;
 using PBS.DSS.Shared.Enums;
 using PBS.DSS.Shared.Models.States;
 using PBS.DSS.Shared.Models.WorkItems;
+using PBS.DSS.WebServices.Client.Pages.App;
 using PBS.DSS.WebServices.Client.ServiceExtensions;
+using System.Net.Http.Headers;
 
 namespace PBS.DSS.WebServices.Client.Services
 {
@@ -66,9 +69,6 @@ namespace PBS.DSS.WebServices.Client.Services
 
             await _sharedStateService.SaveToSession();
 
-            //Debug Code
-            return true;
-
             if (signature.ActionTypes == SignatureActionTypes.AppointmentCheckIn)
                 return await CheckInAppointment(signature);
             else if (signature.ActionTypes == SignatureActionTypes.SignRecommendedServices)
@@ -86,7 +86,15 @@ namespace PBS.DSS.WebServices.Client.Services
             var so = _sharedStateService.GetModel<ServiceOrder>();
             if (so == null || so.SerialNumber.IsEmpty() || so.Id == Guid.Empty) return false;
 
-            var docRes = await _controllerAPIService.Post(signature, "DocumentSignature", "SignServiceOrderCustomerCopy");
+            var sigArgs = new DocumentSignatureArgs()
+            {
+                Signature = signature,
+                SerialNumber = so.SerialNumber,
+                WorkItemRef = so.Id,
+                WorkItemNumber = so.SONumber
+            };
+
+            var docRes = await _controllerAPIService.Post(sigArgs, "DocumentSignature", "SignServiceOrderCustomerCopy");
             if (docRes != null && docRes.IsSuccessStatusCode) return false;
 
             var soResp = await _controllerAPIService.Post(so, "ServiceOrder", "ApproveAWR");
@@ -98,7 +106,15 @@ namespace PBS.DSS.WebServices.Client.Services
             var so = _sharedStateService.GetModel<ServiceOrder>();
             if (so == null || so.SerialNumber.IsEmpty() || so.Id == Guid.Empty) return false;
 
-            var docRes = await _controllerAPIService.Post(signature, "DocumentSignature", "SignServiceOrderCustomerCopy");
+            var sigArgs = new DocumentSignatureArgs()
+            {
+                Signature = signature,
+                SerialNumber = so.SerialNumber,
+                WorkItemRef = so.Id,
+                WorkItemNumber = so.SONumber
+            };
+
+            var docRes = await _controllerAPIService.Post(sigArgs, "DocumentSignature", "SignServiceOrderCustomerCopy");
             return docRes != null && docRes.IsSuccessStatusCode;
         }
         #endregion
@@ -109,7 +125,15 @@ namespace PBS.DSS.WebServices.Client.Services
             var appt = _sharedStateService.GetModel<Appointment>();
             if (appt == null || appt.SerialNumber.IsEmpty() || appt.Id == Guid.Empty) return false;
 
-            var docRes = await _controllerAPIService.Post(signature, "DocumentSignature", "SignAppointmentHardCopy");
+            var sigArgs = new DocumentSignatureArgs()
+            {
+                Signature = signature,
+                SerialNumber = appt.SerialNumber,
+                WorkItemRef = appt.Id,
+                WorkItemNumber = appt.AppointmentNumber
+            };
+
+            var docRes = await _controllerAPIService.Post(sigArgs, "DocumentSignature", "SignAppointmentHardCopy");
             if (docRes == null || !docRes.IsSuccessStatusCode) return false;
 
             var apptResp = await _controllerAPIService.Post(appt, "Appointment", "CheckInAppointment");

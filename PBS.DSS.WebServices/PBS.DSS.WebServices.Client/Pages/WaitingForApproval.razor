@@ -224,6 +224,7 @@
         }
 
         ServiceOrder = resp.ResponseObject;
+        ServiceOrder.SerialNumber = SerialNumber;
         ServiceOrder.AccessType = DSSAccessTypes.WaitingForApproval;
         SharedStateService.SetBanner(ServiceOrder.ShopBanner);
 

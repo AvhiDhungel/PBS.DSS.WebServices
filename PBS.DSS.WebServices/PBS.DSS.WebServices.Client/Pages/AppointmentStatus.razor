@@ -141,6 +141,7 @@
         }
 
         Appointment = resp.ResponseObject;
+        Appointment.SerialNumber = SerialNumber;
         SharedStateService.SetBanner(Appointment.ShopBanner);
     }
 
@@ -200,9 +201,17 @@
         NavigationManager.NavigateTo($"{Utilities.GetWebAppointmentsURL()}/{SerialNumber}/{Appointment.Id}/Reschedule");
     }
 
-    private void CancelAppointment()
+    private async Task CancelAppointment()
     {
+        var resp = await DialogService.PerformBusyResult(ControllerAPIService.Post(Appointment, "Appointment", "CancelAppointment"), "Cancelling Appointment");
 
+        if (resp == null || !resp.IsSuccessStatusCode)
+            SnackbarService.Add("We were unable to cancel your Appointment online.", Severity.Error);
+        else
+        {
+            Appointment.Status = AppointmentStatuses.Deleted;
+            SnackbarService.Add("Your Appointment has been successfully cancelled.", Severity.Success);
+        }
     }
 
     private async Task AddToCalendar()

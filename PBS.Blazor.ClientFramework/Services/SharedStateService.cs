@@ -1,7 +1,8 @@
-﻿using PBS.Blazor.Framework.Resources;
+﻿using System.Text;
+using System.Text.Json;
+using PBS.Blazor.Framework.Resources;
 using PBS.Blazor.Framework.Helpers;
 using PBS.Blazor.Framework.Interfaces;
-using System.Text;
 
 namespace PBS.Blazor.ClientFramework.Services
 {
@@ -16,14 +17,19 @@ namespace PBS.Blazor.ClientFramework.Services
 
         #region StateModel
         public bool HasModel() => SharedState.Model != null;
-        public void SetMode(object model) => SharedState.Model = model;
+        public void SetModel(object model) => SharedState.Model = model;
 
         public T? GetModel<T>()
         {
             if (SharedState.Model == null) return default;
-            if (SharedState.Model.GetType() != typeof(T)) return default;
 
-            return (T)SharedState.Model;
+            if (SharedState.Model.GetType() == typeof(T)) return (T)SharedState.Model;
+            if (SharedState.Model.GetType() == typeof(JsonElement))
+            {
+                try { return ((JsonElement)SharedState.Model).Deserialize<T>(); }
+                catch { return default; }
+            }
+            return default;
         }
 
         public async Task SaveToSession() => await _sessionStorageService.SaveSharedState(SharedState);

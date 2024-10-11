@@ -68,7 +68,12 @@ namespace PBS.DSS.WebServices.Server.Controllers
 
                 msg.LogSerializedWithMessage(resp, "Connect Hub Response:");
 
-                if (resp == null) { msg.HasError = true; msg.ErrorMessage = "Connect Document Signature Request Failed"; return; }
+                if (resp?.Result == null || !resp.Result.WasSuccessful)
+                {
+                    msg.HasError = true;
+                    msg.ErrorMessage = "Connect Document Signature Request Failed";
+                    return;
+                }
 
                 msg.LogSerializedWithMessage(msg.Object, "Transcribed Response Message:");
             }

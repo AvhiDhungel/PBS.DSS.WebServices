@@ -131,6 +131,8 @@
         }
 
         ServiceOrder = resp.ResponseObject;
+        ServiceOrder.SerialNumber = SerialNumber;
+        ServiceOrder.AccessType = DSSAccessTypes.ServiceOrderStatus;
         SharedStateService.SetBanner(ServiceOrder.ShopBanner);
     }
 

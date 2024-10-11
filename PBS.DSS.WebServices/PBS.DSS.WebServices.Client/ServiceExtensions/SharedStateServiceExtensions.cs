@@ -65,13 +65,13 @@ namespace PBS.DSS.WebServices.Client.ServiceExtensions
         #region Models
         public static async Task SaveModelToSession(this SharedStateService<SharedState> s, ServiceOrder model)
         {
-            s.SetModel(model);
+            SetModel(s, model);
             await s.SaveToSession();
         }
 
         public static async Task SaveModelToSession(this SharedStateService<SharedState> s, Appointment model)
         {
-            s.SetModel(model);
+            SetModel(s, model);
             await s.SaveToSession();
         }
 
