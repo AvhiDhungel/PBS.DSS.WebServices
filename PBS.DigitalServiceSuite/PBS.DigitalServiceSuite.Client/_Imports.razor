@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Components.Routing
+@using PBS.Blazor.Framework.Extensions
+@using PBS.Blazor.Framework.Helpers
+@using PBS.Blazor.Framework.Enums
+@using PBS.Blazor.ClientFramework.Services
+@using PBS.Blazor.ClientFramework.Extensions
+@using PBS.Blazor.ClientFramework.MudComponents
+@using PBS.DigitalServiceSuite.Client
+@using PBS.DigitalServiceSuite.Client.Providers
+@using PBS.DigitalServiceSuite.Client.Components
+@using PBS.DigitalServiceSuite.Client.Dialogs
+@using PBS.DigitalServiceSuite.Client.Layout
+@using PBS.DigitalServiceSuite.Client.Services
+@using PBS.DigitalServiceSuite.Client.ServiceExtensions
+@using PBS.DigitalServiceSuite.Shared
+@using PBS.DigitalServiceSuite.Shared.Resources
+@using PBS.DigitalServiceSuite.Shared.Models
+@using PBS.DigitalServiceSuite.Shared.Models.States
+@using PBS.DigitalServiceSuite.Shared.Models.WorkItems
+@using PBS.DigitalServiceSuite.Shared.Criteria
+@using PBS.DigitalServiceSuite.Shared.Enums
+@using MudBlazor
+@using MudBlazor.Services
+@using Blazored.SessionStorage
+@using SignaturePad
+
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+
+@inject IDialogService DialogService
+@inject ISnackbar SnackbarService
+
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@inject InterOpService InterOpService
+@inject SessionStorageService SessionStorageService
+@inject ControllerAPIService ControllerAPIService
+@inject DocumentSignatureService DocumentSignatureService
+@inject SharedStateService<SharedState> SharedStateService
