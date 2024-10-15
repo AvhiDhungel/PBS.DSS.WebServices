@@ -1,7 +1,7 @@
 ﻿using MudBlazor;
 using PBS.Blazor.Framework.Extensions;
-using PBS.Blazor.ClientFramework.MudComponents;
 using PBS.Blazor.Framework.Enums;
+using PBS.Blazor.ClientFramework.MudComponents;
 
 namespace PBS.Blazor.ClientFramework.Extensions
 {

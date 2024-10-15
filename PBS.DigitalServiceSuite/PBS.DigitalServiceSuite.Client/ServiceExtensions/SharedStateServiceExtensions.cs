@@ -1,10 +1,4 @@
 ﻿using PBS.Blazor.ClientFramework.Services;
-using PBS.Blazor.Framework.Extensions;
-using PBS.Blazor.Framework.Helpers;
-using PBS.DigitalServiceSuite.Shared.Enums;
-using PBS.DigitalServiceSuite.Shared.Models.States;
-using PBS.DigitalServiceSuite.Shared.Models.WorkItems;
-using PBS.DigitalServiceSuite.Shared.Resources;
 
 namespace PBS.DigitalServiceSuite.Client.ServiceExtensions
 {

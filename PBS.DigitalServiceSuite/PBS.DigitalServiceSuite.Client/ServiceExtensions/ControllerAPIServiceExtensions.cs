@@ -1,6 +1,4 @@
 ﻿using PBS.Blazor.ClientFramework.Services;
-using PBS.DigitalServiceSuite.Shared.Criteria;
-using PBS.DigitalServiceSuite.Shared.Models.WorkItems;
 using static PBS.Blazor.ClientFramework.Services.ControllerAPIService;
 
 namespace PBS.DigitalServiceSuite.Client.ServiceExtensions

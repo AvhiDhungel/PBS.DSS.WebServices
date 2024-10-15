@@ -28,4 +28,17 @@
     </Reference>
   </ItemGroup>
 
+  
+  
+  <ItemGroup>
+    <Using Include="PBS.Blazor.Framework.Extensions" />
+    <Using Include="PBS.DigitalServiceSuite.Shared" />
+    <Using Include="PBS.DigitalServiceSuite.Shared.Args" />
+    <Using Include="PBS.DigitalServiceSuite.Shared.Enums" />
+    <Using Include="PBS.DigitalServiceSuite.Shared.Models" />
+    <Using Include="PBS.DigitalServiceSuite.Shared.Models.States" />
+    <Using Include="PBS.DigitalServiceSuite.Shared.Models.WorkItems" />
+    <Using Include="PBS.DigitalServiceSuite.Shared.Resources" />
+  </ItemGroup>
+
 </Project>

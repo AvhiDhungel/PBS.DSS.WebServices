@@ -1,5 +1,4 @@
-﻿using PBS.Blazor.Framework.Extensions;
-using PBS.Blazor.ServerFramework;
+﻿using PBS.Blazor.ServerFramework;
 using PBS.DataAccess.Core;
 
 namespace PBS.DigitalServiceSuite.Server.Integrations

@@ -2,10 +2,6 @@
 using ConnectAppt = PBS.ConnectHub.Library.Messages.Appointments;
 using Connect = PBS.ConnectHub.Library.Messages;
 using PBS.ConnectHub.Library;
-using PBS.DigitalServiceSuite.Shared.Models.WorkItems;
-using PBS.DigitalServiceSuite.Shared.Models;
-using PBS.Blazor.Framework.Extensions;
-using PBS.DigitalServiceSuite.Shared.Enums;
 
 namespace PBS.DigitalServiceSuite.Server.Utilities
 {

@@ -1,13 +1,5 @@
 ﻿using PBS.Blazor.ClientFramework.Services;
-using PBS.Blazor.Framework.Extensions;
-using PBS.DigitalServiceSuite.Shared.Args;
-using PBS.DigitalServiceSuite.Shared.Criteria;
-using PBS.DigitalServiceSuite.Shared.Enums;
-using PBS.DigitalServiceSuite.Shared.Models.States;
-using PBS.DigitalServiceSuite.Shared.Models.WorkItems;
-using PBS.DigitalServiceSuite.Client.Pages.App;
 using PBS.DigitalServiceSuite.Client.ServiceExtensions;
-using System.Net.Http.Headers;
 
 namespace PBS.DigitalServiceSuite.Client.Services
 {

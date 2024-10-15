@@ -1,7 +1,7 @@
 ﻿using PBS.DigitalServiceSuite.Shared.Enums;
 using PBS.DigitalServiceSuite.Shared.Models.WorkItems;
 
-namespace PBS.DigitalServiceSuite.Shared.Criteria
+namespace PBS.DigitalServiceSuite.Shared.Args
 {
     public class ServiceOrderFetchArgs
     {

@@ -4,8 +4,6 @@ using PBS.Blazor.ServerFramework.Integrations;
 using PBS.ConnectHub.Library.Messages.Documents;
 using PBS.ConnectHub.Library;
 using PBS.ConnectHub.Library.Messages.DigitalServiceSuite;
-using PBS.DigitalServiceSuite.Shared.Criteria;
-using PBS.DigitalServiceSuite.Shared.Models.WorkItems;
 using PBS.DigitalServiceSuite.Server.Integrations;
 using PBS.DigitalServiceSuite.Server.Utilities;
 
